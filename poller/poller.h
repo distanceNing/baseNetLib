@@ -7,7 +7,7 @@
 #include "../channel.h"
 #include <map>
 #include <vector>
-
+#include "../timerfd/time_stamp.h"
 class Poller {
 
 protected:
@@ -17,7 +17,7 @@ protected:
 
 public:
 
-    virtual int Poll(int time_out,ChannelList & activeChannel) = 0;
+    virtual TimeStamp Poll(int time_out,ChannelList & activeChannel) = 0;
 
     virtual void addNewChannel(Channel * channel) = 0;
 

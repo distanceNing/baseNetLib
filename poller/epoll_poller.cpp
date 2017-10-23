@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include "epoll_poller.h"
+#include "../common.h"
 
 EpollPoller::EpollPoller():epollEventList_(kInitEpollEventSize),epollFd_(epoll_create1(0))
 {
@@ -12,7 +13,7 @@ EpollPoller::EpollPoller():epollEventList_(kInitEpollEventSize),epollFd_(epoll_c
 }
 
 
-int EpollPoller::Poll(int time_out, Poller::ChannelList& activeChannels)
+TimeStamp EpollPoller::Poll(int time_out, Poller::ChannelList& activeChannels)
 {
     int num_ready=epoll_wait(epollFd_,epollEventList_.data(), static_cast<int>(epollEventList_.size()),time_out);
     if (num_ready > 0)
@@ -34,14 +35,15 @@ int EpollPoller::Poll(int time_out, Poller::ChannelList& activeChannels)
         }
         else
         {
-            perror("Epoll Error");
+            printErrorMsg("Epoll Error");
         }
     }
-    return num_ready;
+    return TimeStamp();
 }
 
 void EpollPoller::addNewChannel(Channel* channel)
 {
+    setFdNonBlocking(channel->getFd());
     epoll_ctl(epollFd_,EPOLL_CTL_ADD,channel->getFd(),epollEventList_.data());
     channelMap_.insert(std::make_pair(channel->getFd(), channel));
 }
@@ -51,9 +53,9 @@ void EpollPoller::removeChannel(Channel* channel)
     //从内核注册表上删除文件描述符
     epoll_ctl(epollFd_,EPOLL_CTL_DEL,channel->getFd(),epollEventList_.data());
     //从channelMap删除
-    for (ChannelMap::const_iterator i; i!=channelMap_.end(); ++i)
+    for (auto i=channelMap_.begin(); i!=channelMap_.end(); ++i)
     {
-        if (i->first==channel->getFd())
+        if (i->first == channel->getFd())
         {
             channelMap_.erase(i);
             break;

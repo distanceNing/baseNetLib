@@ -25,7 +25,7 @@ public:
     {
     }
 
-    int Poll(int time_out,ChannelList & activeChannel) override;
+    TimeStamp Poll(int time_out,ChannelList & activeChannel) override;
 
     void addNewChannel(Channel * channel) override ;
 

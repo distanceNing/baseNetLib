@@ -2,8 +2,8 @@
 // Created by yangning on 17-10-23.
 //
 
-#ifndef POLLER_EPOLL_POLLER_H
-#define POLLER_EPOLL_POLLER_H
+#ifndef BASE_NET_LIB_EPOLL_POLLER_H
+#define BASE_NET_LIB_EPOLL_POLLER_H
 #include "poller.h"
 #include <sys/epoll.h>
 #include <vector>
@@ -13,7 +13,7 @@ public:
 
     EpollPoller();
 
-    int Poll(int time_out,ChannelList & activeChannel) override;
+    TimeStamp Poll(int time_out,ChannelList & activeChannel) override;
 
     void addNewChannel(Channel * channel) override ;
 
@@ -32,4 +32,4 @@ private:
     EpollEventList epollEventList_;
 };
 
-#endif //POLLER_EPOLL_POLLER_H
+#endif //BASE_NET_LIB_EPOLL_POLLER_H

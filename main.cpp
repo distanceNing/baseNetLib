@@ -1,14 +1,14 @@
-#include "print_time.h"
 #include "event_loop.h"
 #include "net_helper/tcp_socket.h"
 #include "common.h"
-const int kPort = 8000;
+#include "timerfd/time_stamp.h"
+#include "timerfd/timer.h"
 
-void wcb(int fd)
+void timeRCB(int fd)
 {
-    char buffer[] = "hello world";
-    size_t size = write(fd, buffer, strlen(buffer));
-    printf("writeable write size is : %lu\n", size);
+    int64_t error;
+    size_t size = read(fd, &error, sizeof(error));
+    printf("readable  size is : %lu\n", size);
 }
 
 void rcb(int listen_fd)
@@ -19,7 +19,7 @@ void rcb(int listen_fd)
     struct sockaddr_in client_addr;
     clilen = sizeof(client_addr);
     memset(&client_addr, 0, sizeof(client_addr));
-    if ((client_fd = accept(listen_fd, (struct sockaddr*) &client_addr, &clilen))<0) {
+    if ((client_fd = accept(listen_fd, (struct sockaddr*) &client_addr, &clilen)) < 0) {
         printErrorMsg("accept");
     }
     memset(connIP, '\0', 32);
@@ -29,24 +29,34 @@ void rcb(int listen_fd)
 
 int main()
 {
-    time_t start_time = time(0);
-    struct tm* tm = localtime(&start_time);
-    printf("server start time :%d : %d : %d \n", tm->tm_hour, tm->tm_min, tm->tm_sec);
-
+    TimeStamp::printTimeNow();
     //建立监听socket
-    TcpSocket server_sock;
-    server_sock.CreateSocket(AF_INET, SOCK_STREAM, kPort);
-    server_sock.Listen();
+    //TcpSocket server_sock;
+    //server_sock.CreateSocket(AF_INET, SOCK_STREAM, kPort);
+    //server_sock.Listen();
+    Timer timer;
+    timer.createTimer();
+    timer.setTime(4, 4);
 
-    Channel channel(server_sock.GetSocket(), rcb);
-    channel.setEvent(POLLIN);
+    uint64_t error = 0;
+    for (int i = 0; i < 10; ++i)
+    {
+        ssize_t read_size = read(timer.getTimerFd(), &error, sizeof(uint64_t));
+        if (read_size != sizeof(uint64_t)) {
+             perror("read error");
+        }
+        TimeStamp::printTimeNow();
+    }
+    //Channel channel(server_sock.GetSocket(), rcb);
+    //channel.setEvent(POLLIN);
+    //Channel channel(timer.getTimerFd(),timeRCB);
+    //EventLoop main_loop;
+    //main_loop.addNewChannel(&channel);
+    //main_loop.startLoop();
 
-    EventLoop main_loop;
-    main_loop.addNewChannel(&channel);
-    main_loop.startLoop();
 
-    time_t end_time = time(0);
-    tm = localtime(&end_time);
-    printf("server end time :%d : %d : %d \n", tm->tm_hour, tm->tm_min, tm->tm_sec);
+
+
+
     return 0;
 }

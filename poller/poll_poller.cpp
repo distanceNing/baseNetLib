@@ -1,8 +1,9 @@
 #include "poll_poller.h"
+
 #include <stdlib.h>
 #include <iostream>
 
-int PollPoller::Poll(int time_out, ChannelList& activeChannels)
+TimeStamp PollPoller::Poll(int time_out, ChannelList& activeChannels)
 {
     int num_ready = -1;
     std::cout << "Poll Array Size " << pollfdList_.size() << std::endl;
@@ -25,7 +26,7 @@ int PollPoller::Poll(int time_out, ChannelList& activeChannels)
             perror("Poll Error");
         }
     }
-    return num_ready;
+    return TimeStamp();
 }
 
 void PollPoller::fillActiveChannel(int num_ready, ChannelList& activeChannels)
