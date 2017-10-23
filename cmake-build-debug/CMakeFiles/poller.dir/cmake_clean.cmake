@@ -6,7 +6,9 @@ file(REMOVE_RECURSE
   "CMakeFiles/poller.dir/net_helper/tcp_socket.cpp.o"
   "CMakeFiles/poller.dir/common.cpp.o"
   "CMakeFiles/poller.dir/poller/poller.cpp.o"
-  "CMakeFiles/poller.dir/poller/EpollPoller.cpp.o"
+  "CMakeFiles/poller.dir/poller/epoll_poller.cpp.o"
+  "CMakeFiles/poller.dir/timerfd/time_stamp.cpp.o"
+  "CMakeFiles/poller.dir/timerfd/timer.cpp.o"
   "poller.pdb"
   "poller"
 )
