@@ -1,0 +1,19 @@
+cmake_minimum_required(VERSION 3.7)
+project(poller)
+
+set(CMAKE_CXX_STANDARD 11)
+
+set(SOURCE_FILES
+        channel.cpp
+        channel.h
+        event_loop.cpp
+        event_loop.h
+        main.cpp
+        poller/poll_poller.cpp
+        poller/poll_poller.h
+        print_time.h
+        net_helper/tcp_socket.cpp
+        net_helper/tcp_socket.h
+        timer.h common.cpp common.h poller/poller.cpp poller/poller.h poller/epoll_poller.cpp poller/epoll_poller.h)
+
+add_executable(poller ${SOURCE_FILES})
