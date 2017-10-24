@@ -57,33 +57,9 @@ include CMakeFiles/base_net_lib.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/base_net_lib.dir/flags.make
 
-CMakeFiles/base_net_lib.dir/channel.cpp.o: CMakeFiles/base_net_lib.dir/flags.make
-CMakeFiles/base_net_lib.dir/channel.cpp.o: ../channel.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/hgfs/shared/unpTest/base_net_lib/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/base_net_lib.dir/channel.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/base_net_lib.dir/channel.cpp.o -c /mnt/hgfs/shared/unpTest/base_net_lib/channel.cpp
-
-CMakeFiles/base_net_lib.dir/channel.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/base_net_lib.dir/channel.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/hgfs/shared/unpTest/base_net_lib/channel.cpp > CMakeFiles/base_net_lib.dir/channel.cpp.i
-
-CMakeFiles/base_net_lib.dir/channel.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/base_net_lib.dir/channel.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/hgfs/shared/unpTest/base_net_lib/channel.cpp -o CMakeFiles/base_net_lib.dir/channel.cpp.s
-
-CMakeFiles/base_net_lib.dir/channel.cpp.o.requires:
-
-.PHONY : CMakeFiles/base_net_lib.dir/channel.cpp.o.requires
-
-CMakeFiles/base_net_lib.dir/channel.cpp.o.provides: CMakeFiles/base_net_lib.dir/channel.cpp.o.requires
-	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/channel.cpp.o.provides.build
-.PHONY : CMakeFiles/base_net_lib.dir/channel.cpp.o.provides
-
-CMakeFiles/base_net_lib.dir/channel.cpp.o.provides.build: CMakeFiles/base_net_lib.dir/channel.cpp.o
-
-
 CMakeFiles/base_net_lib.dir/event_loop.cpp.o: CMakeFiles/base_net_lib.dir/flags.make
 CMakeFiles/base_net_lib.dir/event_loop.cpp.o: ../event_loop.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/hgfs/shared/unpTest/base_net_lib/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/base_net_lib.dir/event_loop.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/hgfs/shared/unpTest/base_net_lib/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/base_net_lib.dir/event_loop.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/base_net_lib.dir/event_loop.cpp.o -c /mnt/hgfs/shared/unpTest/base_net_lib/event_loop.cpp
 
 CMakeFiles/base_net_lib.dir/event_loop.cpp.i: cmake_force
@@ -107,7 +83,7 @@ CMakeFiles/base_net_lib.dir/event_loop.cpp.o.provides.build: CMakeFiles/base_net
 
 CMakeFiles/base_net_lib.dir/main.cpp.o: CMakeFiles/base_net_lib.dir/flags.make
 CMakeFiles/base_net_lib.dir/main.cpp.o: ../main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/hgfs/shared/unpTest/base_net_lib/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/base_net_lib.dir/main.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/hgfs/shared/unpTest/base_net_lib/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/base_net_lib.dir/main.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/base_net_lib.dir/main.cpp.o -c /mnt/hgfs/shared/unpTest/base_net_lib/main.cpp
 
 CMakeFiles/base_net_lib.dir/main.cpp.i: cmake_force
@@ -131,7 +107,7 @@ CMakeFiles/base_net_lib.dir/main.cpp.o.provides.build: CMakeFiles/base_net_lib.d
 
 CMakeFiles/base_net_lib.dir/poller/poll_poller.cpp.o: CMakeFiles/base_net_lib.dir/flags.make
 CMakeFiles/base_net_lib.dir/poller/poll_poller.cpp.o: ../poller/poll_poller.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/hgfs/shared/unpTest/base_net_lib/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/base_net_lib.dir/poller/poll_poller.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/hgfs/shared/unpTest/base_net_lib/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/base_net_lib.dir/poller/poll_poller.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/base_net_lib.dir/poller/poll_poller.cpp.o -c /mnt/hgfs/shared/unpTest/base_net_lib/poller/poll_poller.cpp
 
 CMakeFiles/base_net_lib.dir/poller/poll_poller.cpp.i: cmake_force
@@ -153,28 +129,52 @@ CMakeFiles/base_net_lib.dir/poller/poll_poller.cpp.o.provides: CMakeFiles/base_n
 CMakeFiles/base_net_lib.dir/poller/poll_poller.cpp.o.provides.build: CMakeFiles/base_net_lib.dir/poller/poll_poller.cpp.o
 
 
-CMakeFiles/base_net_lib.dir/net_helper/tcp_socket.cpp.o: CMakeFiles/base_net_lib.dir/flags.make
-CMakeFiles/base_net_lib.dir/net_helper/tcp_socket.cpp.o: ../net_helper/tcp_socket.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/hgfs/shared/unpTest/base_net_lib/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/base_net_lib.dir/net_helper/tcp_socket.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/base_net_lib.dir/net_helper/tcp_socket.cpp.o -c /mnt/hgfs/shared/unpTest/base_net_lib/net_helper/tcp_socket.cpp
+CMakeFiles/base_net_lib.dir/timerfdandsockfd/Fd.cpp.o: CMakeFiles/base_net_lib.dir/flags.make
+CMakeFiles/base_net_lib.dir/timerfdandsockfd/Fd.cpp.o: ../timerfdandsockfd/Fd.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/hgfs/shared/unpTest/base_net_lib/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/base_net_lib.dir/timerfdandsockfd/Fd.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/base_net_lib.dir/timerfdandsockfd/Fd.cpp.o -c /mnt/hgfs/shared/unpTest/base_net_lib/timerfdandsockfd/Fd.cpp
 
-CMakeFiles/base_net_lib.dir/net_helper/tcp_socket.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/base_net_lib.dir/net_helper/tcp_socket.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/hgfs/shared/unpTest/base_net_lib/net_helper/tcp_socket.cpp > CMakeFiles/base_net_lib.dir/net_helper/tcp_socket.cpp.i
+CMakeFiles/base_net_lib.dir/timerfdandsockfd/Fd.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/base_net_lib.dir/timerfdandsockfd/Fd.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/hgfs/shared/unpTest/base_net_lib/timerfdandsockfd/Fd.cpp > CMakeFiles/base_net_lib.dir/timerfdandsockfd/Fd.cpp.i
 
-CMakeFiles/base_net_lib.dir/net_helper/tcp_socket.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/base_net_lib.dir/net_helper/tcp_socket.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/hgfs/shared/unpTest/base_net_lib/net_helper/tcp_socket.cpp -o CMakeFiles/base_net_lib.dir/net_helper/tcp_socket.cpp.s
+CMakeFiles/base_net_lib.dir/timerfdandsockfd/Fd.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/base_net_lib.dir/timerfdandsockfd/Fd.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/hgfs/shared/unpTest/base_net_lib/timerfdandsockfd/Fd.cpp -o CMakeFiles/base_net_lib.dir/timerfdandsockfd/Fd.cpp.s
 
-CMakeFiles/base_net_lib.dir/net_helper/tcp_socket.cpp.o.requires:
+CMakeFiles/base_net_lib.dir/timerfdandsockfd/Fd.cpp.o.requires:
 
-.PHONY : CMakeFiles/base_net_lib.dir/net_helper/tcp_socket.cpp.o.requires
+.PHONY : CMakeFiles/base_net_lib.dir/timerfdandsockfd/Fd.cpp.o.requires
 
-CMakeFiles/base_net_lib.dir/net_helper/tcp_socket.cpp.o.provides: CMakeFiles/base_net_lib.dir/net_helper/tcp_socket.cpp.o.requires
-	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/net_helper/tcp_socket.cpp.o.provides.build
-.PHONY : CMakeFiles/base_net_lib.dir/net_helper/tcp_socket.cpp.o.provides
+CMakeFiles/base_net_lib.dir/timerfdandsockfd/Fd.cpp.o.provides: CMakeFiles/base_net_lib.dir/timerfdandsockfd/Fd.cpp.o.requires
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/timerfdandsockfd/Fd.cpp.o.provides.build
+.PHONY : CMakeFiles/base_net_lib.dir/timerfdandsockfd/Fd.cpp.o.provides
 
-CMakeFiles/base_net_lib.dir/net_helper/tcp_socket.cpp.o.provides.build: CMakeFiles/base_net_lib.dir/net_helper/tcp_socket.cpp.o
+CMakeFiles/base_net_lib.dir/timerfdandsockfd/Fd.cpp.o.provides.build: CMakeFiles/base_net_lib.dir/timerfdandsockfd/Fd.cpp.o
+
+
+CMakeFiles/base_net_lib.dir/timerfdandsockfd/socket_fd.cpp.o: CMakeFiles/base_net_lib.dir/flags.make
+CMakeFiles/base_net_lib.dir/timerfdandsockfd/socket_fd.cpp.o: ../timerfdandsockfd/socket_fd.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/hgfs/shared/unpTest/base_net_lib/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/base_net_lib.dir/timerfdandsockfd/socket_fd.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/base_net_lib.dir/timerfdandsockfd/socket_fd.cpp.o -c /mnt/hgfs/shared/unpTest/base_net_lib/timerfdandsockfd/socket_fd.cpp
+
+CMakeFiles/base_net_lib.dir/timerfdandsockfd/socket_fd.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/base_net_lib.dir/timerfdandsockfd/socket_fd.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/hgfs/shared/unpTest/base_net_lib/timerfdandsockfd/socket_fd.cpp > CMakeFiles/base_net_lib.dir/timerfdandsockfd/socket_fd.cpp.i
+
+CMakeFiles/base_net_lib.dir/timerfdandsockfd/socket_fd.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/base_net_lib.dir/timerfdandsockfd/socket_fd.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/hgfs/shared/unpTest/base_net_lib/timerfdandsockfd/socket_fd.cpp -o CMakeFiles/base_net_lib.dir/timerfdandsockfd/socket_fd.cpp.s
+
+CMakeFiles/base_net_lib.dir/timerfdandsockfd/socket_fd.cpp.o.requires:
+
+.PHONY : CMakeFiles/base_net_lib.dir/timerfdandsockfd/socket_fd.cpp.o.requires
+
+CMakeFiles/base_net_lib.dir/timerfdandsockfd/socket_fd.cpp.o.provides: CMakeFiles/base_net_lib.dir/timerfdandsockfd/socket_fd.cpp.o.requires
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/timerfdandsockfd/socket_fd.cpp.o.provides.build
+.PHONY : CMakeFiles/base_net_lib.dir/timerfdandsockfd/socket_fd.cpp.o.provides
+
+CMakeFiles/base_net_lib.dir/timerfdandsockfd/socket_fd.cpp.o.provides.build: CMakeFiles/base_net_lib.dir/timerfdandsockfd/socket_fd.cpp.o
 
 
 CMakeFiles/base_net_lib.dir/common.cpp.o: CMakeFiles/base_net_lib.dir/flags.make
@@ -249,52 +249,52 @@ CMakeFiles/base_net_lib.dir/poller/epoll_poller.cpp.o.provides: CMakeFiles/base_
 CMakeFiles/base_net_lib.dir/poller/epoll_poller.cpp.o.provides.build: CMakeFiles/base_net_lib.dir/poller/epoll_poller.cpp.o
 
 
-CMakeFiles/base_net_lib.dir/timerfd/time_stamp.cpp.o: CMakeFiles/base_net_lib.dir/flags.make
-CMakeFiles/base_net_lib.dir/timerfd/time_stamp.cpp.o: ../timerfd/time_stamp.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/hgfs/shared/unpTest/base_net_lib/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/base_net_lib.dir/timerfd/time_stamp.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/base_net_lib.dir/timerfd/time_stamp.cpp.o -c /mnt/hgfs/shared/unpTest/base_net_lib/timerfd/time_stamp.cpp
+CMakeFiles/base_net_lib.dir/timerfdandsockfd/time_stamp.cpp.o: CMakeFiles/base_net_lib.dir/flags.make
+CMakeFiles/base_net_lib.dir/timerfdandsockfd/time_stamp.cpp.o: ../timerfdandsockfd/time_stamp.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/hgfs/shared/unpTest/base_net_lib/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/base_net_lib.dir/timerfdandsockfd/time_stamp.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/base_net_lib.dir/timerfdandsockfd/time_stamp.cpp.o -c /mnt/hgfs/shared/unpTest/base_net_lib/timerfdandsockfd/time_stamp.cpp
 
-CMakeFiles/base_net_lib.dir/timerfd/time_stamp.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/base_net_lib.dir/timerfd/time_stamp.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/hgfs/shared/unpTest/base_net_lib/timerfd/time_stamp.cpp > CMakeFiles/base_net_lib.dir/timerfd/time_stamp.cpp.i
+CMakeFiles/base_net_lib.dir/timerfdandsockfd/time_stamp.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/base_net_lib.dir/timerfdandsockfd/time_stamp.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/hgfs/shared/unpTest/base_net_lib/timerfdandsockfd/time_stamp.cpp > CMakeFiles/base_net_lib.dir/timerfdandsockfd/time_stamp.cpp.i
 
-CMakeFiles/base_net_lib.dir/timerfd/time_stamp.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/base_net_lib.dir/timerfd/time_stamp.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/hgfs/shared/unpTest/base_net_lib/timerfd/time_stamp.cpp -o CMakeFiles/base_net_lib.dir/timerfd/time_stamp.cpp.s
+CMakeFiles/base_net_lib.dir/timerfdandsockfd/time_stamp.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/base_net_lib.dir/timerfdandsockfd/time_stamp.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/hgfs/shared/unpTest/base_net_lib/timerfdandsockfd/time_stamp.cpp -o CMakeFiles/base_net_lib.dir/timerfdandsockfd/time_stamp.cpp.s
 
-CMakeFiles/base_net_lib.dir/timerfd/time_stamp.cpp.o.requires:
+CMakeFiles/base_net_lib.dir/timerfdandsockfd/time_stamp.cpp.o.requires:
 
-.PHONY : CMakeFiles/base_net_lib.dir/timerfd/time_stamp.cpp.o.requires
+.PHONY : CMakeFiles/base_net_lib.dir/timerfdandsockfd/time_stamp.cpp.o.requires
 
-CMakeFiles/base_net_lib.dir/timerfd/time_stamp.cpp.o.provides: CMakeFiles/base_net_lib.dir/timerfd/time_stamp.cpp.o.requires
-	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/timerfd/time_stamp.cpp.o.provides.build
-.PHONY : CMakeFiles/base_net_lib.dir/timerfd/time_stamp.cpp.o.provides
+CMakeFiles/base_net_lib.dir/timerfdandsockfd/time_stamp.cpp.o.provides: CMakeFiles/base_net_lib.dir/timerfdandsockfd/time_stamp.cpp.o.requires
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/timerfdandsockfd/time_stamp.cpp.o.provides.build
+.PHONY : CMakeFiles/base_net_lib.dir/timerfdandsockfd/time_stamp.cpp.o.provides
 
-CMakeFiles/base_net_lib.dir/timerfd/time_stamp.cpp.o.provides.build: CMakeFiles/base_net_lib.dir/timerfd/time_stamp.cpp.o
+CMakeFiles/base_net_lib.dir/timerfdandsockfd/time_stamp.cpp.o.provides.build: CMakeFiles/base_net_lib.dir/timerfdandsockfd/time_stamp.cpp.o
 
 
-CMakeFiles/base_net_lib.dir/timerfd/timer.cpp.o: CMakeFiles/base_net_lib.dir/flags.make
-CMakeFiles/base_net_lib.dir/timerfd/timer.cpp.o: ../timerfd/timer.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/hgfs/shared/unpTest/base_net_lib/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/base_net_lib.dir/timerfd/timer.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/base_net_lib.dir/timerfd/timer.cpp.o -c /mnt/hgfs/shared/unpTest/base_net_lib/timerfd/timer.cpp
+CMakeFiles/base_net_lib.dir/timerfdandsockfd/timer_fd.cpp.o: CMakeFiles/base_net_lib.dir/flags.make
+CMakeFiles/base_net_lib.dir/timerfdandsockfd/timer_fd.cpp.o: ../timerfdandsockfd/timer_fd.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/hgfs/shared/unpTest/base_net_lib/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/base_net_lib.dir/timerfdandsockfd/timer_fd.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/base_net_lib.dir/timerfdandsockfd/timer_fd.cpp.o -c /mnt/hgfs/shared/unpTest/base_net_lib/timerfdandsockfd/timer_fd.cpp
 
-CMakeFiles/base_net_lib.dir/timerfd/timer.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/base_net_lib.dir/timerfd/timer.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/hgfs/shared/unpTest/base_net_lib/timerfd/timer.cpp > CMakeFiles/base_net_lib.dir/timerfd/timer.cpp.i
+CMakeFiles/base_net_lib.dir/timerfdandsockfd/timer_fd.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/base_net_lib.dir/timerfdandsockfd/timer_fd.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/hgfs/shared/unpTest/base_net_lib/timerfdandsockfd/timer_fd.cpp > CMakeFiles/base_net_lib.dir/timerfdandsockfd/timer_fd.cpp.i
 
-CMakeFiles/base_net_lib.dir/timerfd/timer.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/base_net_lib.dir/timerfd/timer.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/hgfs/shared/unpTest/base_net_lib/timerfd/timer.cpp -o CMakeFiles/base_net_lib.dir/timerfd/timer.cpp.s
+CMakeFiles/base_net_lib.dir/timerfdandsockfd/timer_fd.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/base_net_lib.dir/timerfdandsockfd/timer_fd.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/hgfs/shared/unpTest/base_net_lib/timerfdandsockfd/timer_fd.cpp -o CMakeFiles/base_net_lib.dir/timerfdandsockfd/timer_fd.cpp.s
 
-CMakeFiles/base_net_lib.dir/timerfd/timer.cpp.o.requires:
+CMakeFiles/base_net_lib.dir/timerfdandsockfd/timer_fd.cpp.o.requires:
 
-.PHONY : CMakeFiles/base_net_lib.dir/timerfd/timer.cpp.o.requires
+.PHONY : CMakeFiles/base_net_lib.dir/timerfdandsockfd/timer_fd.cpp.o.requires
 
-CMakeFiles/base_net_lib.dir/timerfd/timer.cpp.o.provides: CMakeFiles/base_net_lib.dir/timerfd/timer.cpp.o.requires
-	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/timerfd/timer.cpp.o.provides.build
-.PHONY : CMakeFiles/base_net_lib.dir/timerfd/timer.cpp.o.provides
+CMakeFiles/base_net_lib.dir/timerfdandsockfd/timer_fd.cpp.o.provides: CMakeFiles/base_net_lib.dir/timerfdandsockfd/timer_fd.cpp.o.requires
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/timerfdandsockfd/timer_fd.cpp.o.provides.build
+.PHONY : CMakeFiles/base_net_lib.dir/timerfdandsockfd/timer_fd.cpp.o.provides
 
-CMakeFiles/base_net_lib.dir/timerfd/timer.cpp.o.provides.build: CMakeFiles/base_net_lib.dir/timerfd/timer.cpp.o
+CMakeFiles/base_net_lib.dir/timerfdandsockfd/timer_fd.cpp.o.provides.build: CMakeFiles/base_net_lib.dir/timerfdandsockfd/timer_fd.cpp.o
 
 
 CMakeFiles/base_net_lib.dir/tcp_server.cpp.o: CMakeFiles/base_net_lib.dir/flags.make
@@ -323,31 +323,31 @@ CMakeFiles/base_net_lib.dir/tcp_server.cpp.o.provides.build: CMakeFiles/base_net
 
 # Object files for target base_net_lib
 base_net_lib_OBJECTS = \
-"CMakeFiles/base_net_lib.dir/channel.cpp.o" \
 "CMakeFiles/base_net_lib.dir/event_loop.cpp.o" \
 "CMakeFiles/base_net_lib.dir/main.cpp.o" \
 "CMakeFiles/base_net_lib.dir/poller/poll_poller.cpp.o" \
-"CMakeFiles/base_net_lib.dir/net_helper/tcp_socket.cpp.o" \
+"CMakeFiles/base_net_lib.dir/timerfdandsockfd/Fd.cpp.o" \
+"CMakeFiles/base_net_lib.dir/timerfdandsockfd/socket_fd.cpp.o" \
 "CMakeFiles/base_net_lib.dir/common.cpp.o" \
 "CMakeFiles/base_net_lib.dir/poller/poller.cpp.o" \
 "CMakeFiles/base_net_lib.dir/poller/epoll_poller.cpp.o" \
-"CMakeFiles/base_net_lib.dir/timerfd/time_stamp.cpp.o" \
-"CMakeFiles/base_net_lib.dir/timerfd/timer.cpp.o" \
+"CMakeFiles/base_net_lib.dir/timerfdandsockfd/time_stamp.cpp.o" \
+"CMakeFiles/base_net_lib.dir/timerfdandsockfd/timer_fd.cpp.o" \
 "CMakeFiles/base_net_lib.dir/tcp_server.cpp.o"
 
 # External object files for target base_net_lib
 base_net_lib_EXTERNAL_OBJECTS =
 
-base_net_lib: CMakeFiles/base_net_lib.dir/channel.cpp.o
 base_net_lib: CMakeFiles/base_net_lib.dir/event_loop.cpp.o
 base_net_lib: CMakeFiles/base_net_lib.dir/main.cpp.o
 base_net_lib: CMakeFiles/base_net_lib.dir/poller/poll_poller.cpp.o
-base_net_lib: CMakeFiles/base_net_lib.dir/net_helper/tcp_socket.cpp.o
+base_net_lib: CMakeFiles/base_net_lib.dir/timerfdandsockfd/Fd.cpp.o
+base_net_lib: CMakeFiles/base_net_lib.dir/timerfdandsockfd/socket_fd.cpp.o
 base_net_lib: CMakeFiles/base_net_lib.dir/common.cpp.o
 base_net_lib: CMakeFiles/base_net_lib.dir/poller/poller.cpp.o
 base_net_lib: CMakeFiles/base_net_lib.dir/poller/epoll_poller.cpp.o
-base_net_lib: CMakeFiles/base_net_lib.dir/timerfd/time_stamp.cpp.o
-base_net_lib: CMakeFiles/base_net_lib.dir/timerfd/timer.cpp.o
+base_net_lib: CMakeFiles/base_net_lib.dir/timerfdandsockfd/time_stamp.cpp.o
+base_net_lib: CMakeFiles/base_net_lib.dir/timerfdandsockfd/timer_fd.cpp.o
 base_net_lib: CMakeFiles/base_net_lib.dir/tcp_server.cpp.o
 base_net_lib: CMakeFiles/base_net_lib.dir/build.make
 base_net_lib: CMakeFiles/base_net_lib.dir/link.txt
@@ -359,16 +359,16 @@ CMakeFiles/base_net_lib.dir/build: base_net_lib
 
 .PHONY : CMakeFiles/base_net_lib.dir/build
 
-CMakeFiles/base_net_lib.dir/requires: CMakeFiles/base_net_lib.dir/channel.cpp.o.requires
 CMakeFiles/base_net_lib.dir/requires: CMakeFiles/base_net_lib.dir/event_loop.cpp.o.requires
 CMakeFiles/base_net_lib.dir/requires: CMakeFiles/base_net_lib.dir/main.cpp.o.requires
 CMakeFiles/base_net_lib.dir/requires: CMakeFiles/base_net_lib.dir/poller/poll_poller.cpp.o.requires
-CMakeFiles/base_net_lib.dir/requires: CMakeFiles/base_net_lib.dir/net_helper/tcp_socket.cpp.o.requires
+CMakeFiles/base_net_lib.dir/requires: CMakeFiles/base_net_lib.dir/timerfdandsockfd/Fd.cpp.o.requires
+CMakeFiles/base_net_lib.dir/requires: CMakeFiles/base_net_lib.dir/timerfdandsockfd/socket_fd.cpp.o.requires
 CMakeFiles/base_net_lib.dir/requires: CMakeFiles/base_net_lib.dir/common.cpp.o.requires
 CMakeFiles/base_net_lib.dir/requires: CMakeFiles/base_net_lib.dir/poller/poller.cpp.o.requires
 CMakeFiles/base_net_lib.dir/requires: CMakeFiles/base_net_lib.dir/poller/epoll_poller.cpp.o.requires
-CMakeFiles/base_net_lib.dir/requires: CMakeFiles/base_net_lib.dir/timerfd/time_stamp.cpp.o.requires
-CMakeFiles/base_net_lib.dir/requires: CMakeFiles/base_net_lib.dir/timerfd/timer.cpp.o.requires
+CMakeFiles/base_net_lib.dir/requires: CMakeFiles/base_net_lib.dir/timerfdandsockfd/time_stamp.cpp.o.requires
+CMakeFiles/base_net_lib.dir/requires: CMakeFiles/base_net_lib.dir/timerfdandsockfd/timer_fd.cpp.o.requires
 CMakeFiles/base_net_lib.dir/requires: CMakeFiles/base_net_lib.dir/tcp_server.cpp.o.requires
 
 .PHONY : CMakeFiles/base_net_lib.dir/requires

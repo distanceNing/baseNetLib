@@ -123,33 +123,6 @@ base_net_lib/fast:
 	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/build
 .PHONY : base_net_lib/fast
 
-channel.o: channel.cpp.o
-
-.PHONY : channel.o
-
-# target to build an object file
-channel.cpp.o:
-	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/channel.cpp.o
-.PHONY : channel.cpp.o
-
-channel.i: channel.cpp.i
-
-.PHONY : channel.i
-
-# target to preprocess a source file
-channel.cpp.i:
-	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/channel.cpp.i
-.PHONY : channel.cpp.i
-
-channel.s: channel.cpp.s
-
-.PHONY : channel.s
-
-# target to generate assembly for a file
-channel.cpp.s:
-	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/channel.cpp.s
-.PHONY : channel.cpp.s
-
 common.o: common.cpp.o
 
 .PHONY : common.o
@@ -230,33 +203,6 @@ main.s: main.cpp.s
 main.cpp.s:
 	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/main.cpp.s
 .PHONY : main.cpp.s
-
-net_helper/tcp_socket.o: net_helper/tcp_socket.cpp.o
-
-.PHONY : net_helper/tcp_socket.o
-
-# target to build an object file
-net_helper/tcp_socket.cpp.o:
-	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/net_helper/tcp_socket.cpp.o
-.PHONY : net_helper/tcp_socket.cpp.o
-
-net_helper/tcp_socket.i: net_helper/tcp_socket.cpp.i
-
-.PHONY : net_helper/tcp_socket.i
-
-# target to preprocess a source file
-net_helper/tcp_socket.cpp.i:
-	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/net_helper/tcp_socket.cpp.i
-.PHONY : net_helper/tcp_socket.cpp.i
-
-net_helper/tcp_socket.s: net_helper/tcp_socket.cpp.s
-
-.PHONY : net_helper/tcp_socket.s
-
-# target to generate assembly for a file
-net_helper/tcp_socket.cpp.s:
-	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/net_helper/tcp_socket.cpp.s
-.PHONY : net_helper/tcp_socket.cpp.s
 
 poller/epoll_poller.o: poller/epoll_poller.cpp.o
 
@@ -366,59 +312,113 @@ tcp_server.cpp.s:
 	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/tcp_server.cpp.s
 .PHONY : tcp_server.cpp.s
 
-timerfd/time_stamp.o: timerfd/time_stamp.cpp.o
+timerfdandsockfd/Fd.o: timerfdandsockfd/Fd.cpp.o
 
-.PHONY : timerfd/time_stamp.o
-
-# target to build an object file
-timerfd/time_stamp.cpp.o:
-	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/timerfd/time_stamp.cpp.o
-.PHONY : timerfd/time_stamp.cpp.o
-
-timerfd/time_stamp.i: timerfd/time_stamp.cpp.i
-
-.PHONY : timerfd/time_stamp.i
-
-# target to preprocess a source file
-timerfd/time_stamp.cpp.i:
-	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/timerfd/time_stamp.cpp.i
-.PHONY : timerfd/time_stamp.cpp.i
-
-timerfd/time_stamp.s: timerfd/time_stamp.cpp.s
-
-.PHONY : timerfd/time_stamp.s
-
-# target to generate assembly for a file
-timerfd/time_stamp.cpp.s:
-	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/timerfd/time_stamp.cpp.s
-.PHONY : timerfd/time_stamp.cpp.s
-
-timerfd/timer.o: timerfd/timer.cpp.o
-
-.PHONY : timerfd/timer.o
+.PHONY : timerfdandsockfd/Fd.o
 
 # target to build an object file
-timerfd/timer.cpp.o:
-	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/timerfd/timer.cpp.o
-.PHONY : timerfd/timer.cpp.o
+timerfdandsockfd/Fd.cpp.o:
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/timerfdandsockfd/Fd.cpp.o
+.PHONY : timerfdandsockfd/Fd.cpp.o
 
-timerfd/timer.i: timerfd/timer.cpp.i
+timerfdandsockfd/Fd.i: timerfdandsockfd/Fd.cpp.i
 
-.PHONY : timerfd/timer.i
+.PHONY : timerfdandsockfd/Fd.i
 
 # target to preprocess a source file
-timerfd/timer.cpp.i:
-	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/timerfd/timer.cpp.i
-.PHONY : timerfd/timer.cpp.i
+timerfdandsockfd/Fd.cpp.i:
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/timerfdandsockfd/Fd.cpp.i
+.PHONY : timerfdandsockfd/Fd.cpp.i
 
-timerfd/timer.s: timerfd/timer.cpp.s
+timerfdandsockfd/Fd.s: timerfdandsockfd/Fd.cpp.s
 
-.PHONY : timerfd/timer.s
+.PHONY : timerfdandsockfd/Fd.s
 
 # target to generate assembly for a file
-timerfd/timer.cpp.s:
-	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/timerfd/timer.cpp.s
-.PHONY : timerfd/timer.cpp.s
+timerfdandsockfd/Fd.cpp.s:
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/timerfdandsockfd/Fd.cpp.s
+.PHONY : timerfdandsockfd/Fd.cpp.s
+
+timerfdandsockfd/socket_fd.o: timerfdandsockfd/socket_fd.cpp.o
+
+.PHONY : timerfdandsockfd/socket_fd.o
+
+# target to build an object file
+timerfdandsockfd/socket_fd.cpp.o:
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/timerfdandsockfd/socket_fd.cpp.o
+.PHONY : timerfdandsockfd/socket_fd.cpp.o
+
+timerfdandsockfd/socket_fd.i: timerfdandsockfd/socket_fd.cpp.i
+
+.PHONY : timerfdandsockfd/socket_fd.i
+
+# target to preprocess a source file
+timerfdandsockfd/socket_fd.cpp.i:
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/timerfdandsockfd/socket_fd.cpp.i
+.PHONY : timerfdandsockfd/socket_fd.cpp.i
+
+timerfdandsockfd/socket_fd.s: timerfdandsockfd/socket_fd.cpp.s
+
+.PHONY : timerfdandsockfd/socket_fd.s
+
+# target to generate assembly for a file
+timerfdandsockfd/socket_fd.cpp.s:
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/timerfdandsockfd/socket_fd.cpp.s
+.PHONY : timerfdandsockfd/socket_fd.cpp.s
+
+timerfdandsockfd/time_stamp.o: timerfdandsockfd/time_stamp.cpp.o
+
+.PHONY : timerfdandsockfd/time_stamp.o
+
+# target to build an object file
+timerfdandsockfd/time_stamp.cpp.o:
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/timerfdandsockfd/time_stamp.cpp.o
+.PHONY : timerfdandsockfd/time_stamp.cpp.o
+
+timerfdandsockfd/time_stamp.i: timerfdandsockfd/time_stamp.cpp.i
+
+.PHONY : timerfdandsockfd/time_stamp.i
+
+# target to preprocess a source file
+timerfdandsockfd/time_stamp.cpp.i:
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/timerfdandsockfd/time_stamp.cpp.i
+.PHONY : timerfdandsockfd/time_stamp.cpp.i
+
+timerfdandsockfd/time_stamp.s: timerfdandsockfd/time_stamp.cpp.s
+
+.PHONY : timerfdandsockfd/time_stamp.s
+
+# target to generate assembly for a file
+timerfdandsockfd/time_stamp.cpp.s:
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/timerfdandsockfd/time_stamp.cpp.s
+.PHONY : timerfdandsockfd/time_stamp.cpp.s
+
+timerfdandsockfd/timer_fd.o: timerfdandsockfd/timer_fd.cpp.o
+
+.PHONY : timerfdandsockfd/timer_fd.o
+
+# target to build an object file
+timerfdandsockfd/timer_fd.cpp.o:
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/timerfdandsockfd/timer_fd.cpp.o
+.PHONY : timerfdandsockfd/timer_fd.cpp.o
+
+timerfdandsockfd/timer_fd.i: timerfdandsockfd/timer_fd.cpp.i
+
+.PHONY : timerfdandsockfd/timer_fd.i
+
+# target to preprocess a source file
+timerfdandsockfd/timer_fd.cpp.i:
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/timerfdandsockfd/timer_fd.cpp.i
+.PHONY : timerfdandsockfd/timer_fd.cpp.i
+
+timerfdandsockfd/timer_fd.s: timerfdandsockfd/timer_fd.cpp.s
+
+.PHONY : timerfdandsockfd/timer_fd.s
+
+# target to generate assembly for a file
+timerfdandsockfd/timer_fd.cpp.s:
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/timerfdandsockfd/timer_fd.cpp.s
+.PHONY : timerfdandsockfd/timer_fd.cpp.s
 
 # Help Target
 help:
@@ -429,9 +429,6 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... base_net_lib"
-	@echo "... channel.o"
-	@echo "... channel.i"
-	@echo "... channel.s"
 	@echo "... common.o"
 	@echo "... common.i"
 	@echo "... common.s"
@@ -441,9 +438,6 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
-	@echo "... net_helper/tcp_socket.o"
-	@echo "... net_helper/tcp_socket.i"
-	@echo "... net_helper/tcp_socket.s"
 	@echo "... poller/epoll_poller.o"
 	@echo "... poller/epoll_poller.i"
 	@echo "... poller/epoll_poller.s"
@@ -456,12 +450,18 @@ help:
 	@echo "... tcp_server.o"
 	@echo "... tcp_server.i"
 	@echo "... tcp_server.s"
-	@echo "... timerfd/time_stamp.o"
-	@echo "... timerfd/time_stamp.i"
-	@echo "... timerfd/time_stamp.s"
-	@echo "... timerfd/timer.o"
-	@echo "... timerfd/timer.i"
-	@echo "... timerfd/timer.s"
+	@echo "... timerfdandsockfd/Fd.o"
+	@echo "... timerfdandsockfd/Fd.i"
+	@echo "... timerfdandsockfd/Fd.s"
+	@echo "... timerfdandsockfd/socket_fd.o"
+	@echo "... timerfdandsockfd/socket_fd.i"
+	@echo "... timerfdandsockfd/socket_fd.s"
+	@echo "... timerfdandsockfd/time_stamp.o"
+	@echo "... timerfdandsockfd/time_stamp.i"
+	@echo "... timerfdandsockfd/time_stamp.s"
+	@echo "... timerfdandsockfd/timer_fd.o"
+	@echo "... timerfdandsockfd/timer_fd.i"
+	@echo "... timerfdandsockfd/timer_fd.s"
 .PHONY : help
 
 

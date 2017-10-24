@@ -84,12 +84,6 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/channel.cpp">
-			<Option target="base_net_lib"/>
-		</Unit>
-		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/channel.h">
-			<Option target="base_net_lib"/>
-		</Unit>
 		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/common.cpp">
 			<Option target="base_net_lib"/>
 		</Unit>
@@ -103,12 +97,6 @@
 			<Option target="base_net_lib"/>
 		</Unit>
 		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/main.cpp">
-			<Option target="base_net_lib"/>
-		</Unit>
-		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/net_helper/tcp_socket.cpp">
-			<Option target="base_net_lib"/>
-		</Unit>
-		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/net_helper/tcp_socket.h">
 			<Option target="base_net_lib"/>
 		</Unit>
 		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/poller/epoll_poller.cpp">
@@ -135,16 +123,28 @@
 		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/tcp_server.h">
 			<Option target="base_net_lib"/>
 		</Unit>
-		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/timerfd/time_stamp.cpp">
+		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/timerfdandsockfd/Fd.cpp">
 			<Option target="base_net_lib"/>
 		</Unit>
-		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/timerfd/time_stamp.h">
+		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/timerfdandsockfd/Fd.h">
 			<Option target="base_net_lib"/>
 		</Unit>
-		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/timerfd/timer.cpp">
+		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/timerfdandsockfd/socket_fd.cpp">
 			<Option target="base_net_lib"/>
 		</Unit>
-		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/timerfd/timer.h">
+		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/timerfdandsockfd/socket_fd.h">
+			<Option target="base_net_lib"/>
+		</Unit>
+		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/timerfdandsockfd/time_stamp.cpp">
+			<Option target="base_net_lib"/>
+		</Unit>
+		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/timerfdandsockfd/time_stamp.h">
+			<Option target="base_net_lib"/>
+		</Unit>
+		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/timerfdandsockfd/timer_fd.cpp">
+			<Option target="base_net_lib"/>
+		</Unit>
+		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/timerfdandsockfd/timer_fd.h">
 			<Option target="base_net_lib"/>
 		</Unit>
 		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/CMakeLists.txt">
