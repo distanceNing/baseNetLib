@@ -42,7 +42,7 @@ TimeStamp EpollPoller::Poll(int time_out, Poller::ChannelList& activeChannels)
     return timeStamp;
 }
 
-void EpollPoller::addNewChannel(Channel* channel)
+void EpollPoller::addNewChannel(Fd* channel)
 {
     struct epoll_event event;
     setFdNonBlocking(channel->getFd());
@@ -52,7 +52,7 @@ void EpollPoller::addNewChannel(Channel* channel)
     channelMap_.insert(std::make_pair(channel->getFd(), channel));
 }
 
-void EpollPoller::removeChannel(Channel* channel)
+void EpollPoller::removeChannel(Fd* channel)
 {
     //从内核注册表上删除文件描述符
     epoll_ctl(epollFd_,EPOLL_CTL_DEL,channel->getFd(),epollEventList_.data());
@@ -71,7 +71,7 @@ void EpollPoller::fillActiveChannel(int num_ready, Poller::ChannelList& activeCh
 {
     for (auto i = epollEventList_.begin(); i!=epollEventList_.end(); ++i)
     {
-        channelMap_[i->data.fd]->serRetEvents(i->events);
+        channelMap_[i->data.fd]->setEvents(i->events);
         activeChannels.push_back(channelMap_[i->data.fd]);
         if (--num_ready <= 0)
         {

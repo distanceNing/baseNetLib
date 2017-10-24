@@ -5,7 +5,7 @@
 #ifndef BASE_NET_LIB_TCPSERVER_H
 #define BASE_NET_LIB_TCPSERVER_H
 #include "event_loop.h"
-#include "net_helper/tcp_socket.h"
+#include "timerfdandsockfd/socket_fd.h"
 
 class TcpServer {
 public:
@@ -19,13 +19,7 @@ public:
     void handleConnection(void *);
 
 
-    void serverStart()
-    {
-        serverChannel_=new  Channel(serverSock_.GetSocket(),handleConnection);
-        serverChannel_->setEvents(POLLIN);
-        serverLoop_.addNewChannel(serverChannel_);
-        serverLoop_.startLoop();
-    }
+    void serverStart();
 
     void serverStop()
     {
@@ -36,11 +30,10 @@ public:
         serverSock_.CloseSocket();
     }
 protected:
-    using ClientList=std::vector<TcpSocket>;
+    using ClientList=std::vector<SocketFd>;
 private:
     EventLoop serverLoop_;
-    TcpSocket serverSock_;
-    Channel* serverChannel_;
+    SocketFd serverSock_;
     ClientList clientList_;
 };
 

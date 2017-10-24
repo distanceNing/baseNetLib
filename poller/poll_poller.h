@@ -13,9 +13,10 @@
 #include <vector>
 #include <map>
 
-#include "../channel.h"
+#include "../timerfdandsockfd/Fd.h"
 #include "../common.h"
 #include "poller.h"
+#include "../timerfdandsockfd/time_stamp.h"
 
 class PollPoller:public Poller
 {
@@ -27,9 +28,9 @@ public:
 
     TimeStamp Poll(int time_out,ChannelList & activeChannel) override;
 
-    void addNewChannel(Channel * channel) override ;
+    void addNewChannel(Fd * channel) override ;
 
-    void removeChannel(Channel * channel) override;
+    void removeChannel(Fd * channel) override;
 
     ~PollPoller(){}
 

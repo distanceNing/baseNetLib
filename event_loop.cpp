@@ -18,7 +18,7 @@ void EventLoop::startLoop()
     }
 }
 
-void EventLoop::addNewChannel(Channel* channel)
+void EventLoop::addNewChannel(Fd* channel)
 {
     if (channel != NULL)
         poller_->addNewChannel(channel);

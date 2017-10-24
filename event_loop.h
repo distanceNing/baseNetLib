@@ -10,7 +10,7 @@
 
 #include <boost/scoped_ptr.hpp>
 
-#include "channel.h"
+#include "timerfdandsockfd/Fd.h"
 #include "poller/poll_poller.h"
 #include "poller/epoll_poller.h"
 const int kTimeOut = 10*1000;
@@ -45,9 +45,9 @@ public:
 
     void handleEvent();
 
-    void addNewChannel(Channel* channel);
+    void addNewChannel(Fd* channel);
 protected:
-    typedef std::vector<Channel*> ChannelList;
+    typedef std::vector<Fd*> ChannelList;
 private:
     bool isLooping_;
     const pid_t threadId_;

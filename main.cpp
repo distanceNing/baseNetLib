@@ -1,13 +1,15 @@
 #include "event_loop.h"
-#include "net_helper/tcp_socket.h"
+#include "timerfdandsockfd/socket_fd.h"
 #include "common.h"
-#include "timerfd/time_stamp.h"
+#include "timerfdandsockfd/time_stamp.h"
 #include "tcp_server.h"
+
 EventLoop* g_loop;
 
 
-void rcb(int listen_fd)
+void rcb(void* fd)
 {
+    int listen_fd = *static_cast<int*>(fd);
     int client_fd = -1;
     char connIP[32];
     socklen_t clilen;
@@ -27,18 +29,20 @@ int main()
 {
     TimeStamp::printTimeNow();
     //建立监听socket
-    //TcpSocket server_sock;
-    //server_sock.CreateSocket(AF_INET, SOCK_STREAM, kPort);
-    //server_sock.Listen();
-    //Channel channel(server_sock.GetSocket(), rcb);
+    SocketFd server_sock;
+    if(!server_sock.CreateSocket(kPort))
+    {
+        printErrorMsg("socket");
+    }
+    server_sock.Listen();
 
-    //channel.setEvents(POLLIN);
-    //EventLoop main_loop(EPOLL);
-    //main_loop.addNewChannel(&channel);
-    //g_loop = &main_loop;
-    //main_loop.startLoop();
-    TcpServer tcpServer(POLL,kPort);
-    tcpServer.serverStart();
+    EventLoop main_loop(POLL);
+    server_sock.setEvents(POLLIN);
+    server_sock.setReadCallBack(&rcb);
+    main_loop.addNewChannel(&server_sock);
+    g_loop = &main_loop;
+    main_loop.startLoop();
+
     TimeStamp::printTimeNow();
     return 0;
 }

@@ -6,9 +6,15 @@
 void TcpServer::handleConnection(void *)
 {
     char conn_ip[32];
-    UINT conn_port = 0;
-    TcpSocket client_sock;
+    unsigned conn_port = 0;
+    SocketFd client_sock;
     serverSock_.Accept(client_sock,conn_ip,conn_port);
     clientList_.push_back(client_sock);
     printf("connect IP: %s ------ Port: %d\n", conn_ip, conn_port);
+}
+
+void TcpServer::serverStart()
+{
+    serverLoop_.addNewChannel(&serverSock_);
+    serverLoop_.startLoop();
 }
