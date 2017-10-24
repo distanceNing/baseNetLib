@@ -27,7 +27,7 @@ TcpSocket::~TcpSocket()
 #endif
 }
 
-bool TcpSocket::CreateSocket(int af, int type, int prot)
+bool TcpSocket::CreateSocket( int prot,int af, int type)
 {
     sock = socket(af, type, 0);
     if (sock==SOCKET_ERROR)

@@ -2,14 +2,9 @@
 #include "net_helper/tcp_socket.h"
 #include "common.h"
 #include "timerfd/time_stamp.h"
-#include "timerfd/timer.h"
+#include "tcp_server.h"
+EventLoop* g_loop;
 
-void timeRCB(int fd)
-{
-    int64_t error;
-    size_t size = read(fd, &error, sizeof(error));
-    printf("readable  size is : %lu\n", size);
-}
 
 void rcb(int listen_fd)
 {
@@ -25,6 +20,7 @@ void rcb(int listen_fd)
     memset(connIP, '\0', 32);
     strcpy(connIP, inet_ntoa(client_addr.sin_addr));
     printf("connect IP: %s ------ Port: %d\n", connIP, ntohs(client_addr.sin_port));
+    g_loop->quitLoop();
 }
 
 int main()
@@ -34,29 +30,15 @@ int main()
     //TcpSocket server_sock;
     //server_sock.CreateSocket(AF_INET, SOCK_STREAM, kPort);
     //server_sock.Listen();
-    Timer timer;
-    timer.createTimer();
-    timer.setTime(4, 4);
-
-    uint64_t error = 0;
-    for (int i = 0; i < 10; ++i)
-    {
-        ssize_t read_size = read(timer.getTimerFd(), &error, sizeof(uint64_t));
-        if (read_size != sizeof(uint64_t)) {
-             perror("read error");
-        }
-        TimeStamp::printTimeNow();
-    }
     //Channel channel(server_sock.GetSocket(), rcb);
-    //channel.setEvent(POLLIN);
-    //Channel channel(timer.getTimerFd(),timeRCB);
-    //EventLoop main_loop;
+
+    //channel.setEvents(POLLIN);
+    //EventLoop main_loop(EPOLL);
     //main_loop.addNewChannel(&channel);
+    //g_loop = &main_loop;
     //main_loop.startLoop();
-
-
-
-
-
+    TcpServer tcpServer(POLL,kPort);
+    tcpServer.serverStart();
+    TimeStamp::printTimeNow();
     return 0;
 }

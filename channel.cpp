@@ -4,22 +4,19 @@
 #include <poll.h>
 #include <iostream>
 
-
-
-
 void Channel::handleEvent()
 {
-    if(revents_&POLLIN)
+    if (revents_ & POLLIN)
     {
-        std::cout<<"fd "<<fd_<<"  is readable ---"<<std::endl;
-        readCallBack_(fd_);
+        std::cout << "fd " << fd_ << "  is readable ---" << std::endl;
+        readCallBack_(static_cast<void*>(&fd_));
     }
-    if(revents_&POLLOUT)
+    if (revents_ & POLLOUT)
     {
-        writeCallBack_(fd_);
+        writeCallBack_(static_cast<void*>(&fd_));
     }
-    if(revents_&POLLERR)
+    if (revents_ & POLLERR)
     {
-        errorCallBack_(fd_);
+        errorCallBack_(static_cast<void*>(&fd_));
     }
 }

@@ -13,6 +13,10 @@ set(SOURCE_FILES
         poller/poll_poller.h
         net_helper/tcp_socket.cpp
         net_helper/tcp_socket.h
-        timerfd/timer.h common.cpp common.h poller/poller.cpp poller/poller.h poller/epoll_poller.cpp poller/epoll_poller.h timerfd/time_stamp.cpp timerfd/time_stamp.h timerfd/timer.cpp)
+        timerfd/timer.h common.cpp common.h poller/poller.cpp
+        poller/poller.h poller/epoll_poller.cpp poller/epoll_poller.h
+        timerfd/time_stamp.cpp timerfd/time_stamp.h timerfd/timer.cpp
+        tcp_server.h tcp_server.cpp
+        )
 
-add_executable(poller ${SOURCE_FILES})
+add_executable(base_net_lib ${SOURCE_FILES})

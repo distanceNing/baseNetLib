@@ -12,7 +12,8 @@ void EventLoop::startLoop()
         if (!activeChannels_.empty())
             activeChannels_.clear();
 
-        poller_->Poll(kTimeOut, activeChannels_);
+        TimeStamp time=poller_->Poll(kTimeOut, activeChannels_);
+        time.printTime();
         handleEvent();
     }
 }

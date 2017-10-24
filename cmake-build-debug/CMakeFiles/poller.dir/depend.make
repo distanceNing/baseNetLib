@@ -11,6 +11,7 @@ CMakeFiles/poller.dir/event_loop.cpp.o: ../channel.h
 CMakeFiles/poller.dir/event_loop.cpp.o: ../common.h
 CMakeFiles/poller.dir/event_loop.cpp.o: ../event_loop.cpp
 CMakeFiles/poller.dir/event_loop.cpp.o: ../event_loop.h
+CMakeFiles/poller.dir/event_loop.cpp.o: ../poller/epoll_poller.h
 CMakeFiles/poller.dir/event_loop.cpp.o: ../poller/poll_poller.h
 CMakeFiles/poller.dir/event_loop.cpp.o: ../poller/poller.h
 CMakeFiles/poller.dir/event_loop.cpp.o: ../timerfd/time_stamp.h
@@ -20,6 +21,7 @@ CMakeFiles/poller.dir/main.cpp.o: ../common.h
 CMakeFiles/poller.dir/main.cpp.o: ../event_loop.h
 CMakeFiles/poller.dir/main.cpp.o: ../main.cpp
 CMakeFiles/poller.dir/main.cpp.o: ../net_helper/tcp_socket.h
+CMakeFiles/poller.dir/main.cpp.o: ../poller/epoll_poller.h
 CMakeFiles/poller.dir/main.cpp.o: ../poller/poll_poller.h
 CMakeFiles/poller.dir/main.cpp.o: ../poller/poller.h
 CMakeFiles/poller.dir/main.cpp.o: ../timerfd/time_stamp.h

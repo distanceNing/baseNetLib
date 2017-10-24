@@ -29,7 +29,7 @@ public:
 
     TcpSocket();
     ~TcpSocket();
-    bool CreateSocket(int af = AF_INET, int type = SOCK_STREAM, int prot = 0);
+    bool CreateSocket(int prot = 0,int af = AF_INET, int type = SOCK_STREAM);
     int Receive(void* buffer, int bufLen);
     bool Listen(int backlog = 5);
     bool Accept(TcpSocket& client_sock, char* fromIP, UINT& fromPort);

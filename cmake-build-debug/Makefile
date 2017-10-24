@@ -56,17 +56,6 @@ CMAKE_BINARY_DIR = /mnt/hgfs/shared/unpTest/base_net_lib/cmake-build-debug
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/home/yangning/桌面/clion-2017.1.3/bin/cmake/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
-.PHONY : edit_cache
-
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
-
-.PHONY : edit_cache/fast
-
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -77,6 +66,17 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
+
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
+	/home/yangning/桌面/clion-2017.1.3/bin/cmake/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+.PHONY : edit_cache
+
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
+
+.PHONY : edit_cache/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -111,17 +111,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named poller
+# Target rules for targets named base_net_lib
 
 # Build rule for target.
-poller: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 poller
-.PHONY : poller
+base_net_lib: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 base_net_lib
+.PHONY : base_net_lib
 
 # fast build rule for target.
-poller/fast:
-	$(MAKE) -f CMakeFiles/poller.dir/build.make CMakeFiles/poller.dir/build
-.PHONY : poller/fast
+base_net_lib/fast:
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/build
+.PHONY : base_net_lib/fast
 
 channel.o: channel.cpp.o
 
@@ -129,7 +129,7 @@ channel.o: channel.cpp.o
 
 # target to build an object file
 channel.cpp.o:
-	$(MAKE) -f CMakeFiles/poller.dir/build.make CMakeFiles/poller.dir/channel.cpp.o
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/channel.cpp.o
 .PHONY : channel.cpp.o
 
 channel.i: channel.cpp.i
@@ -138,7 +138,7 @@ channel.i: channel.cpp.i
 
 # target to preprocess a source file
 channel.cpp.i:
-	$(MAKE) -f CMakeFiles/poller.dir/build.make CMakeFiles/poller.dir/channel.cpp.i
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/channel.cpp.i
 .PHONY : channel.cpp.i
 
 channel.s: channel.cpp.s
@@ -147,7 +147,7 @@ channel.s: channel.cpp.s
 
 # target to generate assembly for a file
 channel.cpp.s:
-	$(MAKE) -f CMakeFiles/poller.dir/build.make CMakeFiles/poller.dir/channel.cpp.s
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/channel.cpp.s
 .PHONY : channel.cpp.s
 
 common.o: common.cpp.o
@@ -156,7 +156,7 @@ common.o: common.cpp.o
 
 # target to build an object file
 common.cpp.o:
-	$(MAKE) -f CMakeFiles/poller.dir/build.make CMakeFiles/poller.dir/common.cpp.o
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/common.cpp.o
 .PHONY : common.cpp.o
 
 common.i: common.cpp.i
@@ -165,7 +165,7 @@ common.i: common.cpp.i
 
 # target to preprocess a source file
 common.cpp.i:
-	$(MAKE) -f CMakeFiles/poller.dir/build.make CMakeFiles/poller.dir/common.cpp.i
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/common.cpp.i
 .PHONY : common.cpp.i
 
 common.s: common.cpp.s
@@ -174,7 +174,7 @@ common.s: common.cpp.s
 
 # target to generate assembly for a file
 common.cpp.s:
-	$(MAKE) -f CMakeFiles/poller.dir/build.make CMakeFiles/poller.dir/common.cpp.s
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/common.cpp.s
 .PHONY : common.cpp.s
 
 event_loop.o: event_loop.cpp.o
@@ -183,7 +183,7 @@ event_loop.o: event_loop.cpp.o
 
 # target to build an object file
 event_loop.cpp.o:
-	$(MAKE) -f CMakeFiles/poller.dir/build.make CMakeFiles/poller.dir/event_loop.cpp.o
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/event_loop.cpp.o
 .PHONY : event_loop.cpp.o
 
 event_loop.i: event_loop.cpp.i
@@ -192,7 +192,7 @@ event_loop.i: event_loop.cpp.i
 
 # target to preprocess a source file
 event_loop.cpp.i:
-	$(MAKE) -f CMakeFiles/poller.dir/build.make CMakeFiles/poller.dir/event_loop.cpp.i
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/event_loop.cpp.i
 .PHONY : event_loop.cpp.i
 
 event_loop.s: event_loop.cpp.s
@@ -201,7 +201,7 @@ event_loop.s: event_loop.cpp.s
 
 # target to generate assembly for a file
 event_loop.cpp.s:
-	$(MAKE) -f CMakeFiles/poller.dir/build.make CMakeFiles/poller.dir/event_loop.cpp.s
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/event_loop.cpp.s
 .PHONY : event_loop.cpp.s
 
 main.o: main.cpp.o
@@ -210,7 +210,7 @@ main.o: main.cpp.o
 
 # target to build an object file
 main.cpp.o:
-	$(MAKE) -f CMakeFiles/poller.dir/build.make CMakeFiles/poller.dir/main.cpp.o
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/main.cpp.o
 .PHONY : main.cpp.o
 
 main.i: main.cpp.i
@@ -219,7 +219,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	$(MAKE) -f CMakeFiles/poller.dir/build.make CMakeFiles/poller.dir/main.cpp.i
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -228,7 +228,7 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	$(MAKE) -f CMakeFiles/poller.dir/build.make CMakeFiles/poller.dir/main.cpp.s
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/main.cpp.s
 .PHONY : main.cpp.s
 
 net_helper/tcp_socket.o: net_helper/tcp_socket.cpp.o
@@ -237,7 +237,7 @@ net_helper/tcp_socket.o: net_helper/tcp_socket.cpp.o
 
 # target to build an object file
 net_helper/tcp_socket.cpp.o:
-	$(MAKE) -f CMakeFiles/poller.dir/build.make CMakeFiles/poller.dir/net_helper/tcp_socket.cpp.o
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/net_helper/tcp_socket.cpp.o
 .PHONY : net_helper/tcp_socket.cpp.o
 
 net_helper/tcp_socket.i: net_helper/tcp_socket.cpp.i
@@ -246,7 +246,7 @@ net_helper/tcp_socket.i: net_helper/tcp_socket.cpp.i
 
 # target to preprocess a source file
 net_helper/tcp_socket.cpp.i:
-	$(MAKE) -f CMakeFiles/poller.dir/build.make CMakeFiles/poller.dir/net_helper/tcp_socket.cpp.i
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/net_helper/tcp_socket.cpp.i
 .PHONY : net_helper/tcp_socket.cpp.i
 
 net_helper/tcp_socket.s: net_helper/tcp_socket.cpp.s
@@ -255,7 +255,7 @@ net_helper/tcp_socket.s: net_helper/tcp_socket.cpp.s
 
 # target to generate assembly for a file
 net_helper/tcp_socket.cpp.s:
-	$(MAKE) -f CMakeFiles/poller.dir/build.make CMakeFiles/poller.dir/net_helper/tcp_socket.cpp.s
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/net_helper/tcp_socket.cpp.s
 .PHONY : net_helper/tcp_socket.cpp.s
 
 poller/epoll_poller.o: poller/epoll_poller.cpp.o
@@ -264,7 +264,7 @@ poller/epoll_poller.o: poller/epoll_poller.cpp.o
 
 # target to build an object file
 poller/epoll_poller.cpp.o:
-	$(MAKE) -f CMakeFiles/poller.dir/build.make CMakeFiles/poller.dir/poller/epoll_poller.cpp.o
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/poller/epoll_poller.cpp.o
 .PHONY : poller/epoll_poller.cpp.o
 
 poller/epoll_poller.i: poller/epoll_poller.cpp.i
@@ -273,7 +273,7 @@ poller/epoll_poller.i: poller/epoll_poller.cpp.i
 
 # target to preprocess a source file
 poller/epoll_poller.cpp.i:
-	$(MAKE) -f CMakeFiles/poller.dir/build.make CMakeFiles/poller.dir/poller/epoll_poller.cpp.i
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/poller/epoll_poller.cpp.i
 .PHONY : poller/epoll_poller.cpp.i
 
 poller/epoll_poller.s: poller/epoll_poller.cpp.s
@@ -282,7 +282,7 @@ poller/epoll_poller.s: poller/epoll_poller.cpp.s
 
 # target to generate assembly for a file
 poller/epoll_poller.cpp.s:
-	$(MAKE) -f CMakeFiles/poller.dir/build.make CMakeFiles/poller.dir/poller/epoll_poller.cpp.s
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/poller/epoll_poller.cpp.s
 .PHONY : poller/epoll_poller.cpp.s
 
 poller/poll_poller.o: poller/poll_poller.cpp.o
@@ -291,7 +291,7 @@ poller/poll_poller.o: poller/poll_poller.cpp.o
 
 # target to build an object file
 poller/poll_poller.cpp.o:
-	$(MAKE) -f CMakeFiles/poller.dir/build.make CMakeFiles/poller.dir/poller/poll_poller.cpp.o
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/poller/poll_poller.cpp.o
 .PHONY : poller/poll_poller.cpp.o
 
 poller/poll_poller.i: poller/poll_poller.cpp.i
@@ -300,7 +300,7 @@ poller/poll_poller.i: poller/poll_poller.cpp.i
 
 # target to preprocess a source file
 poller/poll_poller.cpp.i:
-	$(MAKE) -f CMakeFiles/poller.dir/build.make CMakeFiles/poller.dir/poller/poll_poller.cpp.i
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/poller/poll_poller.cpp.i
 .PHONY : poller/poll_poller.cpp.i
 
 poller/poll_poller.s: poller/poll_poller.cpp.s
@@ -309,7 +309,7 @@ poller/poll_poller.s: poller/poll_poller.cpp.s
 
 # target to generate assembly for a file
 poller/poll_poller.cpp.s:
-	$(MAKE) -f CMakeFiles/poller.dir/build.make CMakeFiles/poller.dir/poller/poll_poller.cpp.s
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/poller/poll_poller.cpp.s
 .PHONY : poller/poll_poller.cpp.s
 
 poller/poller.o: poller/poller.cpp.o
@@ -318,7 +318,7 @@ poller/poller.o: poller/poller.cpp.o
 
 # target to build an object file
 poller/poller.cpp.o:
-	$(MAKE) -f CMakeFiles/poller.dir/build.make CMakeFiles/poller.dir/poller/poller.cpp.o
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/poller/poller.cpp.o
 .PHONY : poller/poller.cpp.o
 
 poller/poller.i: poller/poller.cpp.i
@@ -327,7 +327,7 @@ poller/poller.i: poller/poller.cpp.i
 
 # target to preprocess a source file
 poller/poller.cpp.i:
-	$(MAKE) -f CMakeFiles/poller.dir/build.make CMakeFiles/poller.dir/poller/poller.cpp.i
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/poller/poller.cpp.i
 .PHONY : poller/poller.cpp.i
 
 poller/poller.s: poller/poller.cpp.s
@@ -336,8 +336,35 @@ poller/poller.s: poller/poller.cpp.s
 
 # target to generate assembly for a file
 poller/poller.cpp.s:
-	$(MAKE) -f CMakeFiles/poller.dir/build.make CMakeFiles/poller.dir/poller/poller.cpp.s
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/poller/poller.cpp.s
 .PHONY : poller/poller.cpp.s
+
+tcp_server.o: tcp_server.cpp.o
+
+.PHONY : tcp_server.o
+
+# target to build an object file
+tcp_server.cpp.o:
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/tcp_server.cpp.o
+.PHONY : tcp_server.cpp.o
+
+tcp_server.i: tcp_server.cpp.i
+
+.PHONY : tcp_server.i
+
+# target to preprocess a source file
+tcp_server.cpp.i:
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/tcp_server.cpp.i
+.PHONY : tcp_server.cpp.i
+
+tcp_server.s: tcp_server.cpp.s
+
+.PHONY : tcp_server.s
+
+# target to generate assembly for a file
+tcp_server.cpp.s:
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/tcp_server.cpp.s
+.PHONY : tcp_server.cpp.s
 
 timerfd/time_stamp.o: timerfd/time_stamp.cpp.o
 
@@ -345,7 +372,7 @@ timerfd/time_stamp.o: timerfd/time_stamp.cpp.o
 
 # target to build an object file
 timerfd/time_stamp.cpp.o:
-	$(MAKE) -f CMakeFiles/poller.dir/build.make CMakeFiles/poller.dir/timerfd/time_stamp.cpp.o
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/timerfd/time_stamp.cpp.o
 .PHONY : timerfd/time_stamp.cpp.o
 
 timerfd/time_stamp.i: timerfd/time_stamp.cpp.i
@@ -354,7 +381,7 @@ timerfd/time_stamp.i: timerfd/time_stamp.cpp.i
 
 # target to preprocess a source file
 timerfd/time_stamp.cpp.i:
-	$(MAKE) -f CMakeFiles/poller.dir/build.make CMakeFiles/poller.dir/timerfd/time_stamp.cpp.i
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/timerfd/time_stamp.cpp.i
 .PHONY : timerfd/time_stamp.cpp.i
 
 timerfd/time_stamp.s: timerfd/time_stamp.cpp.s
@@ -363,7 +390,7 @@ timerfd/time_stamp.s: timerfd/time_stamp.cpp.s
 
 # target to generate assembly for a file
 timerfd/time_stamp.cpp.s:
-	$(MAKE) -f CMakeFiles/poller.dir/build.make CMakeFiles/poller.dir/timerfd/time_stamp.cpp.s
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/timerfd/time_stamp.cpp.s
 .PHONY : timerfd/time_stamp.cpp.s
 
 timerfd/timer.o: timerfd/timer.cpp.o
@@ -372,7 +399,7 @@ timerfd/timer.o: timerfd/timer.cpp.o
 
 # target to build an object file
 timerfd/timer.cpp.o:
-	$(MAKE) -f CMakeFiles/poller.dir/build.make CMakeFiles/poller.dir/timerfd/timer.cpp.o
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/timerfd/timer.cpp.o
 .PHONY : timerfd/timer.cpp.o
 
 timerfd/timer.i: timerfd/timer.cpp.i
@@ -381,7 +408,7 @@ timerfd/timer.i: timerfd/timer.cpp.i
 
 # target to preprocess a source file
 timerfd/timer.cpp.i:
-	$(MAKE) -f CMakeFiles/poller.dir/build.make CMakeFiles/poller.dir/timerfd/timer.cpp.i
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/timerfd/timer.cpp.i
 .PHONY : timerfd/timer.cpp.i
 
 timerfd/timer.s: timerfd/timer.cpp.s
@@ -390,7 +417,7 @@ timerfd/timer.s: timerfd/timer.cpp.s
 
 # target to generate assembly for a file
 timerfd/timer.cpp.s:
-	$(MAKE) -f CMakeFiles/poller.dir/build.make CMakeFiles/poller.dir/timerfd/timer.cpp.s
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/timerfd/timer.cpp.s
 .PHONY : timerfd/timer.cpp.s
 
 # Help Target
@@ -399,9 +426,9 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... poller"
+	@echo "... edit_cache"
+	@echo "... base_net_lib"
 	@echo "... channel.o"
 	@echo "... channel.i"
 	@echo "... channel.s"
@@ -426,6 +453,9 @@ help:
 	@echo "... poller/poller.o"
 	@echo "... poller/poller.i"
 	@echo "... poller/poller.s"
+	@echo "... tcp_server.o"
+	@echo "... tcp_server.i"
+	@echo "... tcp_server.s"
 	@echo "... timerfd/time_stamp.o"
 	@echo "... timerfd/time_stamp.i"
 	@echo "... timerfd/time_stamp.s"

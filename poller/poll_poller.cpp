@@ -9,7 +9,7 @@ TimeStamp PollPoller::Poll(int time_out, ChannelList& activeChannels)
     std::cout << "Poll Array Size " << pollfdList_.size() << std::endl;
 
     num_ready = ::poll(pollfdList_.data(), pollfdList_.size(), time_out);
-
+    TimeStamp timeStamp = TimeStamp();
     if (num_ready > 0)
     {
         std::cout << "Ready Event Num " << num_ready << std::endl;
@@ -26,7 +26,7 @@ TimeStamp PollPoller::Poll(int time_out, ChannelList& activeChannels)
             perror("Poll Error");
         }
     }
-    return TimeStamp();
+    return timeStamp;
 }
 
 void PollPoller::fillActiveChannel(int num_ready, ChannelList& activeChannels)
@@ -73,6 +73,3 @@ void PollPoller::removeChannel(Channel* channel)
         }
     }
 }
-
-
-

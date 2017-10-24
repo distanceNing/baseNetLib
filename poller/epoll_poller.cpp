@@ -15,7 +15,8 @@ EpollPoller::EpollPoller():epollEventList_(kInitEpollEventSize),epollFd_(epoll_c
 
 TimeStamp EpollPoller::Poll(int time_out, Poller::ChannelList& activeChannels)
 {
-    int num_ready=epoll_wait(epollFd_,epollEventList_.data(), static_cast<int>(epollEventList_.size()),time_out);
+    int num_ready=epoll_wait(epollFd_,epollEventList_.data(), static_cast<unsigned  long>(epollEventList_.size()),time_out);
+    TimeStamp timeStamp=TimeStamp();
     if (num_ready > 0)
     {
         std::cout << "Ready Event Num " << num_ready << std::endl;
@@ -38,13 +39,16 @@ TimeStamp EpollPoller::Poll(int time_out, Poller::ChannelList& activeChannels)
             printErrorMsg("Epoll Error");
         }
     }
-    return TimeStamp();
+    return timeStamp;
 }
 
 void EpollPoller::addNewChannel(Channel* channel)
 {
+    struct epoll_event event;
     setFdNonBlocking(channel->getFd());
-    epoll_ctl(epollFd_,EPOLL_CTL_ADD,channel->getFd(),epollEventList_.data());
+    event.data.fd = channel->getFd();
+    event.events = EPOLLIN | EPOLLET;
+    epoll_ctl(epollFd_,EPOLL_CTL_ADD,channel->getFd(),&event);
     channelMap_.insert(std::make_pair(channel->getFd(), channel));
 }
 

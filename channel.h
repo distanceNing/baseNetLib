@@ -2,7 +2,7 @@
 #define _CHANELL_H_
 #include <boost/utility.hpp>
 
-typedef void (* EventCallBack)(int fd);
+typedef void (* EventCallBack)(void *);
 
 class Channel : boost::noncopyable {
 
@@ -29,15 +29,11 @@ public:
         errorCallBack_ = call_back;
     }
 
-    void setEvent(int events)
+    void setEvents(int events)
     {
         events_ = events;
     }
 
-    void serRetEvents(int revents)
-    {
-        revents_ = revents;
-    }
 
     short getEvents() const
     {
