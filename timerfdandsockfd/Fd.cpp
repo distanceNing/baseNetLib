@@ -4,11 +4,7 @@
 
 #include <zconf.h>
 #include "Fd.h"
-void Fd::setReadCallBack(Fd::EventCallBack call_back,void* arg)
-{
-    readCallBack_ = call_back;
-    callBackArg_=arg;
-}
+
 void Fd::setErrorCallBack(Fd::EventCallBack call_back)
 {
     errorCallBack_ = call_back;
@@ -37,4 +33,9 @@ void Fd::closeFd()
 {
     close(fd_);
 
+}
+void Fd::setReadCallBack(Fd::EventCallBack call_back, void* arg)
+{
+    readCallBack_ = call_back;
+    callBackArg_=arg;
 }

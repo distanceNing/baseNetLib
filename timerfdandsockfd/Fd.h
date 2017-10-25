@@ -10,7 +10,7 @@
 class Fd{
 
 public:
-    Fd() { }
+    Fd():fd_(-1),events_(-1),revents_(-1) { }
 
     typedef void (* EventCallBack)(void *);
 
@@ -24,11 +24,17 @@ public:
 
     void setRetEvents(int ret_events);
 
+    void resetFd(int fd)
+    {
+        fd_ =fd;
+    }
+
     short getEvents() const;
 
     int getFd() const;
 
     void closeFd();
+
     virtual void handleEvent() = 0;
 
     virtual ~Fd() { }

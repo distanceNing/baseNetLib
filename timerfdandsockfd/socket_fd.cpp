@@ -28,15 +28,16 @@ ssize_t SocketFd::Receive(void* buffer, size_t buf_len)
     return recv(fd_, static_cast<char*>(buffer), buf_len, 0);
 }
 
-bool SocketFd::Accept(SocketFd& clientSock, char* fromIP, UINT& fromPort)
+int SocketFd::Accept( char* fromIP, UINT& fromPort)
 {
     sockaddr_in from = {AF_INET};
     socklen_t len = sizeof(from);
-    if((clientSock.fd_ = accept(fd_, (sockaddr*) &from, &len)) < 0 )
-        return false;
+    int clientSock = -1;
+    if((clientSock = accept(fd_, (sockaddr*) &from, &len)) < 0 )
+        return clientSock;
     strcpy(fromIP, inet_ntoa(from.sin_addr));
     fromPort = htons(from.sin_port);
-    return true;
+    return clientSock;
 }
 
 ssize_t SocketFd::Send(void* message, size_t buf_len)
@@ -86,9 +87,11 @@ void SocketFd::handleEvent()
 
 }
 
-
 SocketFd::~SocketFd()
 {
     close(fd_);
 }
+
+
+
 

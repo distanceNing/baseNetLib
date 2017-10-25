@@ -12,32 +12,32 @@
 #include "timerfdandsockfd/time_stamp.h"
 #include "tcp_server.h"
 
-void connectionRCB(void* arg)
+void rcb(void* arg)
 {
-    auto socketFd = static_cast<SocketFd*>(arg);
+    auto socketFd = *static_cast<SocketFd*>(arg);
     char buffer[MAX_BUF_SIZE] = {'\0'};
 
-    ssize_t size = socketFd->Receive(buffer, MAX_BUF_SIZE);
+    ssize_t size = socketFd.Receive(buffer, MAX_BUF_SIZE);
 
-    if (size < 0)
-    {
+    if (size < 0) {
         printErrorMsg("Receive");
     }
     else if (size == 0) {
-        printf("Sockfd %d is close ---- \n", socketFd->getFd());
+        printf("Sockfd %d is close ---- \n", socketFd.getFd());
         return;
     }
     else
     {
-        socketFd->Send(buffer,size);
+        socketFd.Send(buffer,size);
     }
+
 }
 
 int main()
 {
     TimeStamp::printTimeNow();
 
-    TcpServer tcpServer(POLL, kPort, connectionRCB);
+    TcpServer tcpServer(POLL, kPort, rcb);
     tcpServer.serverStart();
 
     TimeStamp::printTimeNow();

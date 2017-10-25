@@ -11,9 +11,8 @@
 class Poller {
 
 protected:
-
-    typedef std::map<int,Fd*> ChannelMap;
     typedef std::vector<Fd*> ChannelList;
+    typedef std::map<int,Fd*> ChannelMap;
 
 public:
 

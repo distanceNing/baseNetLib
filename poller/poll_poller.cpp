@@ -35,8 +35,9 @@ void PollPoller::fillActiveChannel(int num_ready, ChannelList& activeChannels)
     {
         if (i->revents>0)
         {
-            channelMap_[i->fd]->setRetEvents(i->revents);
-            activeChannels.push_back(channelMap_[i->fd]);
+            Fd* active_fd=channelMap_[i->fd];
+            active_fd->setRetEvents(i->revents);
+            activeChannels.push_back(active_fd);
             if (--num_ready <= 0)
             {
                 break;
@@ -51,7 +52,8 @@ void PollPoller::addNewChannel(Fd* channel)
     temp.fd = channel->getFd();
     temp.events = channel->getEvents();
     pollfdList_.push_back(temp);
-    channelMap_.insert(std::make_pair(channel->getFd(), channel));
+    auto new_channel=std::make_pair(channel->getFd(),channel);
+    channelMap_.insert(new_channel);
 }
 
 void PollPoller::removeChannel(Fd* channel)
@@ -64,12 +66,6 @@ void PollPoller::removeChannel(Fd* channel)
             break;
         }
     }
-    for (ChannelMap::const_iterator i; i!=channelMap_.end(); ++i)
-    {
-        if (i->first==channel->getFd())
-        {
-            channelMap_.erase(i);
-            break;
-        }
-    }
+    auto ite= channelMap_.find(channel->getFd());
+    channelMap_.erase(ite);
 }

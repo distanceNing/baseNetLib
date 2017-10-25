@@ -29,7 +29,7 @@ public:
 
     void Listen(int backlog = 5);
 
-    bool Accept(SocketFd& client_sock, char* fromIP, UINT& fromPort);
+    int Accept( char* fromIP, UINT& fromPort);
 
     ssize_t Send(void* message, size_t bufLen);
 

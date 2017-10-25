@@ -16,23 +16,29 @@ void TcpServer::handleConnection()
 {
     char conn_ip[32];
     unsigned conn_port = 0;
-    SocketFd client_sock;
-    serverSock_.Accept(client_sock,conn_ip,conn_port);
+    int client_fd = -1;
+    if((client_fd=serverSock_.Accept(conn_ip,conn_port)) < 0)
+    {
+        printErrorMsg("Accept");
+    }
     printf("connect IP: %s ------ Port: %d\n", conn_ip, conn_port);
 
     //将新连接的客户端加入clientList
-    clientList_.push_back(client_sock);
+    clientList_.push_back(SocketFd());
+    //设置关注事件和事件回调
+    auto clientFd=&clientList_[clientList_.size() -1];
+    clientFd->resetFd(client_fd);
+    clientFd->setReadCallBack(clientCallBack_,clientFd);
+    clientFd->setEvents(POLLIN);
 
     //再加入到pollList中,处理client发生的事件
-    client_sock.setReadCallBack(clientCallBack_,&client_sock);
-    client_sock.setEvents(POLLIN);
-    serverLoop_.addNewChannel(&client_sock);
+    serverLoop_.addNewChannel(clientFd);
 }
 
 void TcpServer::serverStart()
 {
     serverSock_.setEvents(POLLIN);
-    serverSock_.setReadCallBack(connectionCallBack,this);
+    serverSock_.setReadCallBack(connectionCallBack, this);
     serverLoop_.addNewChannel(&serverSock_);
     serverLoop_.startLoop();
 }
