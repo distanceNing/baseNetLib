@@ -8,6 +8,7 @@
 #include "../timerfdandsockfd/time_stamp.h"
 #include <sys/epoll.h>
 #include <vector>
+
 class EpollPoller: public Poller
 {
 public:
@@ -22,9 +23,12 @@ public:
 
     ~EpollPoller(){}
 protected:
+
+    const uint32_t kEPOLL_MODE= 1 ;
+
     using EpollEventList=std::vector<struct epoll_event> ;
 private:
-    const int kInitEpollEventSize = 16;
+    const unsigned long kInitEpollEventSize = 16;
 
     void fillActiveChannel(int num_ready,ChannelList &activeChannel);
 

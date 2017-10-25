@@ -18,7 +18,7 @@ bool setFdNonBlocking(int fd)
     int flag = fcntl(fd,F_SETFL,O_NONBLOCK);
     if(flag == -1)
     {
-       printErrorMsg("setFdNonBlocking");
+        printErrorMsg("setFdNonBlocking");
     }
     return true;
 }

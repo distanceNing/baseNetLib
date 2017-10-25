@@ -17,6 +17,11 @@ set(SOURCE_FILES
         poller/poller.h poller/epoll_poller.cpp poller/epoll_poller.h
         timerfdandsockfd/time_stamp.cpp timerfdandsockfd/time_stamp.h timerfdandsockfd/timer_fd.cpp
         tcp_server.h tcp_server.cpp
+        thread/Thread.cpp
+        thread/Thread.h
+        thread/thread_pool.cpp
+        thread/thread_pool.h
         )
+link_libraries(pthread)
 
 add_executable(base_net_lib ${SOURCE_FILES})

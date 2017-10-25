@@ -37,7 +37,5 @@ public:
 
     bool Connect(const char* conIP,const  UINT conPort);
 
-    bool CloseSocket();
-
 };
 #endif //_BASE_NET_LIB_SOCKET_FD_H_

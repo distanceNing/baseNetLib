@@ -32,7 +32,8 @@ bool SocketFd::Accept(SocketFd& clientSock, char* fromIP, UINT& fromPort)
 {
     sockaddr_in from = {AF_INET};
     socklen_t len = sizeof(from);
-    clientSock.fd_ = accept(fd_, (sockaddr*) &from, &len);
+    if((clientSock.fd_ = accept(fd_, (sockaddr*) &from, &len)) < 0 )
+        return false;
     strcpy(fromIP, inet_ntoa(from.sin_addr));
     fromPort = htons(from.sin_port);
     return true;
@@ -72,24 +73,19 @@ void SocketFd::handleEvent()
     if (revents_ & POLLIN)
     {
         std::cout << "fd " << fd_ << "  is readable ---" << std::endl;
-        readCallBack_(static_cast<void*>(&fd_));
+        readCallBack_(callBackArg_);
     }
     if (revents_ & POLLOUT)
     {
-        writeCallBack_(static_cast<void*>(&fd_));
+        writeCallBack_(static_cast<void*>(this));
     }
     if (revents_ & POLLERR)
     {
-        errorCallBack_(static_cast<void*>(&fd_));
+        errorCallBack_(static_cast<void*>(this));
     }
 
 }
 
-bool SocketFd::CloseSocket()
-{
-    close(fd_);
-    return true;
-}
 
 SocketFd::~SocketFd()
 {

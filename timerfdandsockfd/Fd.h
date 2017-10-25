@@ -8,14 +8,15 @@
 #include <poll.h>
 
 class Fd{
-protected:
-    typedef void (* EventCallBack)(void *);
+
 public:
     Fd() { }
 
+    typedef void (* EventCallBack)(void *);
+
     void setWriteCallBack(EventCallBack call_back);
 
-    void setReadCallBack(EventCallBack call_back);
+    void setReadCallBack(EventCallBack call_back,void* arg);
 
     void setErrorCallBack(EventCallBack call_back);
 
@@ -27,6 +28,7 @@ public:
 
     int getFd() const;
 
+    void closeFd();
     virtual void handleEvent() = 0;
 
     virtual ~Fd() { }
@@ -35,6 +37,7 @@ protected:
     int fd_;
     short events_;
     short revents_;
+    void* callBackArg_;
     EventCallBack writeCallBack_;
     EventCallBack readCallBack_;
     EventCallBack errorCallBack_;

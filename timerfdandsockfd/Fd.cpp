@@ -2,10 +2,12 @@
 // Created by yangning on 17-10-24.
 //
 
+#include <zconf.h>
 #include "Fd.h"
-void Fd::setReadCallBack(Fd::EventCallBack call_back)
+void Fd::setReadCallBack(Fd::EventCallBack call_back,void* arg)
 {
     readCallBack_ = call_back;
+    callBackArg_=arg;
 }
 void Fd::setErrorCallBack(Fd::EventCallBack call_back)
 {
@@ -30,4 +32,9 @@ int Fd::getFd() const
 void Fd::setRetEvents(int ret_events)
 {
     revents_ = ret_events;
+}
+void Fd::closeFd()
+{
+    close(fd_);
+
 }

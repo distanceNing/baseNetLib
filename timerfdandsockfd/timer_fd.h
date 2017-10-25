@@ -1,20 +1,20 @@
-#ifndef _BASE_NET_LIB_TIMER_H_
-#define _BASE_NET_LIB_TIMER_H_
+#ifndef _BASE_NET_LIB_TIMERFD_H_
+#define _BASE_NET_LIB_TIMERFD_H_
 
 #include "Fd.h"
 #include <sys/timerfd.h>
 #include <zconf.h>
 
-class Timer:public Fd
+class TimerFd:public Fd
 {
 public:
-    Timer();
+    TimerFd();
 
     void handleEvent() override ;
 
     bool setTime(const int after_time,const int timeout);
 
-    virtual ~Timer()
+    virtual ~TimerFd()
     {
         close(fd_);
     }
@@ -22,4 +22,4 @@ public:
 };
 
 
-#endif//!_BASE_NET_LIB_TIMER_H_
+#endif//!_BASE_NET_LIB_TIMERFD_H_

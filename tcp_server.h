@@ -6,32 +6,27 @@
 #define BASE_NET_LIB_TCPSERVER_H
 #include "event_loop.h"
 #include "timerfdandsockfd/socket_fd.h"
-
+#include <functional>
 class TcpServer {
 public:
-    TcpServer(POLL_TYPE pollType,int listenPort):serverLoop_(pollType)
-    {
-        serverSock_.CreateSocket(listenPort);
-        serverSock_.Listen();
+    TcpServer(POLL_TYPE pollType,int listenPort,Fd::EventCallBack clientCallBack);
 
-    }
+    static void connectionCallBack(void* arg);
 
-    void handleConnection(void *);
-
+    void handleConnection();
 
     void serverStart();
 
-    void serverStop()
-    {
-        serverLoop_.quitLoop();
-    }
+    void serverStop();
 
     ~TcpServer(){
-        serverSock_.CloseSocket();
+        serverSock_.closeFd();
     }
+
 protected:
     using ClientList=std::vector<SocketFd>;
 private:
+    Fd::EventCallBack clientCallBack_;
     EventLoop serverLoop_;
     SocketFd serverSock_;
     ClientList clientList_;

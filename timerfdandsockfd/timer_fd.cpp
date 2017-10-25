@@ -8,7 +8,7 @@
 #include "../common.h"
 
 
-Timer::Timer()
+TimerFd::TimerFd()
 {
     fd_ = timerfd_create(CLOCK_REALTIME,0);
     if(fd_ < 0)
@@ -17,7 +17,7 @@ Timer::Timer()
     }
 }
 
-bool Timer::setTime(const int after_time,const int timeout)
+bool TimerFd::setTime(const int after_time,const int timeout)
 {
     struct itimerspec new_value;
     struct timespec now;
@@ -39,11 +39,11 @@ bool Timer::setTime(const int after_time,const int timeout)
     return true;
 }
 
-void Timer::handleEvent()
+void TimerFd::handleEvent()
 {
     if(events_ & POLLIN)
     {
-        readCallBack_(static_cast<void*>(&fd_));
+        readCallBack_(static_cast<void*>(this));
     }
 }
 

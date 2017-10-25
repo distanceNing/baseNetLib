@@ -10,6 +10,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/base_net_lib.dir/timerfdandsockfd/time_stamp.cpp.o"
   "CMakeFiles/base_net_lib.dir/timerfdandsockfd/timer_fd.cpp.o"
   "CMakeFiles/base_net_lib.dir/tcp_server.cpp.o"
+  "CMakeFiles/base_net_lib.dir/thread/Thread.cpp.o"
+  "CMakeFiles/base_net_lib.dir/thread/thread_pool.cpp.o"
   "base_net_lib.pdb"
   "base_net_lib"
 )

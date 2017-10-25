@@ -312,6 +312,60 @@ tcp_server.cpp.s:
 	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/tcp_server.cpp.s
 .PHONY : tcp_server.cpp.s
 
+thread/Thread.o: thread/Thread.cpp.o
+
+.PHONY : thread/Thread.o
+
+# target to build an object file
+thread/Thread.cpp.o:
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/thread/Thread.cpp.o
+.PHONY : thread/Thread.cpp.o
+
+thread/Thread.i: thread/Thread.cpp.i
+
+.PHONY : thread/Thread.i
+
+# target to preprocess a source file
+thread/Thread.cpp.i:
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/thread/Thread.cpp.i
+.PHONY : thread/Thread.cpp.i
+
+thread/Thread.s: thread/Thread.cpp.s
+
+.PHONY : thread/Thread.s
+
+# target to generate assembly for a file
+thread/Thread.cpp.s:
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/thread/Thread.cpp.s
+.PHONY : thread/Thread.cpp.s
+
+thread/thread_pool.o: thread/thread_pool.cpp.o
+
+.PHONY : thread/thread_pool.o
+
+# target to build an object file
+thread/thread_pool.cpp.o:
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/thread/thread_pool.cpp.o
+.PHONY : thread/thread_pool.cpp.o
+
+thread/thread_pool.i: thread/thread_pool.cpp.i
+
+.PHONY : thread/thread_pool.i
+
+# target to preprocess a source file
+thread/thread_pool.cpp.i:
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/thread/thread_pool.cpp.i
+.PHONY : thread/thread_pool.cpp.i
+
+thread/thread_pool.s: thread/thread_pool.cpp.s
+
+.PHONY : thread/thread_pool.s
+
+# target to generate assembly for a file
+thread/thread_pool.cpp.s:
+	$(MAKE) -f CMakeFiles/base_net_lib.dir/build.make CMakeFiles/base_net_lib.dir/thread/thread_pool.cpp.s
+.PHONY : thread/thread_pool.cpp.s
+
 timerfdandsockfd/Fd.o: timerfdandsockfd/Fd.cpp.o
 
 .PHONY : timerfdandsockfd/Fd.o
@@ -450,6 +504,12 @@ help:
 	@echo "... tcp_server.o"
 	@echo "... tcp_server.i"
 	@echo "... tcp_server.s"
+	@echo "... thread/Thread.o"
+	@echo "... thread/Thread.i"
+	@echo "... thread/Thread.s"
+	@echo "... thread/thread_pool.o"
+	@echo "... thread/thread_pool.i"
+	@echo "... thread/thread_pool.s"
 	@echo "... timerfdandsockfd/Fd.o"
 	@echo "... timerfdandsockfd/Fd.i"
 	@echo "... timerfdandsockfd/Fd.s"

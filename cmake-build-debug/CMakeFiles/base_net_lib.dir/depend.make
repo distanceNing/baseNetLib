@@ -54,6 +54,13 @@ CMakeFiles/base_net_lib.dir/tcp_server.cpp.o: ../timerfdandsockfd/Fd.h
 CMakeFiles/base_net_lib.dir/tcp_server.cpp.o: ../timerfdandsockfd/socket_fd.h
 CMakeFiles/base_net_lib.dir/tcp_server.cpp.o: ../timerfdandsockfd/time_stamp.h
 
+CMakeFiles/base_net_lib.dir/thread/Thread.cpp.o: ../thread/Thread.cpp
+CMakeFiles/base_net_lib.dir/thread/Thread.cpp.o: ../thread/Thread.h
+
+CMakeFiles/base_net_lib.dir/thread/thread_pool.cpp.o: ../thread/Thread.h
+CMakeFiles/base_net_lib.dir/thread/thread_pool.cpp.o: ../thread/thread_pool.cpp
+CMakeFiles/base_net_lib.dir/thread/thread_pool.cpp.o: ../thread/thread_pool.h
+
 CMakeFiles/base_net_lib.dir/timerfdandsockfd/Fd.cpp.o: ../timerfdandsockfd/Fd.cpp
 CMakeFiles/base_net_lib.dir/timerfdandsockfd/Fd.cpp.o: ../timerfdandsockfd/Fd.h
 
