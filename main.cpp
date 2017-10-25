@@ -1,7 +1,7 @@
 //
 // Created by yangning on 17-10-25.
 //
-// Descriprion :
+// Descriprion : main func
 //
 // Copyright (c) yangning All rights reserved.
 //
@@ -23,13 +23,16 @@ void connectionRCB(void* arg)
     {
         printErrorMsg("Receive");
     }
-    else if (size == 0) {
+    else if (size == 0)
+    {
         printf("Sockfd %d is close ---- \n", socketFd->getFd());
+        socketFd->closeFd();
+        socketFd->removeSelf();
         return;
     }
     else
     {
-        socketFd->Send(buffer,size);
+        socketFd->Send(buffer, static_cast<size_t>(size));
     }
 }
 

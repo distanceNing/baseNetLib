@@ -17,13 +17,15 @@ protected:
     typedef unsigned int UINT;
     const int SOCKET_ERROR = -1;
 public:
-    SocketFd();
+    SocketFd(EventLoop* own_loop);
 
     virtual ~SocketFd();
 
     void handleEvent() override ;
 
-    bool CreateSocket(int prot = 0,int af = AF_INET, int type = SOCK_STREAM);
+    void removeSelf() override;
+
+    bool CreateSocket(int port = 0,int af = AF_INET, int type = SOCK_STREAM);
 
     ssize_t Receive(void* buffer, size_t bufLen);
 

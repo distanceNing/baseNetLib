@@ -8,6 +8,7 @@
 #include <map>
 #include <vector>
 #include "../timerfdandsockfd/time_stamp.h"
+
 class Poller {
 
 protected:
@@ -15,6 +16,9 @@ protected:
     typedef std::map<int,Fd*> ChannelMap;
 
 public:
+    Poller(){}
+
+
 
     virtual TimeStamp Poll(int time_out,ChannelList & activeChannel) = 0;
 

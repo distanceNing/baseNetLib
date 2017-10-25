@@ -64,15 +64,26 @@ CMakeFiles/base_net_lib.dir/thread/thread_pool.cpp.o: ../thread/thread_pool.h
 CMakeFiles/base_net_lib.dir/timerfdandsockfd/Fd.cpp.o: ../timerfdandsockfd/Fd.cpp
 CMakeFiles/base_net_lib.dir/timerfdandsockfd/Fd.cpp.o: ../timerfdandsockfd/Fd.h
 
+CMakeFiles/base_net_lib.dir/timerfdandsockfd/socket_fd.cpp.o: ../common.h
+CMakeFiles/base_net_lib.dir/timerfdandsockfd/socket_fd.cpp.o: ../event_loop.h
+CMakeFiles/base_net_lib.dir/timerfdandsockfd/socket_fd.cpp.o: ../poller/epoll_poller.h
+CMakeFiles/base_net_lib.dir/timerfdandsockfd/socket_fd.cpp.o: ../poller/poll_poller.h
+CMakeFiles/base_net_lib.dir/timerfdandsockfd/socket_fd.cpp.o: ../poller/poller.h
 CMakeFiles/base_net_lib.dir/timerfdandsockfd/socket_fd.cpp.o: ../timerfdandsockfd/Fd.h
 CMakeFiles/base_net_lib.dir/timerfdandsockfd/socket_fd.cpp.o: ../timerfdandsockfd/socket_fd.cpp
 CMakeFiles/base_net_lib.dir/timerfdandsockfd/socket_fd.cpp.o: ../timerfdandsockfd/socket_fd.h
+CMakeFiles/base_net_lib.dir/timerfdandsockfd/socket_fd.cpp.o: ../timerfdandsockfd/time_stamp.h
 
 CMakeFiles/base_net_lib.dir/timerfdandsockfd/time_stamp.cpp.o: ../timerfdandsockfd/time_stamp.cpp
 CMakeFiles/base_net_lib.dir/timerfdandsockfd/time_stamp.cpp.o: ../timerfdandsockfd/time_stamp.h
 
 CMakeFiles/base_net_lib.dir/timerfdandsockfd/timer_fd.cpp.o: ../common.h
+CMakeFiles/base_net_lib.dir/timerfdandsockfd/timer_fd.cpp.o: ../event_loop.h
+CMakeFiles/base_net_lib.dir/timerfdandsockfd/timer_fd.cpp.o: ../poller/epoll_poller.h
+CMakeFiles/base_net_lib.dir/timerfdandsockfd/timer_fd.cpp.o: ../poller/poll_poller.h
+CMakeFiles/base_net_lib.dir/timerfdandsockfd/timer_fd.cpp.o: ../poller/poller.h
 CMakeFiles/base_net_lib.dir/timerfdandsockfd/timer_fd.cpp.o: ../timerfdandsockfd/Fd.h
+CMakeFiles/base_net_lib.dir/timerfdandsockfd/timer_fd.cpp.o: ../timerfdandsockfd/time_stamp.h
 CMakeFiles/base_net_lib.dir/timerfdandsockfd/timer_fd.cpp.o: ../timerfdandsockfd/timer_fd.cpp
 CMakeFiles/base_net_lib.dir/timerfdandsockfd/timer_fd.cpp.o: ../timerfdandsockfd/timer_fd.h
 

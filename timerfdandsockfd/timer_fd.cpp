@@ -6,9 +6,9 @@
 #include <cstring>
 
 #include "../common.h"
+#include "../event_loop.h"
 
-
-TimerFd::TimerFd()
+TimerFd::TimerFd(EventLoop* own_loop):Fd(own_loop)
 {
     fd_ = timerfd_create(CLOCK_REALTIME,0);
     if(fd_ < 0)
@@ -45,6 +45,11 @@ void TimerFd::handleEvent()
     {
         readCallBack_(static_cast<void*>(this));
     }
+}
+
+void TimerFd::removeSelf()
+{
+    ownEventLoop_->removeChannel(this);
 }
 
 

@@ -7,6 +7,7 @@
 #include "event_loop.h"
 #include "timerfdandsockfd/socket_fd.h"
 #include <functional>
+#include <list>
 class TcpServer {
 public:
     TcpServer(POLL_TYPE pollType,int listenPort,Fd::EventCallBack clientCallBack);
@@ -24,7 +25,7 @@ public:
     }
 
 protected:
-    using ClientList=std::vector<SocketFd>;
+    using ClientList=std::list<SocketFd>;
 private:
     Fd::EventCallBack clientCallBack_;
     EventLoop serverLoop_;

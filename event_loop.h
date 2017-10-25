@@ -10,9 +10,11 @@
 
 #include <boost/scoped_ptr.hpp>
 
-#include "timerfdandsockfd/Fd.h"
+
 #include "poller/poll_poller.h"
 #include "poller/epoll_poller.h"
+
+class Fd;
 const int kTimeOut = 10*1000;
 
 enum POLL_TYPE
@@ -27,7 +29,9 @@ inline  Poller* createPoller(POLL_TYPE pollType)
         return new PollPoller;
     return new EpollPoller;
 }
+
 class EventLoop {
+
 public:
     EventLoop(POLL_TYPE pollType)
             :isLooping_(false), threadId_(getpid()), poller_(createPoller(pollType)) { }
@@ -46,6 +50,8 @@ public:
     void handleEvent();
 
     void addNewChannel(Fd* channel);
+
+    void removeChannel(Fd* channel);
 protected:
     typedef std::vector<Fd*> ChannelList;
 private:

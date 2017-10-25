@@ -39,3 +39,7 @@ void Fd::setReadCallBack(Fd::EventCallBack call_back, void* arg)
     readCallBack_ = call_back;
     callBackArg_=arg;
 }
+void Fd::resetFd(int fd)
+{
+    fd_ =fd;
+}

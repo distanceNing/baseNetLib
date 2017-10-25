@@ -9,6 +9,7 @@ TimeStamp PollPoller::Poll(int time_out, ChannelList& activeChannels)
     std::cout << "Poll Array Size " << pollfdList_.size() << std::endl;
 
     num_ready = ::poll(pollfdList_.data(), pollfdList_.size(), time_out);
+    //生成时间戳
     TimeStamp timeStamp = TimeStamp();
     if (num_ready > 0)
     {
@@ -23,7 +24,7 @@ TimeStamp PollPoller::Poll(int time_out, ChannelList& activeChannels)
         }
         else
         {
-            perror("Poll Error");
+            printErrorMsg("poll");
         }
     }
     return timeStamp;
@@ -58,11 +59,11 @@ void PollPoller::addNewChannel(Fd* channel)
 
 void PollPoller::removeChannel(Fd* channel)
 {
-    for (auto& i :pollfdList_)
+    for (auto i=pollfdList_.begin();i != pollfdList_.end();++i)
     {
-        if (i.fd==channel->getFd())
+        if (i->fd==channel->getFd())
         {
-            i.fd = -1;
+            pollfdList_.erase(i);
             break;
         }
     }

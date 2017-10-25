@@ -5,7 +5,7 @@
 #include "tcp_server.h"
 
 TcpServer::TcpServer(POLL_TYPE pollType, int listenPort,Fd::EventCallBack clientCallBack)
-        :serverLoop_(pollType),clientCallBack_(clientCallBack)
+        :serverLoop_(pollType),clientCallBack_(clientCallBack),serverSock_(&serverLoop_)
 {
     if(!serverSock_.CreateSocket(listenPort))
         printErrorMsg("CreateSocket");
@@ -24,9 +24,11 @@ void TcpServer::handleConnection()
     printf("connect IP: %s ------ Port: %d\n", conn_ip, conn_port);
 
     //将新连接的客户端加入clientList
-    clientList_.push_back(SocketFd());
+    clientList_.push_back(SocketFd(&serverLoop_));
+
+
     //设置关注事件和事件回调
-    auto clientFd=&clientList_[clientList_.size() -1];
+    auto clientFd=&clientList_.back();
     clientFd->resetFd(client_fd);
     clientFd->setReadCallBack(clientCallBack_,clientFd);
     clientFd->setEvents(POLLIN);

@@ -8,9 +8,11 @@
 class TimerFd:public Fd
 {
 public:
-    TimerFd();
+    TimerFd(EventLoop* own_loop);
 
     void handleEvent() override ;
+
+    void removeSelf() override;
 
     bool setTime(const int after_time,const int timeout);
 

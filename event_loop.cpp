@@ -32,3 +32,7 @@ void EventLoop::handleEvent()
         i->handleEvent();
     }
 }
+void EventLoop::removeChannel(Fd* channel)
+{
+    poller_->removeChannel(channel);
+}

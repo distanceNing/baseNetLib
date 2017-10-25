@@ -7,10 +7,13 @@
 
 #include <poll.h>
 
+
+class EventLoop;
+
 class Fd{
 
 public:
-    Fd():fd_(-1),events_(-1),revents_(-1) { }
+    Fd(EventLoop* own_loop):ownEventLoop_(own_loop),fd_(-1),events_(-1),revents_(-1) { }
 
     typedef void (* EventCallBack)(void *);
 
@@ -24,10 +27,7 @@ public:
 
     void setRetEvents(int ret_events);
 
-    void resetFd(int fd)
-    {
-        fd_ =fd;
-    }
+    void resetFd(int fd);
 
     short getEvents() const;
 
@@ -37,9 +37,12 @@ public:
 
     virtual void handleEvent() = 0;
 
+    virtual void removeSelf() = 0;
+
     virtual ~Fd() { }
 
 protected:
+    EventLoop* ownEventLoop_;
     int fd_;
     short events_;
     short revents_;

@@ -1,19 +1,20 @@
 #include "socket_fd.h"
 #include <iostream>
+#include "../event_loop.h"
+
+SocketFd::SocketFd(EventLoop* own_loop):Fd(own_loop) { }
 
 
-SocketFd::SocketFd()
-{
-    fd_ = -1;
-}
-
-
-bool SocketFd::CreateSocket( int prot,int af, int type)
+bool SocketFd::CreateSocket( int port,int af, int type)
 {
     fd_ = socket(af, type, 0);
     if (fd_==SOCKET_ERROR)
         return false;
-    sockaddr_in sa = {af, htons(prot)};
+    sockaddr_in sa ;
+    memset(&sa,0,sizeof(struct sockaddr_in));
+    sa.sin_family=AF_INET;
+    sa.sin_port=htons(static_cast<uint16_t>(port));
+
     int flag = bind(fd_, (sockaddr*) &sa, sizeof(sa));
     return flag >= 0 ;
 }
@@ -30,7 +31,9 @@ ssize_t SocketFd::Receive(void* buffer, size_t buf_len)
 
 int SocketFd::Accept( char* fromIP, UINT& fromPort)
 {
-    sockaddr_in from = {AF_INET};
+    sockaddr_in from;
+    memset(&from,0,sizeof(struct sockaddr_in));
+    from.sin_family=AF_INET;
     socklen_t len = sizeof(from);
     int clientSock = -1;
     if((clientSock = accept(fd_, (sockaddr*) &from, &len)) < 0 )
@@ -47,9 +50,12 @@ ssize_t SocketFd::Send(void* message, size_t buf_len)
 
 bool SocketFd::GetPeerName(char* peerIP, UINT& peerPort)
 {
-    sockaddr_in from = {AF_INET};
+    sockaddr_in from;
+    memset(&from,0,sizeof(struct sockaddr_in));
+    from.sin_family=AF_INET;
     socklen_t len = sizeof(from);
-    if (getpeername(fd_, (sockaddr*) &from, &len)<0) {
+    if (getpeername(fd_, (sockaddr*) &from, &len)<0)
+    {
         return false;
     }
     else {
@@ -90,6 +96,11 @@ void SocketFd::handleEvent()
 SocketFd::~SocketFd()
 {
     close(fd_);
+}
+
+void SocketFd::removeSelf()
+{
+    ownEventLoop_->removeChannel(this);
 }
 
 
