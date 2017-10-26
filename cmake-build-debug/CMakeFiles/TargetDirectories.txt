@@ -1,3 +1,0 @@
-/mnt/hgfs/shared/unpTest/base_net_lib/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/mnt/hgfs/shared/unpTest/base_net_lib/cmake-build-debug/CMakeFiles/edit_cache.dir
-/mnt/hgfs/shared/unpTest/base_net_lib/cmake-build-debug/CMakeFiles/base_net_lib.dir
