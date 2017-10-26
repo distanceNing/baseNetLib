@@ -19,7 +19,6 @@ public:
     Poller(){}
 
 
-
     virtual TimeStamp Poll(int time_out,ChannelList & activeChannel) = 0;
 
     virtual void addNewChannel(Fd * channel) = 0;

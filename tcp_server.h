@@ -20,9 +20,7 @@ public:
 
     void serverStop();
 
-    ~TcpServer(){
-        serverSock_.closeFd();
-    }
+    ~TcpServer();
 
 protected:
     using ClientList=std::list<SocketFd>;

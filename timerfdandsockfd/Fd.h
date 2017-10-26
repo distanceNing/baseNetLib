@@ -6,20 +6,23 @@
 #define BASE_NET_LIB_FD_H
 
 #include <poll.h>
-
+#include <functional>
 
 class EventLoop;
 
-class Fd{
+class Fd {
 
 public:
-    Fd(EventLoop* own_loop):ownEventLoop_(own_loop),fd_(-1),events_(-1),revents_(-1) { }
-
-    typedef void (* EventCallBack)(void *);
+    using EventCallBack = std::function<void(void*)>;
+    //typedef void (* EventCallBack)(void *);
+    Fd(EventLoop* own_loop)
+            :ownEventLoop_(own_loop), fd_(-1), events_(-1), revents_(-1),
+             readCallBack_(NULL), writeCallBack_(NULL),errorCallBack_(NULL),callBackArg_(NULL)
+    { }
 
     void setWriteCallBack(EventCallBack call_back);
 
-    void setReadCallBack(EventCallBack call_back,void* arg);
+    void setReadCallBack(EventCallBack call_back, void* arg);
 
     void setErrorCallBack(EventCallBack call_back);
 

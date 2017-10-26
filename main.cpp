@@ -1,7 +1,7 @@
 //
 // Created by yangning on 17-10-25.
 //
-// Descriprion : main func
+// Descriprion : main func 基于事件驱动基础网络库
 //
 // Copyright (c) yangning All rights reserved.
 //
@@ -12,7 +12,7 @@
 #include "timerfdandsockfd/time_stamp.h"
 #include "tcp_server.h"
 
-void connectionRCB(void* arg)
+void clientRCB(void* arg)
 {
     auto socketFd = static_cast<SocketFd*>(arg);
     char buffer[MAX_BUF_SIZE] = {'\0'};
@@ -40,7 +40,7 @@ int main()
 {
     TimeStamp::printTimeNow();
 
-    TcpServer tcpServer(POLL, kPort, connectionRCB);
+    TcpServer tcpServer(POLL, kPort, clientRCB);
     tcpServer.serverStart();
 
     TimeStamp::printTimeNow();

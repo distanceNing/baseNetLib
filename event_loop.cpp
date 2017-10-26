@@ -8,7 +8,8 @@ bool EventLoop::isLoopInThisThread()
 void EventLoop::startLoop()
 {
     isLooping_ = true;
-    while (isLooping_) {
+    while (isLooping_)
+    {
         if (!activeChannels_.empty())
             activeChannels_.clear();
 

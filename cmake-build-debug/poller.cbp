@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="poller"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/mnt/hgfs/shared/unpTest/base_net_lib/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/mnt/hgfs/shared/unpTest/base_net_lib/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -f &quot;/mnt/hgfs/shared/unpTest/base_net_lib/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/mnt/hgfs/shared/unpTest/base_net_lib/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/mnt/hgfs/shared/unpTest/base_net_lib/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/mnt/hgfs/shared/unpTest/base_net_lib/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/mnt/hgfs/shared/unpTest/base_net_lib/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -f &quot;/mnt/hgfs/shared/unpTest/base_net_lib/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/mnt/hgfs/shared/unpTest/base_net_lib/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/mnt/hgfs/shared/unpTest/base_net_lib/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/mnt/hgfs/shared/unpTest/base_net_lib/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/mnt/hgfs/shared/unpTest/base_net_lib/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -f &quot;/mnt/hgfs/shared/unpTest/base_net_lib/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/mnt/hgfs/shared/unpTest/base_net_lib/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/mnt/hgfs/shared/unpTest/base_net_lib/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="base_net_lib">
+				<Option output="/mnt/hgfs/shared/unpTest/base_net_lib/cmake-build-debug/base_net_lib" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/hgfs/shared/unpTest/base_net_lib/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/4.8"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.8"/>
+					<Add directory="/usr/include/c++/4.8/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/mnt/hgfs/shared/unpTest/base_net_lib/cmake-build-debug/Makefile&quot;  VERBOSE=1 base_net_lib"/>
+					<CompileFile command="/usr/bin/make -f &quot;/mnt/hgfs/shared/unpTest/base_net_lib/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/mnt/hgfs/shared/unpTest/base_net_lib/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/mnt/hgfs/shared/unpTest/base_net_lib/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="base_net_lib/fast">
+				<Option output="/mnt/hgfs/shared/unpTest/base_net_lib/cmake-build-debug/base_net_lib" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/hgfs/shared/unpTest/base_net_lib/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/4.8"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.8"/>
+					<Add directory="/usr/include/c++/4.8/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/mnt/hgfs/shared/unpTest/base_net_lib/cmake-build-debug/Makefile&quot;  VERBOSE=1 base_net_lib/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/mnt/hgfs/shared/unpTest/base_net_lib/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/mnt/hgfs/shared/unpTest/base_net_lib/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/mnt/hgfs/shared/unpTest/base_net_lib/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/common.cpp">
+			<Option target="base_net_lib"/>
+		</Unit>
+		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/common.h">
+			<Option target="base_net_lib"/>
+		</Unit>
+		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/event_loop.cpp">
+			<Option target="base_net_lib"/>
+		</Unit>
+		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/event_loop.h">
+			<Option target="base_net_lib"/>
+		</Unit>
+		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/main.cpp">
+			<Option target="base_net_lib"/>
+		</Unit>
+		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/poller/epoll_poller.cpp">
+			<Option target="base_net_lib"/>
+		</Unit>
+		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/poller/epoll_poller.h">
+			<Option target="base_net_lib"/>
+		</Unit>
+		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/poller/poll_poller.cpp">
+			<Option target="base_net_lib"/>
+		</Unit>
+		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/poller/poll_poller.h">
+			<Option target="base_net_lib"/>
+		</Unit>
+		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/poller/poller.cpp">
+			<Option target="base_net_lib"/>
+		</Unit>
+		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/poller/poller.h">
+			<Option target="base_net_lib"/>
+		</Unit>
+		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/tcp_server.cpp">
+			<Option target="base_net_lib"/>
+		</Unit>
+		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/tcp_server.h">
+			<Option target="base_net_lib"/>
+		</Unit>
+		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/thread/Thread.cpp">
+			<Option target="base_net_lib"/>
+		</Unit>
+		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/thread/Thread.h">
+			<Option target="base_net_lib"/>
+		</Unit>
+		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/thread/thread_pool.cpp">
+			<Option target="base_net_lib"/>
+		</Unit>
+		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/thread/thread_pool.h">
+			<Option target="base_net_lib"/>
+		</Unit>
+		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/timerfdandsockfd/Fd.cpp">
+			<Option target="base_net_lib"/>
+		</Unit>
+		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/timerfdandsockfd/Fd.h">
+			<Option target="base_net_lib"/>
+		</Unit>
+		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/timerfdandsockfd/socket_fd.cpp">
+			<Option target="base_net_lib"/>
+		</Unit>
+		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/timerfdandsockfd/socket_fd.h">
+			<Option target="base_net_lib"/>
+		</Unit>
+		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/timerfdandsockfd/time_stamp.cpp">
+			<Option target="base_net_lib"/>
+		</Unit>
+		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/timerfdandsockfd/time_stamp.h">
+			<Option target="base_net_lib"/>
+		</Unit>
+		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/timerfdandsockfd/timer_fd.cpp">
+			<Option target="base_net_lib"/>
+		</Unit>
+		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/timerfdandsockfd/timer_fd.h">
+			<Option target="base_net_lib"/>
+		</Unit>
+		<Unit filename="/mnt/hgfs/shared/unpTest/base_net_lib/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

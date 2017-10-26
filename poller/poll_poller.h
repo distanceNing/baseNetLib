@@ -22,9 +22,7 @@ class PollPoller:public Poller
 {
 
 public:
-    PollPoller()
-    {
-    }
+    PollPoller() { }
 
     TimeStamp Poll(int time_out,ChannelList & activeChannel) override;
 

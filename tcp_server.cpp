@@ -55,3 +55,8 @@ void TcpServer::connectionCallBack(void* arg)
     TcpServer* tcpServer= static_cast<TcpServer*>(arg);
     tcpServer->handleConnection();
 }
+
+TcpServer::~TcpServer()
+{
+    serverSock_.closeFd();
+}

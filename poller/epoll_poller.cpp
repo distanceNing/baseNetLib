@@ -56,7 +56,7 @@ void EpollPoller::removeChannel(Fd* channel)
 {
     struct epoll_event event;
     event.data.fd = channel->getFd();
-    event.events = static_cast<uint32_t>(channel->getEvents()) | EPOLLET;
+    event.events = static_cast<uint32_t>(channel->getEvents()) | kEPOLL_MODE;
     //从内核注册表上删除文件描述符
     epoll_ctl(epollFd_,EPOLL_CTL_DEL,channel->getFd(),&event);
     //从channelMap删除

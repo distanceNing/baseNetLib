@@ -27,6 +27,7 @@ protected:
     const uint32_t kEPOLL_MODE= 1 ;
 
     using EpollEventList=std::vector<struct epoll_event> ;
+
 private:
     const unsigned long kInitEpollEventSize = 16;
 
