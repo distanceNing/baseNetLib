@@ -4,7 +4,7 @@
 
 #include "time_stamp.h"
 #include <cstdio>
-
+namespace net {
 void TimeStamp::printTime()
 {
     struct tm* tm = localtime(&time_);
@@ -20,5 +20,6 @@ void TimeStamp::printTimeNow()
 
 TimeStamp::PassingTime TimeStamp::operator-(TimeStamp& rvalue)
 {
-    return time_-rvalue.time_;
+    return time_ - rvalue.time_;
 }
+}//namespace net

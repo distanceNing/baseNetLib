@@ -6,13 +6,16 @@
 #define BASE_NET_LIB_TIMESTAMP_H
 
 #include <time.h>
+namespace net {
 class TimeStamp {
 
 public:
     using PassingTime=time_t;
 
     TimeStamp()
-            :time_(time(0)) { }
+            :time_(time(0))
+    {
+    }
 
     static void printTimeNow();
 
@@ -20,10 +23,12 @@ public:
 
     PassingTime operator-(TimeStamp& rvalue);
 
-    ~TimeStamp() { }
+    ~TimeStamp()
+    {
+    }
 
 private:
     time_t time_;
 };
-
+}//namespace net
 #endif //!BASE_NET_LIB_TIMESTAMP_H

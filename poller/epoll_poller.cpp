@@ -5,7 +5,7 @@
 #include <iostream>
 #include "epoll_poller.h"
 #include "../common.h"
-
+namespace net{
 EpollPoller::EpollPoller():epollEventList_(kInitEpollEventSize),epollFd_(epoll_create1(0))
 {
     if(epollFd_ < 0)
@@ -76,3 +76,4 @@ void EpollPoller::fillActiveChannel(int num_ready, Poller::ChannelList& activeCh
         }
     }
 }
+}//namespace net

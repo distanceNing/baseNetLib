@@ -13,19 +13,19 @@
 
 #include "poller/poll_poller.h"
 #include "poller/epoll_poller.h"
-
+namespace net{
 class Fd;
-const int kTimeOut = 10*1000;
+}
+namespace net {
+const int kTimeOut = 10 * 1000;
 
-enum POLL_TYPE
-{
-  POLL=0,
-  EPOLL,
+enum POLL_TYPE {
+  POLL = 0, EPOLL,
 };
 
-inline  Poller* createPoller(POLL_TYPE pollType)
+inline Poller* createPoller(POLL_TYPE pollType)
 {
-    if(pollType==POLL)
+    if (pollType == POLL)
         return new PollPoller;
     return new EpollPoller;
 }
@@ -34,9 +34,13 @@ class EventLoop {
 
 public:
     EventLoop(POLL_TYPE pollType)
-            :isLooping_(false), threadId_(getpid()), poller_(createPoller(pollType)) { }
+            :isLooping_(false), threadId_(getpid()), poller_(createPoller(pollType))
+    {
+    }
 
-    ~EventLoop() { }
+    ~EventLoop()
+    {
+    }
 
     bool isLoopInThisThread();
 
@@ -60,4 +64,5 @@ private:
     ChannelList activeChannels_;
     boost::scoped_ptr<Poller> poller_;
 };
+} //namespace net
 #endif//!BASE_NET_LIB_EVENTLOOP_H

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.7)
-project(poller)
+project(base_net_lib)
 
 set(CMAKE_CXX_STANDARD 11)
 
@@ -21,6 +21,8 @@ set(SOURCE_FILES
         thread/Thread.h
         thread/thread_pool.cpp
         thread/thread_pool.h
+        thread/lock.cpp
+        thread/lock.h
         )
 link_libraries(pthread)
 

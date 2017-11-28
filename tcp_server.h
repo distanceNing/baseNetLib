@@ -8,13 +8,14 @@
 #include "timerfdandsockfd/socket_fd.h"
 #include <functional>
 #include <list>
+namespace net{
 class TcpServer {
 public:
-    TcpServer(POLL_TYPE pollType,int listenPort,Fd::EventCallBack clientCallBack);
+    TcpServer(POLL_TYPE pollType,int listenPort);
 
     static void connectionCallBack(void* arg);
 
-    void handleConnection();
+    virtual void handleConnection()=0;
 
     void serverStart();
 
@@ -24,11 +25,10 @@ public:
 
 protected:
     using ClientList=std::list<SocketFd>;
-private:
-    Fd::EventCallBack clientCallBack_;
+protected:
     EventLoop serverLoop_;
     SocketFd serverSock_;
     ClientList clientList_;
 };
-
+}//namespace net
 #endif //BASE_NET_LIB_TCPSERVER_H

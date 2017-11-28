@@ -1,7 +1,7 @@
 #include "socket_fd.h"
 #include <iostream>
 #include "../event_loop.h"
-
+namespace net{
 SocketFd::SocketFd(EventLoop* own_loop):Fd(own_loop) { }
 
 
@@ -10,6 +10,11 @@ bool SocketFd::CreateSocket( int port,int af, int type)
     fd_ = socket(af, type, 0);
     if (fd_==SOCKET_ERROR)
         return false;
+    int on=1;
+    if((setsockopt(fd_,SOL_SOCKET,SO_REUSEADDR,&on,sizeof(on)))<0)
+    {
+        return false;
+    }
     sockaddr_in sa ;
     memset(&sa,0,sizeof(struct sockaddr_in));
     sa.sin_family=AF_INET;
@@ -75,34 +80,9 @@ bool SocketFd::Connect(const char* conIP, const UINT conPort)
     return flag >= 0;
 }
 
-void SocketFd::handleEvent()
-{
-    if (revents_ & POLLIN)
-    {
-        std::cout << "fd " << fd_ << "  is readable ---" << std::endl;
-        readCallBack_(callBackArg_);
-    }
-    if (revents_ & POLLOUT)
-    {
-        writeCallBack_(static_cast<void*>(this));
-    }
-    if (revents_ & POLLERR)
-    {
-        errorCallBack_(static_cast<void*>(this));
-    }
-
-}
-
-SocketFd::~SocketFd()
-{
-    close(fd_);
-}
-
-void SocketFd::removeSelf()
-{
-    ownEventLoop_->removeChannel(this);
-}
 
 
 
+
+}//namespace net
 

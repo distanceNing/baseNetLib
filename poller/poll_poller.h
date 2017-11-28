@@ -18,23 +18,27 @@
 #include "poller.h"
 #include "../timerfdandsockfd/time_stamp.h"
 
-class PollPoller:public Poller
-{
+namespace net {
+class PollPoller : public Poller {
 
 public:
-    PollPoller() { }
+    PollPoller()
+    {
+    }
 
-    TimeStamp Poll(int time_out,ChannelList & activeChannel) override;
+    TimeStamp Poll(int time_out, ChannelList& activeChannel) override;
 
-    void addNewChannel(Fd * channel) override ;
+    void addNewChannel(Fd* channel) override;
 
-    void removeChannel(Fd * channel) override;
+    void removeChannel(Fd* channel) override;
 
-    ~PollPoller(){}
+    ~PollPoller()
+    {
+    }
 
 private:
-    void fillActiveChannel(int num_ready,ChannelList &activeChannel);
+    void fillActiveChannel(int num_ready, ChannelList& activeChannel);
     std::vector<struct pollfd> pollfdList_;
 };
-
+}// namespace net
 #endif//!BASE_NET_LIB_POLL_POLLER_H

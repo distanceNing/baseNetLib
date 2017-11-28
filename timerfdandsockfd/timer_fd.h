@@ -4,24 +4,14 @@
 #include "Fd.h"
 #include <sys/timerfd.h>
 #include <zconf.h>
-
-class TimerFd:public Fd
-{
+namespace net {
+class TimerFd : public Fd {
 public:
     TimerFd(EventLoop* own_loop);
 
-    void handleEvent() override ;
-
-    void removeSelf() override;
-
-    bool setTime(const int after_time,const int timeout);
-
-    virtual ~TimerFd()
-    {
-        close(fd_);
-    }
+    bool setTime(const int after_time, const int timeout);
 
 };
-
+}//namespace net
 
 #endif//!_BASE_NET_LIB_TIMERFD_H_

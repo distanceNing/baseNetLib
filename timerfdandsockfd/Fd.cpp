@@ -4,7 +4,8 @@
 
 #include <zconf.h>
 #include "Fd.h"
-
+#include "../event_loop.h"
+namespace net{
 void Fd::setErrorCallBack(Fd::EventCallBack call_back)
 {
     errorCallBack_ = call_back;
@@ -34,12 +35,33 @@ void Fd::closeFd()
     close(fd_);
 
 }
-void Fd::setReadCallBack(Fd::EventCallBack call_back, void* arg)
+void Fd::setReadCallBack(Fd::EventCallBack call_back)
 {
     readCallBack_ = call_back;
-    callBackArg_=arg;
 }
 void Fd::resetFd(int fd)
 {
     fd_ =fd;
 }
+void Fd::removeSelf()
+{
+    ownEventLoop_->removeChannel(this);
+}
+void Fd::handleEvent()
+{
+    if (revents_ & POLLIN)
+    {
+        std::cout << "fd " << fd_ << "  is readable ---" << std::endl;
+        readCallBack_();
+    }
+    if (revents_ & POLLOUT)
+    {
+        writeCallBack_();
+    }
+    if (revents_ & POLLERR)
+    {
+        errorCallBack_();
+    }
+
+}
+}//namespace net

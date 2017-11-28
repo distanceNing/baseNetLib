@@ -8,34 +8,35 @@
 #include "../timerfdandsockfd/time_stamp.h"
 #include <sys/epoll.h>
 #include <vector>
-
-class EpollPoller: public Poller
-{
+namespace net {
+class EpollPoller : public Poller {
 public:
 
     EpollPoller();
 
-    TimeStamp Poll(int time_out,ChannelList & activeChannel) override;
+    TimeStamp Poll(int time_out, ChannelList& activeChannel) override;
 
-    void addNewChannel(Fd * channel) override ;
+    void addNewChannel(Fd* channel) override;
 
-    void removeChannel(Fd * channel) override;
+    void removeChannel(Fd* channel) override;
 
-    ~EpollPoller(){}
+    ~EpollPoller()
+    {
+    }
 protected:
 
-    const uint32_t kEPOLL_MODE= 1 ;
+    const uint32_t kEPOLL_MODE = 1;
 
-    using EpollEventList=std::vector<struct epoll_event> ;
+    using EpollEventList=std::vector<struct epoll_event>;
 
 private:
     const unsigned long kInitEpollEventSize = 16;
 
-    void fillActiveChannel(int num_ready,ChannelList &activeChannel);
+    void fillActiveChannel(int num_ready, ChannelList& activeChannel);
 
     int epollFd_;
 
     EpollEventList epollEventList_;
 };
-
+}//namespace net
 #endif //BASE_NET_LIB_EPOLL_POLLER_H
