@@ -35,3 +35,4 @@ pid_t Thread::getCurrentThreadID()
 {
     return getpid();
 }
+

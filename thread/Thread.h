@@ -6,10 +6,13 @@
 #define BASE_NET_LIB_THREAD_H
 
 #include <pthread.h>
-
+#include <functional>
 class Thread {
 public:
-    Thread() { }
+    using ThreadFun =std::function<void()>;
+    Thread(const ThreadFun& thread_fun ):threadFun_(thread_fun) { }
+
+    Thread(){}
 
     static void* threadFun(void*);
 
@@ -17,18 +20,26 @@ public:
 
     void createThread();
 
+    void setThreadFun(const ThreadFun& thread_fun){
+        threadFun_=thread_fun;
+    }
+
     void join();
 
     void cancel();
 
-    pthread_t getThreadID();
+    void run()
+    {
+        threadFun_();
+    }
 
-    virtual void run() = 0;
+    pthread_t getThreadID();
 
     ~Thread() { }
 
 private:
     pthread_t threadID_;
+    ThreadFun threadFun_;
 };
 
 #endif //BASE_NET_LIB_THREAD_H
