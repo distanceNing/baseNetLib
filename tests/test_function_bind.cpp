@@ -38,6 +38,9 @@ int main()
     // 当为_1,只需一个参数,_2,_3...以此类推.
     // arguments that will be passed to f1)
 
+    std::function<void ()> fun=std::bind(f,1,2,3,4,5);
+    fun();
+
     auto func=std::bind(f,_1,1,2,3,4);
     func(0);
 

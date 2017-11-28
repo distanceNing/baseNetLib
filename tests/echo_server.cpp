@@ -14,7 +14,7 @@
 
 void clientRCB(void* arg)
 {
-    auto socketFd = static_cast<SocketFd*>(arg);
+    auto socketFd = static_cast<net::SocketFd*>(arg);
     char buffer[MAX_BUF_SIZE] = {'\0'};
 
     ssize_t size = socketFd->Receive(buffer, MAX_BUF_SIZE);
@@ -38,12 +38,12 @@ void clientRCB(void* arg)
 
 int main()
 {
-    TimeStamp::printTimeNow();
+    net::TimeStamp::printTimeNow();
 
-    TcpServer tcpServer(POLL, kPort, clientRCB);
+    net::TcpServer tcpServer(net::POLL, kPort, clientRCB);
     tcpServer.serverStart();
 
-    TimeStamp::printTimeNow();
+    net::TimeStamp::printTimeNow();
     return 0;
 }
 
