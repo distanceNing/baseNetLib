@@ -5,7 +5,7 @@
 #ifndef BASE_NET_LIB_EPOLL_POLLER_H
 #define BASE_NET_LIB_EPOLL_POLLER_H
 #include "poller.h"
-#include "../timerfdandsockfd/time_stamp.h"
+#include "../timerfd/time_stamp.h"
 #include <sys/epoll.h>
 #include <vector>
 namespace net {
@@ -16,9 +16,9 @@ public:
 
     TimeStamp Poll(int time_out, ChannelList& activeChannel) override;
 
-    void addNewChannel(Fd* channel) override;
+    void addNewChannel(Channel* channel) override;
 
-    void removeChannel(Fd* channel) override;
+    void removeChannel(Channel* channel) override;
 
     ~EpollPoller()
     {

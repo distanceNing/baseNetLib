@@ -2,6 +2,7 @@
 
 #include <stdlib.h>
 #include <iostream>
+#include "../channel.h"
 namespace net {
 TimeStamp PollPoller::Poll(int time_out, ChannelList& activeChannels)
 {
@@ -40,7 +41,7 @@ void PollPoller::fillActiveChannel(int num_ready, ChannelList& activeChannels)
     }
 }
 
-void PollPoller::addNewChannel(Fd* channel)
+void PollPoller::addNewChannel(Channel* channel)
 {
     struct pollfd temp;
     temp.fd = channel->getFd();
@@ -51,7 +52,7 @@ void PollPoller::addNewChannel(Fd* channel)
     channelMap_.insert(std::move(new_channel));
 }
 
-void PollPoller::removeChannel(Fd* channel)
+void PollPoller::removeChannel(Channel* channel)
 {
     for (auto i = pollfdList_.begin(); i != pollfdList_.end(); ++i) {
         if (i->fd == channel->getFd()) {

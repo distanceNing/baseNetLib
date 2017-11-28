@@ -13,10 +13,11 @@
 #include <vector>
 #include <map>
 
-#include "../timerfdandsockfd/Fd.h"
+
 #include "../common.h"
 #include "poller.h"
-#include "../timerfdandsockfd/time_stamp.h"
+
+#include "../timerfd/time_stamp.h"
 
 namespace net {
 class PollPoller : public Poller {
@@ -28,9 +29,9 @@ public:
 
     TimeStamp Poll(int time_out, ChannelList& activeChannel) override;
 
-    void addNewChannel(Fd* channel) override;
+    void addNewChannel(Channel* channel) override;
 
-    void removeChannel(Fd* channel) override;
+    void removeChannel(Channel* channel) override;
 
     ~PollPoller()
     {

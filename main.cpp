@@ -7,27 +7,26 @@
 //
 
 #include "event_loop.h"
-#include "timerfdandsockfd/socket_fd.h"
 #include "common.h"
-#include "timerfdandsockfd/time_stamp.h"
 #include "tcp_server.h"
 
-void clientRCB(net::SocketFd* socketFd)
+void clientRCB(net::Channel* channel)
 {
+    net::TcpSocket sock(channel->getFd());
     char buffer[MAX_BUF_SIZE] = {'\0'};
-    ssize_t size = socketFd->Receive(buffer, MAX_BUF_SIZE);
+    ssize_t size = sock.Receive(buffer, MAX_BUF_SIZE);
 
     if (size < 0) {
         printErrorMsg("Receive");
     }
     else if (size == 0) {
-        printf("Sockfd %d is close ---- \n", socketFd->getFd());
-        socketFd->closeFd();
-        socketFd->removeSelf();
+        printf("Sockfd %d is close ---- \n", sock.getFd());
+        sock.closeFd();
+        channel->removeSelf();
         return;
     }
     else {
-        socketFd->Send(buffer, static_cast<size_t>(size));
+        sock.Send(buffer, static_cast<size_t>(size));
     }
 }
 
@@ -49,18 +48,15 @@ public:
         printf("connect IP: %s ------ Port: %d\n", conn_ip, conn_port);
 
         //将新连接的客户端加入clientList
-        clientList_.push_back(net::SocketFd(&serverLoop_));
-
-
+        clientList_.push_back(net::Channel(&serverLoop_, client_fd));
         //设置关注事件和事件回调
-        auto clientFd = &clientList_.back();
-        clientFd->resetFd(client_fd);
-        net::Fd::EventCallBack fun = std::bind(clientRCB, clientFd);
-        clientFd->setReadCallBack(fun);
-        clientFd->setEvents(POLLIN);
+        auto channel = &clientList_.back();
+        net::EventCallBack fun = std::bind(clientRCB, channel);
+        channel->setReadCallBack(fun);
+        channel->setEvents(POLLIN);
 
         //再加入到pollList中,处理client发生的事件
-        serverLoop_.addNewChannel(clientFd);
+        serverLoop_.addNewChannel(channel);
     }
 
 };

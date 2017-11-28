@@ -14,7 +14,7 @@
 #include "poller/poll_poller.h"
 #include "poller/epoll_poller.h"
 namespace net{
-class Fd;
+class Channel;
 }
 namespace net {
 const int kTimeOut = 10 * 1000;
@@ -53,11 +53,11 @@ public:
 
     void handleEvent();
 
-    void addNewChannel(Fd* channel);
+    void addNewChannel(Channel* channel);
 
-    void removeChannel(Fd* channel);
+    void removeChannel(Channel* channel);
 protected:
-    typedef std::vector<Fd*> ChannelList;
+    typedef std::vector<Channel*> ChannelList;
 private:
     bool isLooping_;
     const pid_t threadId_;

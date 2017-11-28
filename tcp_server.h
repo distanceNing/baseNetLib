@@ -5,13 +5,15 @@
 #ifndef BASE_NET_LIB_TCPSERVER_H
 #define BASE_NET_LIB_TCPSERVER_H
 #include "event_loop.h"
-#include "timerfdandsockfd/socket_fd.h"
 #include <functional>
 #include <list>
+#include "channel.h"
+#include "socket/tcp_socket.h"
+#include "Acceptor.h"
 namespace net{
 class TcpServer {
 public:
-    TcpServer(POLL_TYPE pollType,int listenPort);
+    TcpServer(POLL_TYPE pollType,int listen_port);
 
     static void connectionCallBack(void* arg);
 
@@ -24,10 +26,10 @@ public:
     ~TcpServer();
 
 protected:
-    using ClientList=std::list<SocketFd>;
+    using ClientList=std::list<Channel>;
 protected:
     EventLoop serverLoop_;
-    SocketFd serverSock_;
+    net::Acceptor acceptor_;
     ClientList clientList_;
 };
 }//namespace net

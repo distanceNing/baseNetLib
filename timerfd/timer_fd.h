@@ -1,16 +1,19 @@
 #ifndef _BASE_NET_LIB_TIMERFD_H_
 #define _BASE_NET_LIB_TIMERFD_H_
 
-#include "Fd.h"
+
 #include <sys/timerfd.h>
 #include <zconf.h>
+
+
 namespace net {
-class TimerFd : public Fd {
+class TimerFd  {
 public:
-    TimerFd(EventLoop* own_loop);
+    TimerFd();
 
     bool setTime(const int after_time, const int timeout);
-
+private:
+    int fd_;
 };
 }//namespace net
 

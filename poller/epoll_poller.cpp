@@ -5,6 +5,7 @@
 #include <iostream>
 #include "epoll_poller.h"
 #include "../common.h"
+#include "../channel.h"
 namespace net{
 EpollPoller::EpollPoller():epollEventList_(kInitEpollEventSize),epollFd_(epoll_create1(0))
 {
@@ -42,7 +43,7 @@ TimeStamp EpollPoller::Poll(int time_out, Poller::ChannelList& activeChannels)
     return timeStamp;
 }
 
-void EpollPoller::addNewChannel(Fd* channel)
+void EpollPoller::addNewChannel(Channel* channel)
 {
     struct epoll_event event;
     setFdNonBlocking(channel->getFd());
@@ -52,7 +53,7 @@ void EpollPoller::addNewChannel(Fd* channel)
     channelMap_.insert(std::make_pair(channel->getFd(), channel));
 }
 
-void EpollPoller::removeChannel(Fd* channel)
+void EpollPoller::removeChannel(Channel* channel)
 {
     struct epoll_event event;
     event.data.fd = channel->getFd();

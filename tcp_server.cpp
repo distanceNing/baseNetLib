@@ -4,22 +4,20 @@
 
 #include "tcp_server.h"
 namespace net {
-TcpServer::TcpServer(POLL_TYPE pollType, int listenPort)
-        :serverLoop_(pollType), serverSock_(&serverLoop_)
-{
-    if (!serverSock_.CreateSocket(listenPort))
-        printErrorMsg("CreateSocket");
-    serverSock_.Listen();
-}
+TcpServer::TcpServer(POLL_TYPE pollType,int listen_port)
+        :serverLoop_(pollType),acceptor_(listen_port,&serverLoop_)
+    {
+
+    }
 
 
 
 void TcpServer::serverStart()
 {
-    serverSock_.setEvents(POLLIN);
-    Fd::EventCallBack fun=std::bind(connectionCallBack,this);
-    serverSock_.setReadCallBack(fun);
-    serverLoop_.addNewChannel(&serverSock_);
+    serverChannel_.setEvents(POLLIN);
+    net::EventCallBack fun=std::bind(connectionCallBack,this);
+    serverChannel_.setReadCallBack(fun);
+    serverLoop_.addNewChannel(&serverChannel_);
     serverLoop_.startLoop();
 }
 

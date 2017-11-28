@@ -7,3 +7,10 @@
 //
 
 #include "Acceptor.h"
+namespace net{
+void Acceptor::handleRead()
+{
+
+}
+
+}//namespace net

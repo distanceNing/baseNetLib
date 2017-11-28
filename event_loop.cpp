@@ -1,4 +1,5 @@
 #include "event_loop.h"
+#include "channel.h"
 namespace net {
 bool EventLoop::isLoopInThisThread()
 {
@@ -18,10 +19,10 @@ void EventLoop::startLoop()
     }
 }
 
-void EventLoop::addNewChannel(Fd* channel)
+void EventLoop::addNewChannel(Channel* channel)
 {
-    if (channel != NULL)
-        poller_->addNewChannel(channel);
+    assert(channel!=NULL);
+    poller_->addNewChannel(channel);
 }
 
 void EventLoop::handleEvent()
@@ -32,7 +33,7 @@ void EventLoop::handleEvent()
         i->handleEvent();
     }
 }
-void EventLoop::removeChannel(Fd* channel)
+void EventLoop::removeChannel(Channel* channel)
 {
     poller_->removeChannel(channel);
 }

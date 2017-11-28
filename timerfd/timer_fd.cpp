@@ -8,8 +8,8 @@
 #include "../common.h"
 #include "../event_loop.h"
 namespace net {
-TimerFd::TimerFd(EventLoop* own_loop)
-        :Fd(own_loop)
+TimerFd::TimerFd()
+
 {
     fd_ = timerfd_create(CLOCK_REALTIME, 0);
     if (fd_ < 0) {
