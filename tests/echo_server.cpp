@@ -7,40 +7,45 @@
 //
 
 #include "event_loop.h"
-#include "timerfdandsockfd/socket_fd.h"
 #include "common.h"
-#include "timerfdandsockfd/time_stamp.h"
 #include "tcp_server.h"
 
-void clientRCB(void* arg)
+void clientRCB(net::Channel* channel)
 {
-    auto socketFd = static_cast<net::SocketFd*>(arg);
+    net::TcpSocket sock(channel->getFd());
     char buffer[MAX_BUF_SIZE] = {'\0'};
+    ssize_t size = sock.Receive(buffer, MAX_BUF_SIZE);
 
-    ssize_t size = socketFd->Receive(buffer, MAX_BUF_SIZE);
-
-    if (size < 0)
-    {
+    if (size < 0) {
         printErrorMsg("Receive");
     }
-    else if (size == 0)
-    {
-        printf("Sockfd %d is close ---- \n", socketFd->getFd());
-        socketFd->closeFd();
-        socketFd->removeSelf();
+    else if (size == 0) {
+        printf("Sockfd %d is close ---- \n", sock.getFd());
+        sock.closeFd();
+        channel->removeSelf();
         return;
     }
-    else
-    {
-        socketFd->Send(buffer, static_cast<size_t>(size));
+    else {
+        sock.Send(buffer, static_cast<size_t>(size));
     }
 }
+
+class EchoServer : public net::TcpServer {
+public:
+    EchoServer(net::POLL_TYPE pollType, int listenPort)
+            :TcpServer(pollType, listenPort)
+    {
+    }
+
+
+
+};
 
 int main()
 {
     net::TimeStamp::printTimeNow();
 
-    net::TcpServer tcpServer(net::POLL, kPort, clientRCB);
+    EchoServer tcpServer(net::POLL, kPort);
     tcpServer.serverStart();
 
     net::TimeStamp::printTimeNow();
