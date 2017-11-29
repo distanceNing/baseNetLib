@@ -1,7 +1,7 @@
 //
 // Created by yangning on 17-11-28.
 //
-// Descriprion :
+// Descriprion :事件处理器,用于事件处理.通过添加回调函数,在fd上发生事件时,调用相应的回调函数.
 //
 // Copyright (c) yangning All rights reserved.
 //
@@ -17,29 +17,50 @@ namespace net {
 using EventCallBack=std::function<void()>;
 class Channel {
 public:
+    static const int kNonWrite = ~POLLOUT;
     Channel(EventLoop* ownEventLoop_, const int fd_)
             :ownEventLoop_(ownEventLoop_), fd_(fd_), events_(0), revents_(0)
     {
+        ownEventLoop_->addNewChannel(this);
     }
 
-    void setWriteCallBack(EventCallBack call_back)
+    void setWriteCallBack(const EventCallBack& call_back)
     {
         writeCallBack_ = call_back;
     }
 
-    void setReadCallBack(EventCallBack call_back)
+    void setReadCallBack(const EventCallBack& call_back)
     {
         readCallBack_ = call_back;
     }
 
-    void setErrorCallBack(EventCallBack call_back)
+    void setErrorCallBack(const EventCallBack& call_back)
     {
         errorCallBack_ = call_back;
     }
 
-    void setEvents(int events)
+    void enableReading()
     {
-        events_ = static_cast<short >(events);
+        events_ |= POLLIN;
+        ownEventLoop_->updateChannel(this);
+    }
+
+    void enableWriting()
+    {
+        events_ |= POLLOUT;
+        ownEventLoop_->updateChannel(this);
+    }
+
+    void disenableWriting()
+    {
+        events_ &= kNonWrite;
+        ownEventLoop_->updateChannel(this);
+    }
+
+    void enableError()
+    {
+        events_ |= POLLERR;
+        ownEventLoop_->updateChannel(this);
     }
 
     void setRetEvents(int ret_events)
@@ -55,11 +76,6 @@ public:
     int getFd() const
     {
         return fd_;
-    }
-
-    void closeFd()
-    {
-        close(fd_);
     }
 
     void handleEvent();

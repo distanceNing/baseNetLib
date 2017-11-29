@@ -1,7 +1,10 @@
 //
 // Created by yangning on 17-10-24.
 //
-
+// Descriprion :事件循环每个线程只能存在一个loop.
+//
+// Copyright (c) yangning All rights reserved.
+//
 #ifndef BASE_NET_LIB_EVENTLOOP_H
 #define BASE_NET_LIB_EVENTLOOP_H
 
@@ -43,6 +46,10 @@ public:
     }
 
     bool isLoopInThisThread();
+
+    void updateChannel(Channel* channel){
+        poller_->updateChannel(channel);
+    }
 
     void startLoop();
 

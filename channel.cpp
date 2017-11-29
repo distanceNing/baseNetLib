@@ -9,8 +9,8 @@
 #include <poll.h>
 #include <iostream>
 #include "channel.h"
-
-void net::Channel::handleEvent()
+namespace net {
+void Channel::handleEvent()
 {
     if (revents_ & POLLIN) {
         std::cout << "fd " << fd_ << "  is readable ---" << std::endl;
@@ -27,5 +27,5 @@ void net::Channel::handleEvent()
     }
 
 }
-
+}//namespace net
 

@@ -63,4 +63,14 @@ void PollPoller::removeChannel(Channel* channel)
     auto ite = channelMap_.find(channel->getFd());
     channelMap_.erase(ite);
 }
+void PollPoller::updateChannel(Channel* channel)
+{
+   for(auto& ite :pollfdList_)
+   {
+       if(ite.fd==channel->getFd())
+       {
+           ite.events=channel->getEvents();
+       }
+   }
+}
 }//namespace net

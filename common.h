@@ -11,6 +11,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <fcntl.h>
+#include <string>
 
 const int kPort=9000;
 inline void printErrorMsg(const char* msg)
@@ -29,5 +30,15 @@ inline bool setFdNonBlocking(int fd)
     return true;
 }
 
+struct IpAddress
+{
+  std::string ip;
+  unsigned int port;
+
+  IpAddress(const char* ip, unsigned int port)
+          :ip(ip), port(port)
+  {
+  }
+};
 
 #endif //BASE_NET_LIB_COMMON_H

@@ -32,7 +32,7 @@ public:
     void addNewChannel(Channel* channel) override;
 
     void removeChannel(Channel* channel) override;
-
+    void updateChannel(Channel* channel) override;
     ~PollPoller()
     {
     }

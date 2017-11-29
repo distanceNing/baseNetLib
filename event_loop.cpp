@@ -21,7 +21,7 @@ void EventLoop::startLoop()
 
 void EventLoop::addNewChannel(Channel* channel)
 {
-    assert(channel!=NULL);
+    assert(channel != NULL);
     poller_->addNewChannel(channel);
 }
 
@@ -35,6 +35,7 @@ void EventLoop::handleEvent()
 }
 void EventLoop::removeChannel(Channel* channel)
 {
+    assert(channel != NULL);
     poller_->removeChannel(channel);
 }
 } //namespace net
