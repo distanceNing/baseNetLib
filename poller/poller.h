@@ -12,10 +12,10 @@
 #include <map>
 #include <vector>
 
-#include "../timerfd/time_stamp.h"
 
 namespace net {
 class Channel;
+class TimeStamp;
 }
 namespace net {
 class Poller {

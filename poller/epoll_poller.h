@@ -5,7 +5,6 @@
 #ifndef BASE_NET_LIB_EPOLL_POLLER_H
 #define BASE_NET_LIB_EPOLL_POLLER_H
 #include "poller.h"
-#include "../timerfd/time_stamp.h"
 #include <sys/epoll.h>
 #include <vector>
 namespace net {

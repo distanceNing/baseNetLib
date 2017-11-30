@@ -10,29 +10,19 @@
 #define BASE_NET_LIB_TCPCONNECTION_H
 #include "common.h"
 #include "socket/tcp_socket.h"
-#include "channel.h"
 #include "tcp_server.h"
 
 #include <memory>
-namespace {
+namespace net{
 class TcpSocket;
 class EventLoop;
-class TcpServer;
+class Channel;
 }
 namespace net {
 
 class TcpConnection {
 public:
-    TcpConnection(const int fd, const IpAddress& ipAddress, EventLoop* loop)
-            :connSocket_(new TcpSocket(fd)), ipAddress_(ipAddress), connChannel_(loop, fd)
-    {
-        //添加connection的事件回调函数
-        connChannel_.setReadCallBack(std::bind(&TcpConnection::handleRead, this));
-        connChannel_.setWriteCallBack(std::bind(&TcpConnection::handleWrite, this));
-        connChannel_.setErrorCallBack(errorCallBack_);
-        //设置connsock可读
-        connChannel_.enableReading();
-    }
+    TcpConnection(const int fd, const IpAddress& ipAddress, EventLoop* loop);
 
     void setClienReadCallBack(const TcpServer::ClientReadCallBack & call_back)
     {
@@ -51,16 +41,11 @@ public:
 
     void handleRead();
 
-    void handleClose()
-    {
-        connChannel_.removeSelf();
-        connSocket_->closeFd();
-    }
+    void handleClose();
 
     void handleWrite();
 
     void sendMessage(const char* msg,size_t len);
-
 
     int getFd() const {
         return connSocket_->getFd();

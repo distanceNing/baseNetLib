@@ -8,13 +8,14 @@
 #ifndef BASE_NET_LIB_TCPSERVER_H
 #define BASE_NET_LIB_TCPSERVER_H
 #include "event_loop.h"
-#include "channel.h"
 #include "socket/tcp_socket.h"
+#include "channel.h"
 #include "Acceptor.h"
 
 #include <functional>
 #include <list>
 #include <memory>
+
 using namespace std::placeholders;
 namespace net {
 class SocketBuf;
@@ -27,11 +28,7 @@ class TcpServer {
 public:
     using ClientReadCallBack=std::function<void(TcpConnection&, SocketBuf&)>;
     using ClientCloseCallBack=std::function<void(TcpConnection&)>;
-    TcpServer(unsigned listen_port, EventLoop* loop)
-            :serverLoop_(loop), acceptor_(new Acceptor(listen_port, serverLoop_))
-    {
-        acceptor_->setNewConnetcionCallBack(std::bind(&TcpServer::newConnectionCallBack, this, _1, _2));
-    }
+    TcpServer(unsigned listen_port, EventLoop* loop);
 
     void newConnectionCallBack(int fd, IpAddress ip_address);
 

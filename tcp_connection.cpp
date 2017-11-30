@@ -8,6 +8,18 @@
 
 #include "tcp_connection.h"
 namespace net {
+
+TcpConnection::TcpConnection(const int fd, const IpAddress& ipAddress, EventLoop* loop)
+        :connSocket_(new TcpSocket(fd)), ipAddress_(ipAddress), connChannel_(loop, fd)
+{
+    //添加connection的事件回调函数
+    connChannel_.setReadCallBack(std::bind(&TcpConnection::handleRead, this));
+    connChannel_.setWriteCallBack(std::bind(&TcpConnection::handleWrite, this));
+    connChannel_.setErrorCallBack(errorCallBack_);
+    //设置connsock可读
+    connChannel_.enableReading();
+}
+
 void TcpConnection::handleRead()
 {
     if (ssize_t read_size = readBuf_.readFromFd(connSocket_->getFd()) > 0)
@@ -38,6 +50,11 @@ void TcpConnection::sendMessage(const char* msg, size_t len)
         writeBuf_.write(msg + send_size, len - send_size);
         connChannel_.enableWriting();
     }
+}
+void TcpConnection::handleClose()
+{
+    connChannel_.removeSelf();
+    connSocket_->closeFd();
 }
 
 }//namespace net

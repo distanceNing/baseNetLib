@@ -5,6 +5,11 @@
 #include "tcp_server.h"
 #include "tcp_connection.h"
 namespace net {
+TcpServer::TcpServer(unsigned listen_port, EventLoop* loop)
+        :serverLoop_(loop), acceptor_(new Acceptor(listen_port, serverLoop_))
+{
+    acceptor_->setNewConnetcionCallBack(std::bind(&TcpServer::newConnectionCallBack, this, _1, _2));
+}
 
 void TcpServer::serverStart()
 {
@@ -39,4 +44,5 @@ void TcpServer::newConnectionCallBack(int fd, IpAddress ip_address)
     // auto ite=connectionMap_.insert({fd,con_ptr});
     connectionMap_[fd] = con_ptr;
 }
+
 } //namespace net

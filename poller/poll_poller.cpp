@@ -1,8 +1,7 @@
-#include "poll_poller.h"
-
-#include <stdlib.h>
 #include <iostream>
 #include "../channel.h"
+#include "poll_poller.h"
+#include "../timerfd/time_stamp.h"
 namespace net {
 TimeStamp PollPoller::Poll(int time_out, ChannelList& activeChannels)
 {
@@ -29,8 +28,7 @@ TimeStamp PollPoller::Poll(int time_out, ChannelList& activeChannels)
 
 void PollPoller::fillActiveChannel(int num_ready, ChannelList& activeChannels)
 {
-    for (std::vector<struct pollfd>::iterator i = pollfdList_.begin(); i != pollfdList_.end(); ++i)
-    {
+    for (std::vector<struct pollfd>::iterator i = pollfdList_.begin(); i != pollfdList_.end(); ++i) {
         if (i->revents > 0) {
             channelMap_[i->fd]->setRetEvents(i->revents);
             activeChannels.push_back(channelMap_[i->fd]);
@@ -65,12 +63,10 @@ void PollPoller::removeChannel(Channel* channel)
 }
 void PollPoller::updateChannel(Channel* channel)
 {
-   for(auto& ite :pollfdList_)
-   {
-       if(ite.fd==channel->getFd())
-       {
-           ite.events=channel->getEvents();
-       }
-   }
+    for (auto& ite :pollfdList_) {
+        if (ite.fd == channel->getFd()) {
+            ite.events = channel->getEvents();
+        }
+    }
 }
 }//namespace net
