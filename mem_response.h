@@ -21,6 +21,7 @@ public:
     ~Response()
     {
     }
+    void handleDelete(const std::string& key);
 
     void handleGet(const std::string& key);
 
