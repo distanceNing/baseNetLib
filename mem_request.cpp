@@ -5,8 +5,8 @@
 //
 // Copyright (c) yangning All rights reserved.
 //
-#include "request.h"
-#include "socket/socket_buf.h"
+#include "mem_request.h"
+#include "net/socket/socket_buf.h"
 #include "net/common.h"
 #include "data_structer.h"
 
@@ -28,7 +28,7 @@ for (;*ptr == ' '||*ptr=='\n';++ptr)\
 ;\
 }while (0)
 
-int request::parse(net::SocketBuf& sock_buf)
+int Request::parse(net::SocketBuf& sock_buf)
 {
 
     char* crlf = sock_buf.findCRLF();
@@ -64,7 +64,7 @@ int request::parse(net::SocketBuf& sock_buf)
     return currenParseStat_;
 }
 
-int request::pareseBody(char* begin)
+int Request::pareseBody(char* begin)
 {
     SKIP_SPACE(begin);
     if ( *begin == '\0' )
@@ -98,7 +98,7 @@ int request::pareseBody(char* begin)
     return PARSE_OK;
 }
 
-int request::parseSet(char* begin)
+int Request::parseSet(char* begin)
 {
 
     char* flag = std::find(begin, begin + strlen(begin), ' ');
@@ -127,7 +127,7 @@ int request::parseSet(char* begin)
     return 0;
 }
 
-char* request::pareseType(char* begin)
+char* Request::pareseType(char* begin)
 {
     if ( !strncmp(begin, "set", 3)) {
         requestType_ = REQ_SET;
@@ -175,15 +175,15 @@ char* request::pareseType(char* begin)
     return NULL;
 }
 
-REQ_TYPE request::getRequestType() const
+REQ_TYPE Request::getRequestType() const
 {
     return requestType_;
 }
-const std::string& request::getKey() const
+const std::string& Request::getKey() const
 {
     return key_;
 }
-int request::parseGet(char* begin)
+int Request::parseGet(char* begin)
 {
     char* flag = NULL;
     keyCount_ = 0;
@@ -202,7 +202,7 @@ int request::parseGet(char* begin)
     }
     return keyCount_ == 0 ?  BAD_REQ:PARSE_OK;
 }
-uint32_t request::getKeyCount()const
+uint32_t Request::getKeyCount()const
 {
     return keyCount_;
 }

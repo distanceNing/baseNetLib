@@ -9,7 +9,7 @@
 #ifndef MEMCACHED_DATASTRUCTER_H
 #define MEMCACHED_DATASTRUCTER_H
 #include "thread/lock.h"
-#include "common.h"
+#include "net/common.h"
 #include <unordered_map>
 #include <vector>
 #include <memory>

@@ -5,4 +5,10 @@
 //
 // Copyright (c) yangning All rights reserved.
 //
+#include "tests/test.h"
 
+int main()
+{
+    testRequestParse();
+    return 0;
+}

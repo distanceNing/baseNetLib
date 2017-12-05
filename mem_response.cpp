@@ -6,7 +6,7 @@
 // Copyright (c) yangning All rights reserved.
 //
 
-#include "Response.h"
+#include "mem_response.h"
 #include "data_structer.h"
 
 static const char* NOT_FOUND = "NOT_FOUND";

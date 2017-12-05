@@ -30,9 +30,9 @@ enum REQ_TYPE {
 enum PARSE_RESULT {
   NOT_PARSING = 100,NOT_ALL, PARSE_OK, BAD_REQ,NEED_DATA_BLOCK,
 };
-class request {
+class Request {
 public:
-    request()
+    Request()
             :isNoReplay(false), valueInfo_(new ValueInfo),currenParseStat_(NOT_PARSING),keyCount_(0)
     { }
 
@@ -47,7 +47,7 @@ public:
         return valueInfo_;
     }
 
-    ~request()
+    ~Request()
     {
     }
 
