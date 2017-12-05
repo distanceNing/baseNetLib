@@ -22,7 +22,7 @@ void User::packResponse()
         break;
     }
     case REQ_GET: {
-        response_.handleGet(request_.getKey());
+        response_.handleGet(request_.getKey(),request_.getKeyCount());
         break;
     }
     case REQ_DELETE: {

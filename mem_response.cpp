@@ -18,15 +18,22 @@ static const char* END = "END";
 static const char* CRLF = "\r\n";
 
 
-void Response::handleGet(const std::string& key)
+void Response::handleGet(const std::string& keys,const uint32_t key_count)
 {
-    const ValueInfo* value_info = dataStructer_->getValue(key);
-    if ( value_info != nullptr )
-        response_ = std::move(value_info->packInfo(key));
-    else {
-        response_ = NOT_FOUND;
+    std::string key("");
+    for(int i=0;i<key_count;++i)
+    {
+        key=keys.substr(key.size(),keys.find(CRLF,2));
+        const ValueInfo* value_info = dataStructer_->getValue(key);
+        if ( value_info != nullptr )
+            response_ = std::move(value_info->packInfo(key));
+        else {
+            response_ = NOT_FOUND;
+        }
+        response_ += CRLF;
     }
-    response_ += CRLF;
+
+
 }
 
 void Response::handleSet(const std::string& key, ValueInfo* value_info)

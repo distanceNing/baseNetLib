@@ -18,6 +18,9 @@ inline bool strIsNum(const char* flag)
     }
     return true;
 }
+
+
+static const int kCrlfLen=2;
 static const char* FLUSH_ALL = "flash_all";
 static const char* DELETE = "delete";
 static const char* QUIT = "quit";
@@ -57,8 +60,8 @@ PARSE_RESULT Request::parse(net::SocketBuf& sock_buf)
                 currenParseStat_ = PARSE_OK;
         }
         if ( crlf != NULL && currenParseStat_ == NEED_DATA_BLOCK ) {
-            valueInfo_->value_ = new char[valueInfo_->value_len_];
-            sock_buf.read(valueInfo_->value_, valueInfo_->value_len_);
+            valueInfo_->value_ = new char[valueInfo_->value_len_+kCrlfLen];
+            sock_buf.read(valueInfo_->value_, valueInfo_->value_len_+kCrlfLen);
             currenParseStat_ = PARSE_OK;
         }
     }
@@ -70,6 +73,7 @@ int Request::pareseBody(char* begin)
     SKIP_SPACE(begin);
     if ( *begin == '\0' )
         return BAD_REQ;
+    key_="";
     switch (requestType_) {
     case REQ_SET: {
         return parseSet(begin);
