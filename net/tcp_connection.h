@@ -34,6 +34,8 @@ public:
         closeCallBack_ = call_back;
     }
 
+    void destoryConn();
+
     void setClienErrorCallBack(const EventCallBack& call_back)
     {
         errorCallBack_ = call_back;

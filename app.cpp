@@ -12,9 +12,24 @@
 void App::newUserConn(int fd,IpAddress ipAddress)
 {
     userMap_.insert(std::make_pair(fd,User(&dataStructer_)));
-    printf("connect IP: %s ------ Port: %d\n", ipAddress.ip.c_str(), ipAddress.port);
 }
 void App::userMessageCallBack(net::TcpConnection& connection, net::SocketBuf& buf)
 {
     User& user=userMap_.find(connection.getFd())->second;
+    PARSE_RESULT handle_res=user.handleRquest(buf);
+    if(user.getRequestType()==REQ_QUIT)
+    {
+        connection.destoryConn();
+    }
+    if(handle_res != NOT_ALL&&handle_res != NEED_DATA_BLOCK)
+    {
+        user.packResponse();
+        connection.sendMessage(user.getResponse(),user.getResponseLength());
+    }
+
+}
+void App::userCloseConn(net::TcpConnection& connection)
+{
+    printf("fd  %d closed connection \n",connection.getFd());
+    userMap_.erase(connection.getFd());
 }

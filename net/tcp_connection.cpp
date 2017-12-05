@@ -58,5 +58,9 @@ void TcpConnection::handleWrite()
         connChannel_.disenableWriting();
 
 }
+void TcpConnection::destoryConn()
+{
+    closeCallBack_(*this);
+}
 
 }//namespace net

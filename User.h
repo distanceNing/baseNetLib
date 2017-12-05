@@ -10,6 +10,9 @@
 #define MEMCACHED_USER_H
 #include "mem_request.h"
 #include "mem_response.h"
+
+
+
 class DataStructer;
 class User {
 public:
@@ -17,6 +20,24 @@ public:
             :response_(date_structer)
     {
     }
+
+    PARSE_RESULT handleRquest(net::SocketBuf& buf);
+
+    REQ_TYPE getRequestType()
+    {
+        return request_.getRequestType();
+    }
+    void packResponse();
+
+    const size_t getResponseLength()
+    {
+        return response_.getResponseLength();
+    }
+    const char* getResponse() const
+    {
+        return response_.getResponse();
+    }
+
     ~User()
     {
     }

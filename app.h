@@ -27,6 +27,7 @@ public:
     {
     }
 
+    void userCloseConn(net::TcpConnection& connection);
 
     void newUserConn(int fd,IpAddress ipAddress);
 

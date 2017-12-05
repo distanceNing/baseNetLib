@@ -28,9 +28,15 @@ class TcpServer {
 public:
     using ClientReadCallBack=std::function<void(TcpConnection&, SocketBuf&)>;
     using ClientCloseCallBack=std::function<void(TcpConnection&)>;
+    using NewConnCallBack =std::function<void (int,IpAddress&)>;
     TcpServer(unsigned listen_port, EventLoop* loop);
 
     void newConnectionCallBack(int fd, IpAddress ip_address);
+
+    void serNewConnCallBack(const NewConnCallBack& call_back )
+    {
+        newConnCallBack_=call_back;
+    }
 
     void setClientReadCallBack(const ClientReadCallBack& call_back)
     {
@@ -67,6 +73,7 @@ protected:
     ConnectionMap connectionMap_;
     ClientReadCallBack clienReadCallBack_;
     ClientCloseCallBack closeCallBack_;
+    NewConnCallBack newConnCallBack_;
     EventCallBack errorCallBack_;
 };
 }//namespace net

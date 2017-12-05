@@ -43,6 +43,7 @@ void TcpServer::newConnectionCallBack(int fd, IpAddress ip_address)
 
     connectionMap_.insert(std::make_pair(fd,con_ptr));
     //connectionMap_[fd] = con_ptr;
+    newConnCallBack_(fd,ip_address);
 }
 
 } //namespace net

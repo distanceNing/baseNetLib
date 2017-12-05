@@ -24,11 +24,12 @@ enum REQ_TYPE {
   //delete
           REQ_DELETE, REQ_QUIT,
           REQ_FLUSH_ALL,
-  UNKNOWN_REQ,
+   UNKNOWN_REQ,
+   REQ_FAIL,
 };
 
 enum PARSE_RESULT {
-  NOT_PARSING = 100,NOT_ALL, PARSE_OK, BAD_REQ,NEED_DATA_BLOCK,
+  NOT_PARSING = 100,NOT_ALL, PARSE_OK, BAD_REQ,NEED_DATA_BLOCK,PARSE_UNKNOWN_REQ
 };
 class Request {
 public:
@@ -36,8 +37,12 @@ public:
             :isNoReplay(false), valueInfo_(new ValueInfo),currenParseStat_(NOT_PARSING),keyCount_(0)
     { }
 
-    int parse(net::SocketBuf& socketBuf_);
+    PARSE_RESULT parse(net::SocketBuf& socketBuf_);
 
+    void resetParseStat()
+    {
+         currenParseStat_=NOT_PARSING;
+    }
     const std::string& getKey() const;
 
     REQ_TYPE getRequestType() const;
@@ -55,9 +60,9 @@ private:
     char* pareseType(char* begin);
     int pareseBody(char* begin);
 
-    int parseSet(char* begin);
+    PARSE_RESULT parseSet(char* begin);
 
-    int parseGet(char* begin);
+    PARSE_RESULT parseGet(char* begin);
 
     bool needDataBlock(){
         return requestType_ <= REQ_PREPEND;

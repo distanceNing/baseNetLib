@@ -26,6 +26,8 @@ public:
     void handleGet(const std::string& key);
 
     void handleSet(const std::string& key, ValueInfo* value_info);
+
+    void hanleBadReq();
 public:
     const size_t getResponseLength()
     {

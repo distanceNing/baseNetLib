@@ -18,16 +18,15 @@ static const char* END = "END";
 static const char* CRLF = "\r\n";
 
 
-
 void Response::handleGet(const std::string& key)
 {
     const ValueInfo* value_info = dataStructer_->getValue(key);
     if ( value_info != nullptr )
         response_ = std::move(value_info->packInfo(key));
     else {
-        response_ += NOT_FOUND;
-        response_ += CRLF;
+        response_ = NOT_FOUND;
     }
+    response_ += CRLF;
 }
 
 void Response::handleSet(const std::string& key, ValueInfo* value_info)
@@ -46,4 +45,10 @@ void Response::handleDelete(const std::string& key)
         response_=DELETED;
     else
         response_=NOT_FOUND;
+    response_+=CRLF;
+}
+void Response::hanleBadReq()
+{
+    response_=ERROR;
+    response_+=CRLF;
 }

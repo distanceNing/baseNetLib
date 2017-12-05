@@ -28,9 +28,8 @@ for (;*ptr == ' '||*ptr=='\n';++ptr)\
 ;\
 }while (0)
 
-int Request::parse(net::SocketBuf& sock_buf)
+PARSE_RESULT Request::parse(net::SocketBuf& sock_buf)
 {
-
     char* crlf = sock_buf.findCRLF();
     if ( crlf == NULL )
         currenParseStat_ = currenParseStat_ == NOT_PARSING ? NOT_ALL : currenParseStat_;
@@ -43,9 +42,11 @@ int Request::parse(net::SocketBuf& sock_buf)
             sock_buf.skip(strlen(begin) + 2);
             begin = pareseType(begin);
             if ( requestType_ == UNKNOWN_REQ )
-                return UNKNOWN_REQ;
-
+                return PARSE_UNKNOWN_REQ;
+            if(requestType_ == REQ_QUIT)
+                return PARSE_OK;
             if ( pareseBody(begin) == BAD_REQ ) {
+                requestType_=REQ_FAIL;
                 return BAD_REQ;
             }
             if ( needDataBlock()) {
@@ -98,7 +99,7 @@ int Request::pareseBody(char* begin)
     return PARSE_OK;
 }
 
-int Request::parseSet(char* begin)
+PARSE_RESULT Request::parseSet(char* begin)
 {
 
     char* flag = std::find(begin, begin + strlen(begin), ' ');
@@ -124,7 +125,7 @@ int Request::parseSet(char* begin)
     if ( !strIsNum(bytes))
         return BAD_REQ;
     valueInfo_->value_len_ = (uint32_t) atoi(bytes);
-    return 0;
+    return PARSE_OK;
 }
 
 char* Request::pareseType(char* begin)
@@ -183,7 +184,7 @@ const std::string& Request::getKey() const
 {
     return key_;
 }
-int Request::parseGet(char* begin)
+PARSE_RESULT Request::parseGet(char* begin)
 {
     char* flag = NULL;
     keyCount_ = 0;
