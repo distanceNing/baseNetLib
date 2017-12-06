@@ -17,22 +17,25 @@ static const char* ERROR = "ERROR";
 static const char* END = "END";
 static const char* CRLF = "\r\n";
 
-
-void Response::handleGet(const std::string& keys,const uint32_t key_count)
+void Response::handleGet(const std::string& keys, const uint32_t key_count)
 {
+    size_t pos = 0;
     std::string key("");
-    for(int i=0;i<key_count;++i)
-    {
-        key=keys.substr(key.size(),keys.find(CRLF,2));
+    size_t dis = 0;
+    response_ = "";
+    for (int i = 0; i < key_count; ++i) {
+        dis = key.size() == 0 ? 0 : key.size() + 2 + dis;
+        pos = keys.find("\r\n", pos);
+        key = keys.substr(dis, pos - dis);
+        pos += 2;
         const ValueInfo* value_info = dataStructer_->getValue(key);
         if ( value_info != nullptr )
-            response_ = std::move(value_info->packInfo(key));
+            response_ += std::move(value_info->packInfo(key));
         else {
             response_ = NOT_FOUND;
         }
         response_ += CRLF;
     }
-
 
 }
 

@@ -3,28 +3,11 @@
 #include "../mem_request.h"
 #include "../data_structer.h"
 #include "../mem_response.h"
+#include "test_common.h"
 static int main_ret = 0;
 static int test_count = 0;
 static int test_pass = 0;
 
-#define EXPECT_EQ_BASE(equality, expect, actual, format) \
-    do {\
-        test_count++;\
-        if (equality)\
-            test_pass++;\
-        else {\
-            fprintf(stderr, "%s:%d: expect: " format " actual: " format "\n", __FILE__, __LINE__, expect, actual);\
-            main_ret = 1;\
-        }\
-    } while(0)
-
-#define EXPECT_EQ_INT(expect, actual) \
-			EXPECT_EQ_BASE((expect) == (actual), expect, actual, "%d")
-
-#define EXPECT_EQ_STRING(expect,parse_str) \
-	do{\
-		EXPECT_EQ_INT(0, strcmp(expect, parse_str,len));\
-	}while(0)
 
 //#define TEST_RESPONSE(expect,a)
 #define TEST_REQ_TYPE(request,buf,str,result) \
