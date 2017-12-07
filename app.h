@@ -13,10 +13,6 @@
 #include <map>
 #include "net/common.h"
 #include "net/tcp_server.h"
-namespace net{
-class TcpConnection;
-class SocketBuf;
-};
 
 class DataStructer;
 
