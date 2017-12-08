@@ -10,6 +10,9 @@
 #define MEMCACHED_RESPONSE_H
 
 #include <string>
+#include "mem_request.h"
+
+
 class DataStructer;
 struct ValueInfo;
 class Response {
@@ -27,6 +30,9 @@ public:
 
     void handleSet(const std::string& key, ValueInfo* value_info);
 
+    void badDataBlock(PARSE_RESULT result);
+
+    void handleUnknown();
     void hanleBadReq();
 public:
     const size_t getResponseLength()

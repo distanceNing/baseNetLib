@@ -8,11 +8,11 @@
 
 #ifndef MEMCACHED_APP_H
 #define MEMCACHED_APP_H
-#include "Session.h"
+#include "user.h"
 
 #include <map>
-#include "net/common.h"
-#include "net/tcp_server.h"
+#include "../net/common.h"
+#include "../net/tcp_server.h"
 
 class DataStructer;
 

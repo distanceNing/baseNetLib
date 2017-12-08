@@ -1,7 +1,7 @@
 #include "app.h"
 #include "gtest/gtest.h"
 
-#define _TESTING
+//#define _TESTING
 
 int main(int argc, char* argv[])
 {

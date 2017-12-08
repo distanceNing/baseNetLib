@@ -23,7 +23,7 @@ void App::userMessageCallBack(net::TcpConnection& connection, net::SocketBuf& bu
     }
     if(handle_res != NOT_ALL&&handle_res != NEED_DATA_BLOCK)
     {
-        user.packResponse();
+        user.packResponse(handle_res);
         connection.sendMessage(user.getResponse(),user.getResponseLength());
     }
 

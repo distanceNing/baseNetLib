@@ -27,7 +27,7 @@ public:
     {
         return request_.getRequestType();
     }
-    void packResponse();
+    void packResponse(PARSE_RESULT result);
 
     const size_t getResponseLength()
     {

@@ -6,7 +6,7 @@
 // Copyright (c) yangning All rights reserved.
 //
 
-#include "Session.h"
+#include "user.h"
 PARSE_RESULT User::handleRquest(net::SocketBuf& buf)
 {
     PARSE_RESULT handle_res = request_.parse(buf);
@@ -14,11 +14,14 @@ PARSE_RESULT User::handleRquest(net::SocketBuf& buf)
         request_.resetParseStat();
     return handle_res;
 }
-void User::packResponse()
+void User::packResponse(PARSE_RESULT result)
 {
     switch (request_.getRequestType()) {
     case REQ_SET: {
-        response_.handleSet(request_.getKey(), request_.getValueInfo());
+        if(result != PARSE_OK)
+            response_.badDataBlock(result);
+        else
+            response_.handleSet(request_.getKey(), request_.getValueInfo());
         break;
     }
     case REQ_GET: {
@@ -34,7 +37,7 @@ void User::packResponse()
         break;
     }
     case UNKNOWN_REQ: {
-        response_.hanleBadReq();
+        response_.handleUnknown();
         break;
     }
     default:break;

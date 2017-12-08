@@ -5,10 +5,10 @@
 //
 // Copyright (c) yangning All rights reserved.
 //
-#include "mem_request.h"
+#include "headers/mem_request.h"
 #include "net/socket/socket_buf.h"
 #include "net/common.h"
-#include "data_structer.h"
+#include "headers/data_structer.h"
 
 inline bool strIsNum(const char* flag)
 {
@@ -19,8 +19,7 @@ inline bool strIsNum(const char* flag)
     return true;
 }
 
-
-static const int kCrlfLen=2;
+static const int kCrlfLen = 2;
 static const char* FLUSH_ALL = "flash_all";
 static const char* DELETE = "delete";
 static const char* QUIT = "quit";
@@ -46,10 +45,10 @@ PARSE_RESULT Request::parse(net::SocketBuf& sock_buf)
             begin = pareseType(begin);
             if ( requestType_ == UNKNOWN_REQ )
                 return PARSE_UNKNOWN_REQ;
-            if(requestType_ == REQ_QUIT)
+            if ( requestType_ == REQ_QUIT )
                 return PARSE_OK;
             if ( pareseBody(begin) == BAD_REQ ) {
-                requestType_=REQ_FAIL;
+                requestType_ = REQ_FAIL;
                 return BAD_REQ;
             }
             if ( needDataBlock()) {
@@ -60,9 +59,7 @@ PARSE_RESULT Request::parse(net::SocketBuf& sock_buf)
                 currenParseStat_ = PARSE_OK;
         }
         if ( crlf != NULL && currenParseStat_ == NEED_DATA_BLOCK ) {
-            valueInfo_->value_ = new char[valueInfo_->value_len_+kCrlfLen];
-            sock_buf.read(valueInfo_->value_, valueInfo_->value_len_+kCrlfLen);
-            currenParseStat_ = PARSE_OK;
+            fillValueInfo(crlf, sock_buf);
         }
     }
     return currenParseStat_;
@@ -73,7 +70,7 @@ int Request::pareseBody(char* begin)
     SKIP_SPACE(begin);
     if ( *begin == '\0' )
         return BAD_REQ;
-    key_="";
+    key_ = "";
     switch (requestType_) {
     case REQ_SET: {
         return parseSet(begin);
@@ -199,17 +196,35 @@ PARSE_RESULT Request::parseGet(char* begin)
         begin = flag;
         ++keyCount_;
     }
-    if(*begin != '\0')
-    {
+    if ( *begin != '\0' ) {
         key_ += begin;
         key_ += "\r\n";
         ++keyCount_;
     }
-    return keyCount_ == 0 ?  BAD_REQ:PARSE_OK;
+    return keyCount_ == 0 ? BAD_REQ : PARSE_OK;
 }
-uint32_t Request::getKeyCount()const
+uint32_t Request::getKeyCount() const
 {
     return keyCount_;
+}
+void Request::fillValueInfo(const char* crlf, net::SocketBuf& sock_buf)
+{
+
+    size_t data_size = crlf - sock_buf.readBegin();
+    //数据块过小
+    if ( data_size < valueInfo_->value_len_ ) {
+        sock_buf.skip(data_size + kCrlfLen);
+        currenParseStat_ = DATA_BLOCK_SHORT;
+    }
+    else if ( data_size > valueInfo_->value_len_ ) {
+        sock_buf.skip(data_size + kCrlfLen);
+        currenParseStat_ = DATA_BLOCK_LONG;
+    }
+    else {
+        valueInfo_->value_ = new char[valueInfo_->value_len_ + kCrlfLen];
+        sock_buf.read(valueInfo_->value_, valueInfo_->value_len_ + kCrlfLen);
+        currenParseStat_ = PARSE_OK;
+    }
 }
 
 

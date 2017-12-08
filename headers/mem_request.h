@@ -8,7 +8,7 @@
 
 #ifndef MEMCACHED_REQUEST_H
 #define MEMCACHED_REQUEST_H
-#include "net/common.h"
+#include "../net/common.h"
 #include "data_structer.h"
 
 #include <string>
@@ -29,7 +29,7 @@ enum REQ_TYPE {
 };
 
 enum PARSE_RESULT {
-  NOT_PARSING = 100,NOT_ALL,NEED_DATA_BLOCK, PARSE_OK, BAD_REQ,PARSE_UNKNOWN_REQ
+  NOT_PARSING = 100,NOT_ALL,NEED_DATA_BLOCK, PARSE_OK, BAD_REQ,PARSE_UNKNOWN_REQ,DATA_BLOCK_SHORT,DATA_BLOCK_LONG
 };
 class Request {
 public:
@@ -51,6 +51,12 @@ public:
     {
         return valueInfo_;
     }
+    PARSE_RESULT getParseResult()const
+    {
+        return currenParseStat_;
+    }
+
+    void fillValueInfo(const char* crlf,net::SocketBuf& sock_buf);
 
     ~Request()
     {
