@@ -20,6 +20,7 @@ void App::userMessageCallBack(net::TcpConnection& connection, net::SocketBuf& bu
     if(user.getRequestType()==REQ_QUIT)
     {
         connection.destoryConn();
+        return;
     }
     if(handle_res != NOT_ALL&&handle_res != NEED_DATA_BLOCK)
     {

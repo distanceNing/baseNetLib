@@ -1,10 +1,10 @@
 #include "app.h"
 #include "gtest/gtest.h"
-
 //#define _TESTING
 
 int main(int argc, char* argv[])
 {
+
 #ifdef _TESTING
     ::testing::FLAGS_gtest_color="yes";
     ::testing::InitGoogleTest(&argc, argv);
@@ -15,7 +15,6 @@ int main(int argc, char* argv[])
     App app(&loop);
     app.run();
     return 0;
-
 #endif
 
 }

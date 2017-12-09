@@ -37,7 +37,7 @@ PARSE_RESULT Request::parse(net::SocketBuf& sock_buf)
         currenParseStat_ = currenParseStat_ == NOT_PARSING ? NOT_ALL : currenParseStat_;
     else {
         char* begin = NULL;
-        if ( currenParseStat_ == NOT_PARSING ) {
+        if ( currenParseStat_ == NOT_PARSING ||currenParseStat_ ==NOT_ALL) {
             *crlf = '\0';
             begin = sock_buf.readBegin();
             //数据读取了一行
@@ -48,6 +48,7 @@ PARSE_RESULT Request::parse(net::SocketBuf& sock_buf)
             if ( requestType_ == REQ_QUIT )
                 return PARSE_OK;
             if ( pareseBody(begin) == BAD_REQ ) {
+                sock_buf.skip(sock_buf.readableBytes());
                 requestType_ = REQ_FAIL;
                 return BAD_REQ;
             }
@@ -59,6 +60,7 @@ PARSE_RESULT Request::parse(net::SocketBuf& sock_buf)
                 currenParseStat_ = PARSE_OK;
         }
         if ( crlf != NULL && currenParseStat_ == NEED_DATA_BLOCK ) {
+            char* temp=sock_buf.readBegin();
             fillValueInfo(crlf, sock_buf);
         }
     }
@@ -102,7 +104,6 @@ int Request::pareseBody(char* begin)
 
 PARSE_RESULT Request::parseSet(char* begin)
 {
-
     char* flag = std::find(begin, begin + strlen(begin), ' ');
     if ( *flag == '\0' )
         return BAD_REQ;
@@ -115,17 +116,17 @@ PARSE_RESULT Request::parseSet(char* begin)
     *exptiem++ = '\0';
     if ( !strIsNum(flag))
         return BAD_REQ;
-    valueInfo_->flags_ = (uint32_t) atoi(flag);
+    valueInfo_.flags_ = (uint32_t) atoi(flag);
     char* bytes = std::find(exptiem, exptiem + strlen(exptiem), ' ');
     if ( *bytes == '\0' )
         return BAD_REQ;
     *bytes++ = '\0';
     if ( !strIsNum(exptiem))
         return BAD_REQ;
-    valueInfo_->exptime_ = atoi(exptiem);
+    valueInfo_.exptime_ = atoi(exptiem);
     if ( !strIsNum(bytes))
         return BAD_REQ;
-    valueInfo_->value_len_ = (uint32_t) atoi(bytes);
+    valueInfo_.value_len_ = (uint32_t) atoi(bytes);
     return PARSE_OK;
 }
 
@@ -212,17 +213,17 @@ void Request::fillValueInfo(const char* crlf, net::SocketBuf& sock_buf)
 
     size_t data_size = crlf - sock_buf.readBegin();
     //数据块过小
-    if ( data_size < valueInfo_->value_len_ ) {
+    if ( data_size < valueInfo_.value_len_ ) {
         sock_buf.skip(data_size + kCrlfLen);
         currenParseStat_ = DATA_BLOCK_SHORT;
     }
-    else if ( data_size > valueInfo_->value_len_ ) {
+    else if ( data_size > valueInfo_.value_len_ ) {
         sock_buf.skip(data_size + kCrlfLen);
         currenParseStat_ = DATA_BLOCK_LONG;
     }
     else {
-        valueInfo_->value_ = new char[valueInfo_->value_len_ + kCrlfLen];
-        sock_buf.read(valueInfo_->value_, valueInfo_->value_len_ + kCrlfLen);
+        valueInfo_.setValue(sock_buf);
+        char* temp=sock_buf.readBegin();
         currenParseStat_ = PARSE_OK;
     }
 }

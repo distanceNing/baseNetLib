@@ -18,8 +18,9 @@ bool net::SocketBuf::read(char* data, size_t bytes)
     assert(data != NULL && bytes >= 0);
     if (bytes > readableBytes())
         return false;
-    memcpy(data, readBegin(), bytes);
-    readIndex_ += bytes;
+    const char* temp=readBegin();
+    memcpy(data, temp, bytes);
+    skip(bytes);
     return true;
 }
 

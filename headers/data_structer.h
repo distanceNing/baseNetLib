@@ -10,6 +10,7 @@
 #define MEMCACHED_DATASTRUCTER_H
 #include "../thread/lock.h"
 #include "../net/common.h"
+#include "../net/socket/socket_buf.h"
 #include <unordered_map>
 #include <vector>
 #include <memory>
@@ -23,14 +24,30 @@ struct ValueInfo {
   uint64_t cas_;
   uint32_t value_len_;
   char* value_;
-
+  ValueInfo()
+          :value_(NULL), flags_(0), exptime_(0), cas_(0), value_len_(0)
+  {
+  }
   void setValue(const char* value, uint32_t len)
   {
+      if ( value_ != NULL )
+          delete[]value_;
       value_ = new char[len];
       memcpy(value_, value, len);
   }
 
-  void printInfo()const
+  void setValue(net::SocketBuf& sock_buf)
+  {
+      if ( value_ != NULL )
+          delete[]value_;
+      value_ = new char[value_len_ + 2];
+      sock_buf.read(value_, value_len_ + 2);
+      value_len_ += 2;
+  }
+
+  const ValueInfo& operator=(ValueInfo& rv);
+
+  void printInfo() const
   {
       std::cout << "value_len_ : " << value_len_ << "\nvalue_     : " << value_ << "\nflags_     : " << flags_
                 << "\nexptime_   : " << exptime_ << "\ncas_       : " << cas_ << std::endl;
@@ -51,15 +68,13 @@ struct ValueInfo {
 
 typedef struct {
   MutexLock nodeLock_;
-  std::unordered_map<std::string, std::unique_ptr<ValueInfo>> nodeMap_;
+  std::unordered_map<std::string, std::unique_ptr<ValueInfo, std::function<void(ValueInfo*)>>> nodeMap_;
 } Node;
-
-
 
 class DataStructer {
 public:
-    enum OperatorRes{
-      kOperatorOk=100,kExisted,kOperatorFail,kNotFound,
+    enum OperatorRes {
+      kOperatorOk = 100, kExisted, kOperatorFail, kNotFound,
     };
     static const size_t kInitBucketSize = 8;
 
@@ -75,6 +90,15 @@ public:
     OperatorRes remove(const std::string& key);
 
     OperatorRes append(const std::string& key, const char* data, const size_t data_len);
+
+    size_t elementSize() const
+    {
+        size_t count = 0;
+        for (auto& ite : dataStructer_) {
+            count += ite.nodeMap_.size();
+        }
+        return count;
+    }
 
     ~DataStructer()
     {

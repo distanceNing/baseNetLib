@@ -34,7 +34,7 @@ enum PARSE_RESULT {
 class Request {
 public:
     Request()
-            :isNoReplay(false), valueInfo_(new ValueInfo),currenParseStat_(NOT_PARSING),keyCount_(0)
+            :isNoReplay(false),currenParseStat_(NOT_PARSING),keyCount_(0)
     { }
 
     PARSE_RESULT parse(net::SocketBuf& socketBuf_);
@@ -49,7 +49,7 @@ public:
 
     inline ValueInfo* getValueInfo()
     {
-        return valueInfo_;
+        return &valueInfo_;
     }
     PARSE_RESULT getParseResult()const
     {
@@ -60,6 +60,8 @@ public:
 
     ~Request()
     {
+        if(valueInfo_.value_)
+            delete []valueInfo_.value_;
     }
 
 private:
@@ -74,13 +76,15 @@ private:
         return requestType_ <= REQ_PREPEND;
     }
 
-    PARSE_RESULT currenParseStat_;
-    REQ_TYPE requestType_;
-    ValueInfo* valueInfo_;
-    std::string key_;
+
 public:
     uint32_t getKeyCount() const;
 private:
+    PARSE_RESULT currenParseStat_;
+    REQ_TYPE requestType_;
+    ValueInfo valueInfo_;
+    std::string key_;
+
     uint32_t keyCount_;
     bool isNoReplay;
 

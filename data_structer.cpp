@@ -10,19 +10,38 @@
 #include "net/common.h"
 #include <hash_fun.h>
 #include <cstring>
+
+const ValueInfo& ValueInfo::operator=(ValueInfo& rv)
+{
+    flags_ = rv.flags_;
+    cas_ = rv.cas_;
+    value_len_ = rv.value_len_;
+    value_ = rv.value_;
+    exptime_ = rv.exptime_;
+    rv.value_ = NULL;
+    rv.value_len_ = 0;
+    return *this;
+}
+
 DataStructer::OperatorRes DataStructer::insert(const std::string& key, ValueInfo* value_info)
 {
     //已存在
-    if(getValue(key)!= nullptr)
+    if ( getValue(key) != nullptr )
         return kExisted;
+    auto temp = new ValueInfo;
+    *temp = *value_info;
     size_t hash_code = hashFun(key);
     size_t index = hash_code % dataStructer_.size();
-
     Node& index_ref = dataStructer_.at(index);
     index_ref.nodeLock_.lock();
-    auto result = index_ref.nodeMap_.insert(std::make_pair(key, std::unique_ptr<ValueInfo>(value_info)));
+    auto result = index_ref.nodeMap_
+            .insert(std::make_pair(key, std::unique_ptr<ValueInfo, std::function<void(ValueInfo*)>>(temp, //deletor
+                    [](ValueInfo* value) {
+                      delete[]value->value_;
+                      delete value;
+                    })));
     index_ref.nodeLock_.unlock();
-    return result.second ? kOperatorOk:kOperatorFail;
+    return result.second ? kOperatorOk : kOperatorFail;
 }
 const ValueInfo* DataStructer::getValue(const std::string& key) const
 {
@@ -32,17 +51,19 @@ const ValueInfo* DataStructer::getValue(const std::string& key) const
     return ite != index_ref.nodeMap_.end() ? ite->second.get() : nullptr;
 }
 
-
 DataStructer::OperatorRes DataStructer::remove(const std::string& key)
 {
-    if(getValue(key)!= nullptr)
+    const ValueInfo* temp = getValue(key);
+    if ( temp == nullptr )
         return kNotFound;
+    //先释放value的内存
+    //delete[]temp->value_;
     size_t index = hashFun(key) % dataStructer_.size();
     Node& index_ref = dataStructer_.at(index);
     index_ref.nodeLock_.lock();
     size_t res = index_ref.nodeMap_.erase(key);
     index_ref.nodeLock_.unlock();
-    return res == 1 ? kOperatorOk:kOperatorFail;
+    return res == 1 ? kOperatorOk : kOperatorFail;
 }
 DataStructer::OperatorRes DataStructer::append(const std::string& key, const char* data, const size_t data_len)
 {
@@ -62,4 +83,5 @@ DataStructer::OperatorRes DataStructer::append(const std::string& key, const cha
     delete[]ptr;
     return kOperatorOk;
 }
+
 

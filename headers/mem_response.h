@@ -12,7 +12,6 @@
 #include <string>
 #include "mem_request.h"
 
-
 class DataStructer;
 struct ValueInfo;
 class Response {
@@ -26,7 +25,7 @@ public:
     }
     void handleDelete(const std::string& key);
 
-    void handleGet(const std::string& keys,const uint32_t key_count);
+    void handleGet(const std::string& keys, const uint32_t key_count);
 
     void handleSet(const std::string& key, ValueInfo* value_info);
 
