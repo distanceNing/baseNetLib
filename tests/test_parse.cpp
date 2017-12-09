@@ -19,16 +19,18 @@ do{\
     EXPECT_EQ(result,request.getRequestType());\
 }while(0)
 
-#define APEND_BUF(buf, str, result) \
+#define APEND_BUF(buf, request, str, result) \
 do{\
     buf.resetBuffer();\
     buf.append(str);\
-    Request request;\
     EXPECT_EQ(result,request.parse(buf));\
 }while(0)
 
+
+
+
 //加入参数
-class ReqTest : public ::testing::TestWithParam<std::string >{
+class ReqTest : public ::testing::TestWithParam<std::string> {
 public:
     //第一个case执行前执行
     static void SetUpTestCase()
@@ -55,10 +57,10 @@ public:
     Request request;
     net::SocketBuf buf;
 };
-INSTANTIATE_TEST_CASE_P(TrueReturn, ReqTest, testing::Values("get\r\n","get \r\n","get   \r\n"));
+INSTANTIATE_TEST_CASE_P(TrueReturn, ReqTest, testing::Values("get\r\n", "get \r\n", "get   \r\n"));
 TEST_P(ReqTest, bad_req)
 {
-    std::string str =  GetParam();
+    std::string str = GetParam();
     TEST_GET(buf, str, BAD_REQ, 0);
 }
 
@@ -69,24 +71,55 @@ TEST_F(ReqTest, req_type_get)
     TEST_GET(buf, "g\r\n", PARSE_UNKNOWN_REQ, 0);
 
 }
+
+#define TEST_PARSE(buf, request, str, result) \
+do{\
+    buf.append(str);\
+    EXPECT_EQ(result,request.parse(buf));\
+}while(0)
+
+
 TEST_F(ReqTest, req_set)
 {
-    APEND_BUF(buf, "set yn 32 1023434 8\r\n", NEED_DATA_BLOCK);
-    APEND_BUF(buf, "set yn 32 102343", NOT_ALL);
-    APEND_BUF(buf, "set yn 32 1023434 8\r\n yn\r\n", PARSE_OK);
-    APEND_BUF(buf, "set yn 32 1023434 8\r\n yn", NEED_DATA_BLOCK);
+    buf.resetBuffer();
+    request.resetParseStat();
+    TEST_PARSE(buf, request, "set yn 32 1023434 8\r\n", NEED_DATA_BLOCK);
+    TEST_PARSE(buf, request, "setaaaaa\r\n", PARSE_OK);
+    EXPECT_EQ((int)REQ_SET,request.getRequestType());
+    request.resetParseStat();
+    TEST_PARSE(buf, request, "quit\r\n", PARSE_OK);
+    EXPECT_EQ(REQ_QUIT,request.getRequestType());
+    TEST_PARSE(buf, request, "set yn 32 1023434 3\r\n yn\r\n", PARSE_OK);
+    request.resetParseStat();
+    TEST_PARSE(buf, request, "set yn 32 102343 1", NOT_ALL);
+    TEST_PARSE(buf, request, "\r\n", NEED_DATA_BLOCK);
+    TEST_PARSE(buf, request, "1\r\n", PARSE_OK);
+    EXPECT_EQ((int)REQ_SET,request.getRequestType());
+    request.resetParseStat();
+    TEST_PARSE(buf, request, "set yn 32 1023434 3\r\n yn\r\n", PARSE_OK);
+    EXPECT_EQ((int)REQ_SET,request.getRequestType());
+    request.resetParseStat();
 
-    APEND_BUF(buf, "set   \r\n yn", BAD_REQ);
-    APEND_BUF(buf, "set yn  \r\n yn", BAD_REQ);
-    APEND_BUF(buf, "set yn 32 \r\n yn", BAD_REQ);
-    APEND_BUF(buf, "set yn 32 1023434  \r\n yn", BAD_REQ);
+    TEST_PARSE(buf, request, "set yn 32 1023434 4\r\n yn\r\n", DATA_BLOCK_SHORT);
+    request.resetParseStat();
+    TEST_PARSE(buf, request, "set yn 32 1023434 1\r\n yn\r\n", DATA_BLOCK_LONG);
+    request.resetParseStat();
+    TEST_PARSE(buf, request, "set   \r\n yn", BAD_REQ);
+    request.resetParseStat();
+    TEST_PARSE(buf, request, "set yn  \r\n yn", BAD_REQ);
+    request.resetParseStat();
+    TEST_PARSE(buf, request, "set yn 32 \r\n yn", BAD_REQ);
+    request.resetParseStat();
+    TEST_PARSE(buf, request, "set yn 32 1023434  \r\n yn", BAD_REQ);
+    request.resetParseStat();
 
-    APEND_BUF(buf, "set yn a \r\n yn", BAD_REQ);
-    APEND_BUF(buf, "set yn 32 a\r\n yn", BAD_REQ);
-    APEND_BUF(buf, "set yn 32 32 a\r\n yn", BAD_REQ);
+    APEND_BUF(buf, request, "set yn a \r\n yn", BAD_REQ);
+    request.resetParseStat();
+    APEND_BUF(buf, request, "set yn 32 a\r\n yn", BAD_REQ);
+    request.resetParseStat();
+    APEND_BUF(buf, request, "set yn 32 32 a\r\n yn", BAD_REQ);
+    request.resetParseStat();
 }
-
-
 
 TEST_F(ReqTest, test_req_type)
 {
@@ -114,11 +147,15 @@ TEST_F(ReqTest, req_get)
     TEST_GET(buf, "get yn \r\n", PARSE_OK, 1);
     TEST_GET(buf, "get yn yn1 \r\n", PARSE_OK, 2);
 }
+
+
 TEST_F(ReqTest, req_delete)
 {
-    APEND_BUF(buf, "delete \r\n", BAD_REQ);
-    APEND_BUF(buf, "delete yn\r\n", PARSE_OK);
-    APEND_BUF(buf, "delete", NOT_ALL);
-    APEND_BUF(buf, "de\r\n", PARSE_UNKNOWN_REQ);
+    request.resetParseStat();
+    TEST_PARSE(buf, request, "delete \r\n", BAD_REQ);
+    TEST_PARSE(buf, request, "delete yn\r\n", PARSE_OK);
+    request.resetParseStat();
+    TEST_PARSE(buf, request, "delete", NOT_ALL);
+    TEST_PARSE(buf, request, "key\r\n", PARSE_OK);
 }
 
