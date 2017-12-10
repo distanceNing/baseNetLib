@@ -39,6 +39,10 @@ struct IpAddress
           :ip(ip), port(port)
   {
   }
+  virtual ~IpAddress()
+  {
+
+  }
 };
 
 #endif //BASE_NET_LIB_COMMON_H

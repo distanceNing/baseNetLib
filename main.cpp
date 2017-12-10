@@ -1,43 +1,39 @@
 //
-// Created by yangning on 17-11-29.
+// Created by yangning on 17-10-25.
 //
-// Descriprion :test echo server
+// Descriprion :
 //
 // Copyright (c) yangning All rights reserved.
 //
 
 #include "event_loop.h"
-#include "Acceptor.h"
 #include "common.h"
 #include "tcp_server.h"
 #include "tcp_connection.h"
-void clientRCB(net::TcpConnection& connection, net::SocketBuf& buf)
-{
-    std::vector<char> buffer(buf.readableBytes(), 0);
-    buf.read(buffer.data(), buffer.size());
-    connection.sendMessage(buffer.data(), buffer.size());
-}
-
-void errorCB()
-{
-    printErrorMsg("read from fd");
-}
-
-void closecb(net::TcpConnection& connection)
-{
-    printf("Sockfd %d is close ---- \n", connection.getFd());
-}
 int main()
 {
-
     net::EventLoop loop(net::POLL);
 
-    net::TcpServer tcpServer(kPort, &loop);
+    net::TcpServer tcpServer(kPort,&loop);
 
-    tcpServer.setClientReadCallBack(clientRCB);
-    tcpServer.setClienErrorCallBack(errorCB);
-    tcpServer.setClienCloseCallBack(closecb);
+    tcpServer.setClienCloseCallBack([](net::TcpConnection& connection){
+      printf("fd is %d closed \n",connection.getFd());
+    });
+
+    tcpServer.setClientReadCallBack([](net::TcpConnection& connection,net::SocketBuf& buf){
+      printf("fd %d is readable  buf is  %s \n",connection.getFd(),buf.readBegin());
+    });
+
+    tcpServer.setClienErrorCallBack([](){
+      printErrorMsg("error");
+    });
+
+    tcpServer.setNewConnCallBack([](int fd, const IpAddress& ipAddress) {
+      printf("a new connection fd is %d ,ip : %s  port : %d \n", fd, ipAddress.ip.c_str(), ipAddress.port);
+    });
+
     tcpServer.serverStart();
 
-    return EXIT_SUCCESS;
+    return 0;
 }
+

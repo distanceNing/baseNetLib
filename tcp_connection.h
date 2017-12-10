@@ -39,24 +39,24 @@ public:
         errorCallBack_ = call_back;
     }
 
+    void sendMessage(const char* msg,size_t len);
+
+    int getFd() const {
+        return connSocket_.getFd();
+    }
+
     void handleRead();
 
     void handleClose();
 
     void handleWrite();
 
-    void sendMessage(const char* msg,size_t len);
-
-    int getFd() const {
-        return connSocket_->getFd();
-    }
-
     ~TcpConnection()
     {
     }
 
 private:
-    std::unique_ptr<TcpSocket> connSocket_;
+    TcpSocket connSocket_;
     Channel connChannel_;
     IpAddress ipAddress_;
     TcpServer::ClientReadCallBack clientReadCallBack_;

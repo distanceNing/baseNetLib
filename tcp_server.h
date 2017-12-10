@@ -1,7 +1,7 @@
 //
 // Created by yangning on 17-10-24.
 //
-// Descriprion :
+// Descriprion : tcpserver 内部持有acceptor来接收连接,以及管理连接
 //
 // Copyright (c) yangning All rights reserved.
 //
@@ -28,9 +28,15 @@ class TcpServer {
 public:
     using ClientReadCallBack=std::function<void(TcpConnection&, SocketBuf&)>;
     using ClientCloseCallBack=std::function<void(TcpConnection&)>;
+    using NewConnCallBack =std::function<void (int,const IpAddress&)>;
     TcpServer(unsigned listen_port, EventLoop* loop);
 
     void newConnectionCallBack(int fd, IpAddress ip_address);
+
+    void setNewConnCallBack(const NewConnCallBack& call_back )
+    {
+        newConnCallBack_=call_back;
+    }
 
     void setClientReadCallBack(const ClientReadCallBack& call_back)
     {
@@ -67,6 +73,7 @@ protected:
     ConnectionMap connectionMap_;
     ClientReadCallBack clienReadCallBack_;
     ClientCloseCallBack closeCallBack_;
+    NewConnCallBack newConnCallBack_;
     EventCallBack errorCallBack_;
 };
 }//namespace net

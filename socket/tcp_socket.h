@@ -22,7 +22,6 @@ protected:
 public:
     TcpSocket()
     {
-
     }
     static int create_and_bind(int port = 0, int af = AF_INET, int type = SOCK_STREAM)
     {
@@ -31,6 +30,7 @@ public:
         if (fd < 0)
             printErrorMsg("socket");
         int on = 1;
+        //address already use
         if ((setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, &on, sizeof(on))) < 0) {
             printErrorMsg("setsockopt");
         }
@@ -42,6 +42,7 @@ public:
             printErrorMsg("bind");
         return fd;
     }
+
     explicit TcpSocket(const int fd)
             :fd_(fd)
     {

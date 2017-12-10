@@ -59,7 +59,10 @@ void PollPoller::removeChannel(Channel* channel)
         }
     }
     auto ite = channelMap_.find(channel->getFd());
-    channelMap_.erase(ite);
+    auto res=channelMap_.erase(ite);
+    if(res != channelMap_.end())
+        channel->setIsRemoveFromLoop(true);
+
 }
 void PollPoller::updateChannel(Channel* channel)
 {

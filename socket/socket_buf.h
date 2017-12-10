@@ -37,6 +37,11 @@ public:
         write(str.c_str(), str.size());
     }
 
+    void append(const char* str,size_t len)
+    {
+        write(str,len);
+    }
+
     void write(const char* txt, size_t len);
 
     bool write(net::SocketBuf& buf, size_t bytes);

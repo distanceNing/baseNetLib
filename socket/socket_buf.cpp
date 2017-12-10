@@ -55,7 +55,7 @@ bool net::SocketBuf::write(net::SocketBuf& buf, size_t bytes)
 void SocketBuf::grow(size_t len)
 {
     if (writeableBytes() + prependBytes() < len + kPrepend) {
-        int size = static_cast<int>(capacity_ * kGrowthFactor + len);
+        size_t size = static_cast<size_t>(capacity_ * kGrowthFactor + len);
         char* buf = new char[size];
         memset(buf, 0, size);
         assert(buf != NULL);
@@ -82,6 +82,8 @@ ssize_t SocketBuf::readFromFd(int fd)
     iov[1].iov_len = 65535;
 
     ssize_t read_size = readv(fd, iov, 2);
+    if(read_size < 0)
+        return read_size;
 
     if (read_size > writeable) {
         writeIndex_ += writeable;

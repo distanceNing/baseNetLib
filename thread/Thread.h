@@ -38,6 +38,7 @@ public:
     ~Thread() { }
 
 private:
+    bool isAutoDelete_;
     pthread_t threadID_;
     ThreadFun threadFun_;
 };

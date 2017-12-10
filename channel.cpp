@@ -12,6 +12,8 @@
 namespace net {
 void Channel::handleEvent()
 {
+
+    assert(!isRemoveFromLoop);
     if (revents_ & POLLIN) {
         std::cout << "fd " << fd_ << "  is readable ---" << std::endl;
         if (readCallBack_)
@@ -26,6 +28,10 @@ void Channel::handleEvent()
             errorCallBack_();
     }
 
+}
+void Channel::setIsRemoveFromLoop(bool isRemoveFromLoop)
+{
+    Channel::isRemoveFromLoop = isRemoveFromLoop;
 }
 }//namespace net
 

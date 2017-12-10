@@ -29,7 +29,7 @@ public:
     void removeChannel(Channel* channel) override;
 
     void updateChannel(Channel* channel) override;
-    ~PollPoller()
+    virtual  ~PollPoller()
     {
     }
 

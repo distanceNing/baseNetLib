@@ -16,7 +16,8 @@ void Acceptor::handleRead()
     int client_fd = -1;
     if ((client_fd = listenSock_.Accept(conn_ip, conn_port)) < 0)
         printErrorMsg("accept");
-    printf("connect IP: %s ------ Port: %d\n", conn_ip, conn_port);
+    //设置socke为非阻塞
+    setFdNonBlocking(client_fd);
     //执行newconnection回调
     if (newConnetcioncb_)
         newConnetcioncb_(client_fd, IpAddress(conn_ip, conn_port));
