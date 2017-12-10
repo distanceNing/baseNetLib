@@ -1,54 +1,44 @@
 //
-// Created by yangning on 17-10-25.
+// Created by yangning on 17-11-29.
 //
-// Descriprion : main func 基于事件驱动基础网络库
+// Descriprion :test echo server
 //
 // Copyright (c) yangning All rights reserved.
 //
 
 #include "event_loop.h"
+#include "Acceptor.h"
 #include "common.h"
 #include "tcp_server.h"
-
-void clientRCB(net::Channel* channel)
+#include "tcp_connection.h"
+void clientRCB(net::TcpConnection& connection, net::SocketBuf& buf)
 {
-    net::TcpSocket sock(channel->getFd());
-    char buffer[MAX_BUF_SIZE] = {'\0'};
-    ssize_t size = sock.Receive(buffer, MAX_BUF_SIZE);
-
-    if (size < 0) {
-        printErrorMsg("Receive");
-    }
-    else if (size == 0) {
-        printf("Sockfd %d is close ---- \n", sock.getFd());
-        sock.closeFd();
-        channel->removeSelf();
-        return;
-    }
-    else {
-        sock.Send(buffer, static_cast<size_t>(size));
-    }
+    size_t readable=buf.readableBytes();
+    std::vector<char> buffer(readable, 0);
+    buf.read(buffer.data(), buffer.size());
+    connection.sendMessage(buffer.data(), buffer.size());
 }
 
-class EchoServer : public net::TcpServer {
-public:
-    EchoServer(net::POLL_TYPE pollType, int listenPort)
-            :TcpServer(pollType, listenPort)
-    {
-    }
+void errorCB()
+{
+    printErrorMsg("read from fd");
+}
 
-
-
-};
-
+void closecb(net::TcpConnection& connection)
+{
+    printf("Sockfd %d is close ---- \n", connection.getFd());
+}
 int main()
 {
-    net::TimeStamp::printTimeNow();
+    //std::cout<<sizeof (net::Channel);
+    net::EventLoop loop(net::POLL);
 
-    EchoServer tcpServer(net::POLL, kPort);
+    net::TcpServer tcpServer(kPort, &loop);
+
+    tcpServer.setClientReadCallBack(clientRCB);
+    tcpServer.setClienErrorCallBack(errorCB);
+    tcpServer.setClienCloseCallBack(closecb);
     tcpServer.serverStart();
 
-    net::TimeStamp::printTimeNow();
-    return 0;
+    return EXIT_SUCCESS;
 }
-
