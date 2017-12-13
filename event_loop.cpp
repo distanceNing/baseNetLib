@@ -1,21 +1,23 @@
 #include "event_loop.h"
 #include "channel.h"
 #include "timerfd/time_stamp.h"
+#include <pthread.h>
 namespace net {
-bool EventLoop::isLoopInThisThread()
+bool EventLoop::isInLoopThread()
 {
-    return threadId_ == getpid();
+    return threadId_ == Thread::getCurrentThreadID();
 }
 
 void EventLoop::startLoop()
 {
+    assert(isInLoopThread());
     isLooping_ = true;
     while (isLooping_) {
         if (!activeChannels_.empty())
             activeChannels_.clear();
 
         TimeStamp time = poller_->Poll(kTimeOut, activeChannels_);
-        time.printTime();
+        //time.printTime();
         handleEvent();
     }
 }
@@ -38,5 +40,10 @@ void EventLoop::removeChannel(Channel* channel)
 {
     assert(channel != NULL);
     poller_->removeChannel(channel);
+}
+void EventLoop::updateChannel(Channel* channel)
+{
+    assert(this == channel->getOwnLoop());
+    poller_->updateChannel(channel);
 }
 } //namespace net

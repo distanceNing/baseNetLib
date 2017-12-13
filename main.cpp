@@ -1,39 +1,39 @@
 //
-// Created by yangning on 17-10-25.
+// Created by yangning on 17-12-13.
 //
 // Descriprion :
 //
 // Copyright (c) yangning All rights reserved.
 //
 
+
 #include "event_loop.h"
 #include "common.h"
-#include "tcp_server.h"
-#include "tcp_connection.h"
+#include "thread/Thread.h"
+#include "timerfd/timer_fd.h"
+#include "timerfd/time_stamp.h"
+#include "channel.h"
+
 int main()
 {
+    net::TimeStamp::printTimeNow();
+
     net::EventLoop loop(net::POLL);
-
-    net::TcpServer tcpServer(kPort,&loop);
-
-    tcpServer.setClienCloseCallBack([](net::TcpConnection& connection){
-      printf("fd is %d closed \n",connection.getFd());
+    std::cout << "pid is " << getpid() << " main thread id is " << pthread_self() << " \n";
+    net::TimerFd timerFd;
+    timerFd.setTime(4,4);
+    net::Channel channel(&loop,timerFd.getTimerFd());
+    channel.setReadCallBack([&loop](){
+      loop.quitLoop();
     });
+    channel.enableReading();
+    loop.startLoop();
 
-    tcpServer.setClientReadCallBack([](net::TcpConnection& connection,net::SocketBuf& buf){
-      printf("fd %d is readable  buf is  %s \n",connection.getFd(),buf.readBegin());
-    });
 
-    tcpServer.setClienErrorCallBack([](){
-      printErrorMsg("error");
-    });
+    net::TimeStamp::printTimeNow();
 
-    tcpServer.setNewConnCallBack([](int fd, const IpAddress& ipAddress) {
-      printf("a new connection fd is %d ,ip : %s  port : %d \n", fd, ipAddress.ip.c_str(), ipAddress.port);
-    });
-
-    tcpServer.serverStart();
 
     return 0;
 }
+
 

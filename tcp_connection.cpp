@@ -42,8 +42,8 @@ void TcpConnection::sendMessage(const char* msg, size_t len)
 }
 void TcpConnection::handleClose()
 {
+    connChannel_.disenableAllEvent();
     connChannel_.removeSelf();
-    connChannel_.disenableEvent();
     connSocket_.closeFd();
 }
 void TcpConnection::handleWrite()

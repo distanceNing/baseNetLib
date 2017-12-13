@@ -9,13 +9,8 @@
 void* Thread::threadFun(void* arg)
 {
     Thread* thread= static_cast<Thread*>(arg);
-    thread->run();
+    thread->threadFun_();
     return NULL;
-}
-
-void Thread::createThread()
-{
-    pthread_create(&threadID_,NULL,threadFun,this);
 }
 
 void Thread::join()
@@ -31,8 +26,8 @@ pthread_t Thread::getThreadID()
 {
     return threadID_;
 }
-pid_t Thread::getCurrentThreadID()
+pthread_t Thread::getCurrentThreadID()
 {
-    return getpid();
+    return pthread_self();
 }
 

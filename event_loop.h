@@ -12,10 +12,11 @@
 #include <memory>
 
 #include <boost/scoped_ptr.hpp>
-
+#include <boost/noncopyable.hpp>
 
 #include "poller/poll_poller.h"
 #include "poller/epoll_poller.h"
+#include "thread/Thread.h"
 namespace net{
 class Channel;
 }
@@ -33,23 +34,28 @@ inline Poller* createPoller(POLL_TYPE pollType)
     return new EpollPoller;
 }
 
-class EventLoop {
-
+class EventLoop : boost::noncopyable{
+protected:
+    typedef std::vector<Channel*> ChannelList;
 public:
     EventLoop(POLL_TYPE pollType)
-            :isLooping_(false), threadId_(getpid()), poller_(createPoller(pollType))
+            :isLooping_(false), threadId_(Thread::getCurrentThreadID()), poller_(createPoller(pollType))
     {
     }
 
     ~EventLoop()
     {
     }
+    void runInLoop( ){
+        if(isInLoopThread())
+        {
 
-    bool isLoopInThisThread();
-
-    void updateChannel(Channel* channel){
-        poller_->updateChannel(channel);
+        }
     }
+
+    bool isInLoopThread();
+
+    void updateChannel(Channel* channel);
 
     void startLoop();
 
@@ -63,13 +69,13 @@ public:
     void addNewChannel(Channel* channel);
 
     void removeChannel(Channel* channel);
-protected:
-    typedef std::vector<Channel*> ChannelList;
+
 private:
     bool isLooping_;
-    const pid_t threadId_;
+    const pthread_t threadId_;
     ChannelList activeChannels_;
     boost::scoped_ptr<Poller> poller_;
+
 };
 } //namespace net
 #endif//!BASE_NET_LIB_EVENTLOOP_H

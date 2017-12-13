@@ -7,40 +7,33 @@
 //
 
 #include "event_loop.h"
-#include "timerfdandsockfd/socket_fd.h"
 #include "common.h"
-#include "timerfdandsockfd/time_stamp.h"
 #include "tcp_server.h"
-
-void rcb(void* arg)
-{
-    auto socketFd = *static_cast<SocketFd*>(arg);
-    char buffer[MAX_BUF_SIZE] = {'\0'};
-
-    ssize_t size = socketFd.Receive(buffer, MAX_BUF_SIZE);
-
-    if (size < 0) {
-        printErrorMsg("Receive");
-    }
-    else if (size == 0) {
-        printf("Sockfd %d is close ---- \n", socketFd.getFd());
-        return;
-    }
-    else
-    {
-        socketFd.Send(buffer,size);
-    }
-
-}
-
+#include "tcp_connection.h"
 int main()
 {
-    TimeStamp::printTimeNow();
+    net::EventLoop loop(net::POLL);
 
-    TcpServer tcpServer(POLL, kPort, rcb);
+    net::TcpServer tcpServer(kPort,&loop);
+
+    tcpServer.setClienCloseCallBack([](net::TcpConnection& connection){
+      printf("fd is %d closed \n",connection.getFd());
+    });
+
+    tcpServer.setClientReadCallBack([](net::TcpConnection& connection,net::SocketBuf& buf){
+      printf("fd %d is readable  buf is  %s \n",connection.getFd(),buf.readBegin());
+    });
+
+    tcpServer.setClienErrorCallBack([](){
+      printErrorMsg("error");
+    });
+
+    tcpServer.setNewConnCallBack([](int fd, const IpAddress& ipAddress) {
+      printf("a new connection fd is %d ,ip : %s  port : %d \n", fd, ipAddress.ip.c_str(), ipAddress.port);
+    });
+
     tcpServer.serverStart();
 
-    TimeStamp::printTimeNow();
     return 0;
 }
 

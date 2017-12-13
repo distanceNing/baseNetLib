@@ -18,19 +18,27 @@ using EventCallBack=std::function<void()>;
 class Channel {
 public:
     static const int kNonWrite = ~POLLOUT;
-    static const int kNonRead =~POLLIN;
-    static const int kNonEvent=0;
-    static const int kWrite =POLLOUT;
+    static const int kNonRead = ~POLLIN;
+    static const int kNonEvent = 0;
+    static const int kWrite = POLLOUT;
     static const int kRead = POLLIN;
-    static const int kError =POLLERR;
+    static const int kError = POLLERR;
     Channel(EventLoop* ownEventLoop_, const int fd_)
-            :ownEventLoop_(ownEventLoop_), fd_(fd_), events_(0), revents_(0),isRemoveFromLoop(false)
+            :ownEventLoop_(ownEventLoop_), fd_(fd_), events_(0), revents_(0)
     {
         ownEventLoop_->addNewChannel(this);
     }
+
+    const net::EventLoop* getOwnLoop() const
+    {
+        return ownEventLoop_;
+    }
+
     void disenableAllEvent()
     {
-        events_=kNonEvent;
+        events_ = kNonEvent;
+        revents_ = kNonEvent;
+        ownEventLoop_->updateChannel(this);
     }
 
     void setWriteCallBack(const EventCallBack& call_back)
@@ -46,11 +54,6 @@ public:
     void setErrorCallBack(const EventCallBack& call_back)
     {
         errorCallBack_ = call_back;
-    }
-    void disenableEvent()
-    {
-        events_ &= kNonEvent;
-        ownEventLoop_->updateChannel(this);
     }
 
     void enableReading()
@@ -83,7 +86,6 @@ public:
         ownEventLoop_->updateChannel(this);
     }
 
-
     void setRetEvents(int ret_events)
     {
         revents_ = static_cast<short >(ret_events);
@@ -105,15 +107,18 @@ public:
     {
         ownEventLoop_->removeChannel(this);
     }
-    void setIsRemoveFromLoop(bool isRemoveFromLoop);
 
+public:
+    void setIsAddInLoop(bool isAddInLoop_);
     ~Channel()
     {
     }
 
 private:
     EventLoop* ownEventLoop_;
-    bool isRemoveFromLoop;
+    bool isAddInLoop_;
+
+private:
     const int fd_;
     short events_;
     short revents_;

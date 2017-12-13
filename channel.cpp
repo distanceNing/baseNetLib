@@ -13,25 +13,26 @@ namespace net {
 void Channel::handleEvent()
 {
 
-    assert(!isRemoveFromLoop);
-    if (revents_ & POLLIN) {
+    assert(isAddInLoop_);
+    if ( revents_ & POLLIN ) {
         std::cout << "fd " << fd_ << "  is readable ---" << std::endl;
-        if (readCallBack_)
+        if ( readCallBack_ )
             readCallBack_();
     }
-    if (revents_ & POLLOUT) {
-        if (writeCallBack_)
+    if ( revents_ & POLLOUT ) {
+        if ( writeCallBack_ )
             writeCallBack_();
     }
-    if (revents_ & POLLERR) {
-        if (errorCallBack_)
+    if ( revents_ & POLLERR ) {
+        if ( errorCallBack_ )
             errorCallBack_();
     }
 
 }
-void Channel::setIsRemoveFromLoop(bool isRemoveFromLoop)
+
+void Channel::setIsAddInLoop(bool isAddInLoop)
 {
-    Channel::isRemoveFromLoop = isRemoveFromLoop;
+    this->isAddInLoop_ = isAddInLoop;
 }
 }//namespace net
 
