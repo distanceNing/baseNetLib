@@ -1,39 +1,39 @@
+//
+// Created by yangning on 17-12-13.
+//
+// Descriprion :
+//
+// Copyright (c) yangning All rights reserved.
+//
+
+
 #include "event_loop.h"
-#include "timerfdandsockfd/timer_fd.h"
 #include "common.h"
-#include "timerfdandsockfd/time_stamp.h"
-
-
-EventLoop* g_loop;
-
-
-void timeRCB(void* arg)
-{
-    TimerFd* fd = static_cast<TimerFd*>(arg);
-    int64_t error;
-    error = 0;
-    ssize_t size;
-    size =  read(fd->getFd(), &error, sizeof(error));
-    printf("timeRCB read  size is : %lu\n", size);
-    g_loop->quitLoop();
-}
+#include "thread/Thread.h"
+#include "timerfd/timer_fd.h"
+#include "timerfd/time_stamp.h"
+#include "channel.h"
 
 int main()
 {
-    TimeStamp::printTimeNow();
+    net::TimeStamp::printTimeNow();
+
+    net::EventLoop loop(net::POLL);
+    std::cout << "pid is " << getpid() << " main thread id is " << pthread_self() << " \n";
+    net::TimerFd timerFd;
+    timerFd.setTime(4,4);
+    net::Channel channel(&loop,timerFd.getTimerFd());
+    channel.setReadCallBack([&loop](){
+      loop.quitLoop();
+    });
+    channel.enableReading();
+    loop.startLoop();
 
 
-    EventLoop main_loop(EPOLL);
+    net::TimeStamp::printTimeNow();
 
-    TimerFd timer;
-    //第一个参数为第一次timerfd触发的时间(从现在开始 单位:s)
-    timer.setTime(4, 4);
-    timer.setEvents(POLLIN);
-    timer.setReadCallBack(timeRCB);
-    main_loop.addNewChannel(&timer);
-    g_loop = &main_loop;
-    main_loop.startLoop();
 
-    TimeStamp::printTimeNow();
     return 0;
 }
+
+

@@ -6,20 +6,33 @@
 #define BASE_NET_LIB_TIMESTAMP_H
 
 #include <time.h>
+#include <sys/time.h>
+#include "../common.h"
+
 namespace net {
+
 class TimeStamp {
 
 public:
-    using PassingTime=time_t;
-
-    TimeStamp()
-            :time_(time(0))
+    using PassingTime=int64_t;
+    /*
+     * @descriprion:获取当前的时间
+     * @param: void
+     * @return: 单位为us
+     */
+    static int64_t nowTime()
     {
+        struct timeval tm;
+        if ( gettimeofday(&tm, 0) < 0 )
+            printErrorMsg("gettimeofday");
+        return (int64_t) tm.tv_sec * 1000 * 1000 + (int64_t) tm.tv_usec;
     }
 
     static void printTimeNow();
-
-    void printTime();
+    TimeStamp()
+            :time_us_(nowTime())
+    {
+    }
 
     PassingTime operator-(TimeStamp& rvalue);
 
@@ -28,7 +41,7 @@ public:
     }
 
 private:
-    time_t time_;
+    int64_t time_us_;
 };
 }//namespace net
 #endif //!BASE_NET_LIB_TIMESTAMP_H
