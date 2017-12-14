@@ -7,3 +7,12 @@
 //
 
 #include "lock.h"
+MutexRAII::MutexRAII(MutexLock& mutexLock_)
+        :mutexLock_(mutexLock_)
+{
+    mutexLock_.lock();
+}
+MutexRAII::~MutexRAII()
+{
+    mutexLock_.unlock();
+}

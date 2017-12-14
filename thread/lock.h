@@ -34,7 +34,15 @@ public:
 private:
     pthread_mutex_t mutex_;
 };
-
+class MutexRAII
+{
+public:
+    virtual ~MutexRAII();
+public:
+    MutexRAII(MutexLock& mutexLock_);
+private:
+    MutexLock& mutexLock_;
+};
 //条件变量用于线程之间同步共享数据的值,条件变量提供了一种线程间的通知机制当某个共享数据到达某个值的时候,唤醒
 //等待这个共享数据的线程
 
