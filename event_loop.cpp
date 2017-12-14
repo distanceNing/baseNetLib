@@ -18,7 +18,9 @@ void EventLoop::startLoop()
 
         TimeStamp time = poller_->Poll(kTimeOut, activeChannels_);
         //time.printTime();
+        //处理socket上发生的事件
         handleEvent();
+        doTaskInQueue();
     }
 }
 

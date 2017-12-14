@@ -17,6 +17,7 @@
 #include "poller/poll_poller.h"
 #include "poller/epoll_poller.h"
 #include "thread/Thread.h"
+#include "thread/lock.h"
 namespace net{
 class Channel;
 }
@@ -37,6 +38,7 @@ inline Poller* createPoller(POLL_TYPE pollType)
 class EventLoop : boost::noncopyable{
 protected:
     typedef std::vector<Channel*> ChannelList;
+    using Functor=std::function<void()>;
 public:
     EventLoop(POLL_TYPE pollType)
             :isLooping_(false), threadId_(Thread::getCurrentThreadID()), poller_(createPoller(pollType))
@@ -70,12 +72,41 @@ public:
 
     void removeChannel(Channel* channel);
 
+    void doTaskInQueue()
+    {
+        std::vector<Functor> functors;
+        {
+            MutexRAII raii(mutexLock_);
+            functors.swap(functorQueue_);
+        }
+        for(auto & i : functors)
+        {
+            i();
+        }
+    }
+
+    void runInLoop(const Functor& functor)
+    {
+        if(isInLoopThread())
+            functor();
+        else
+            addTaskInQueue(functor);
+    }
+
+    void addTaskInQueue(const Functor& functor)
+    {
+
+        MutexRAII raii(mutexLock_);
+        functorQueue_.push_back(functor);
+
+    }
 private:
     bool isLooping_;
     const pthread_t threadId_;
     ChannelList activeChannels_;
     boost::scoped_ptr<Poller> poller_;
-
+    std::vector<Functor> functorQueue_;
+    MutexLock mutexLock_;
 };
 } //namespace net
 #endif//!BASE_NET_LIB_EVENTLOOP_H

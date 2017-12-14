@@ -27,10 +27,10 @@ int main()
     */
 
     //负面测试
-    Thread thread(std::bind([]() {
+    Thread thread([](){
         std::cout << "pid is " << getpid() << " thread id is " << pthread_self() << " \n";
         g_loop->startLoop();
-    }));
+    });
 
     thread.run();
     loop.startLoop();

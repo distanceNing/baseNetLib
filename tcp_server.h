@@ -26,18 +26,20 @@ namespace net {
 
 class TcpServer {
 public:
+    using TcpConnectionPtr=std::shared_ptr<TcpConnection>;
+    using ConnectionMap=std::map<int, TcpConnectionPtr>;
+public:
     using ClientReadCallBack=std::function<void(TcpConnection&, SocketBuf&)>;
-    using ClientCloseCallBack=std::function<void(TcpConnection&)>;
-    using NewConnCallBack =std::function<void (int,const IpAddress&)>;
-
+    using ClientCloseCallBack=std::function<void(TcpConnectionPtr)>;
+    using NewConnCallBack =std::function<void(int, const IpAddress&)>;
 
     TcpServer(unsigned listen_port, EventLoop* loop);
 
     void newConnectionCallBack(int fd, IpAddress ip_address);
 
-    void setNewConnCallBack(const NewConnCallBack& call_back )
+    void setNewConnCallBack(const NewConnCallBack& call_back)
     {
-        newConnCallBack_=call_back;
+        newConnCallBack_ = call_back;
     }
 
     void setClientReadCallBack(const ClientReadCallBack& call_back)
@@ -55,7 +57,7 @@ public:
         errorCallBack_ = call_back;
     }
 
-    void removeConnection(TcpConnection& connection);
+    void removeConnection(TcpConnectionPtr connection);
 
     void serverStart();
 
@@ -65,9 +67,7 @@ public:
     {
     }
 
-protected:
-    using TcpConnectionPtr=std::shared_ptr<TcpConnection>;
-    using ConnectionMap=std::map<int, TcpConnectionPtr>;
+
 protected:
     Acceptor::NewConnetcionCallBack cb;
     EventLoop* serverLoop_;

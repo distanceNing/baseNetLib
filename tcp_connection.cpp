@@ -10,12 +10,13 @@
 namespace net {
 
 TcpConnection::TcpConnection(const int fd, const IpAddress& ipAddress, EventLoop* loop)
-        :connSocket_(fd), ipAddress_(ipAddress), connChannel_(loop, fd)
+        :connSocket_(fd), ipAddress_(ipAddress), connChannel_(loop, fd),connectState_(kConnected)
 {
     //添加connection的事件回调函数
     connChannel_.setReadCallBack(std::bind(&TcpConnection::handleRead, this));
     connChannel_.setWriteCallBack(std::bind(&TcpConnection::handleWrite, this));
     connChannel_.setErrorCallBack(errorCallBack_);
+    connChannel_.setCloseCallBack(std::bind(&TcpConnection::handleClose,this));
     //设置connsock可读
     connChannel_.enableReading();
 }
@@ -26,7 +27,7 @@ void TcpConnection::handleRead()
     if ((read_size = readBuf_.readFromFd(connSocket_.getFd()) )> 0)
         clientReadCallBack_(*this, readBuf_);
     else if (read_size == 0)
-        closeCallBack_(*this); //read 返回值为0,client关闭连接
+        handleClose(); //read 返回值为0,client关闭连接
     else
         errorCallBack_();
 }
@@ -34,6 +35,10 @@ void TcpConnection::handleRead()
 void TcpConnection::sendMessage(const char* msg, size_t len)
 {
     assert(msg != NULL);
+    if ( !isConnected()) {
+     std::cout<<"connection is not active \n";
+        return;
+    }
     ssize_t send_size;
     if ((send_size = connSocket_.Send(msg, len)) < len) {
         writeBuf_.write(msg + send_size, len - send_size);
@@ -43,8 +48,7 @@ void TcpConnection::sendMessage(const char* msg, size_t len)
 void TcpConnection::handleClose()
 {
     connChannel_.disenableAllEvent();
-    connChannel_.removeSelf();
-    connSocket_.closeFd();
+    closeCallBack_(shared_from_this());
 }
 void TcpConnection::handleWrite()
 {

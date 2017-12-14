@@ -13,49 +13,71 @@
 #include "tcp_server.h"
 
 #include <memory>
-namespace net{
+
+namespace net {
 class TcpSocket;
 class EventLoop;
 class Channel;
 }
 namespace net {
 
-class TcpConnection {
+class TcpConnection :public std::enable_shared_from_this<TcpConnection>{
 public:
+    enum ConnectState {
+      kConnecting, kConnected, kdisConncting, kdisConnected
+    };
+
     TcpConnection(const int fd, const IpAddress& ipAddress, EventLoop* loop);
 
-    void setClienReadCallBack(const TcpServer::ClientReadCallBack & call_back)
+    void setClienReadCallBack(const TcpServer::ClientReadCallBack& call_back)
     {
         clientReadCallBack_ = call_back;
     }
 
-    void setClienCloseCallBack(const TcpServer::ClientCloseCallBack & call_back)
+    void setClienCloseCallBack(const TcpServer::ClientCloseCallBack& call_back)
     {
         closeCallBack_ = call_back;
+
     }
 
     void setClienErrorCallBack(const EventCallBack& call_back)
     {
         errorCallBack_ = call_back;
+
     }
 
-    void sendMessage(const char* msg,size_t len);
+    void sendMessage(const char* msg, size_t len);
 
-    int getFd() const {
+
+    bool isConnected() const
+    {
+        return connectState_ == kConnected;
+    }
+
+    int getFd() const
+    {
         return connSocket_.getFd();
     }
 
-    void handleRead();
-
-    void handleClose();
-
-    void handleWrite();
+    void destoryConn()
+    {
+        connectState_ = kdisConnected;
+        connChannel_.removeSelf();
+        connSocket_.closeFd();
+    }
 
     ~TcpConnection()
     {
+        connSocket_.closeFd();
     }
 
 private:
+    void handleRead();
+
+    void handleWrite();
+
+    void handleClose();
+    ConnectState connectState_;
     TcpSocket connSocket_;
     Channel connChannel_;
     IpAddress ipAddress_;

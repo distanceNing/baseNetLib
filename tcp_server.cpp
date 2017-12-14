@@ -22,16 +22,14 @@ void TcpServer::serverStop()
     serverLoop_->quitLoop();
 }
 
-void TcpServer::removeConnection(TcpConnection& connection)
+void TcpServer::removeConnection(TcpConnectionPtr connection)
 {
     //先执行客户回调
     closeCallBack_(connection);
-    //处理连接断开事件
-    connection.handleClose();
     //从connections中删除连接
-    auto ite = connectionMap_.find(connection.getFd());
+    auto ite = connectionMap_.find(connection->getFd());
     connectionMap_.erase(ite);
-
+    serverLoop_->addTaskInQueue(std::bind(&TcpConnection::destoryConn,connection));
 }
 void TcpServer::newConnectionCallBack(int fd, IpAddress ip_address)
 {

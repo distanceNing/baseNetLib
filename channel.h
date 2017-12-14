@@ -23,8 +23,9 @@ public:
     static const int kWrite = POLLOUT;
     static const int kRead = POLLIN;
     static const int kError = POLLERR;
+
     Channel(EventLoop* ownEventLoop_, const int fd_)
-            :ownEventLoop_(ownEventLoop_), fd_(fd_), events_(0), revents_(0)
+            :ownEventLoop_(ownEventLoop_), fd_(fd_), events_(0), revents_(0),eventHandling_(false)
     {
         ownEventLoop_->addNewChannel(this);
     }
@@ -40,6 +41,8 @@ public:
         revents_ = kNonEvent;
         ownEventLoop_->updateChannel(this);
     }
+public:
+    void setCloseCallBack(const EventCallBack& closeCallBack_);
 
     void setWriteCallBack(const EventCallBack& call_back)
     {
@@ -112,12 +115,13 @@ public:
     void setIsAddInLoop(bool isAddInLoop_);
     ~Channel()
     {
+        assert(!eventHandling_);
     }
 
 private:
     EventLoop* ownEventLoop_;
     bool isAddInLoop_;
-
+    bool eventHandling_;
 private:
     const int fd_;
     short events_;
@@ -125,6 +129,8 @@ private:
     EventCallBack writeCallBack_;
     EventCallBack readCallBack_;
     EventCallBack errorCallBack_;
+    EventCallBack closeCallBack_;
+
 
 };
 }// namespace net
