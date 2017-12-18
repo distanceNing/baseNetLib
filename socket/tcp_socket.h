@@ -11,9 +11,10 @@ typedef unsigned int SOCKET;
 typedef unsigned int UINT;
 typedef const char* LPCSTR;
 typedef char* LPSTR;
-#include "../common.h"
+#include <netinet/tcp.h>
 
 #include "socket_buf.h"
+
 namespace net {
 
 class TcpSocket {
@@ -23,25 +24,9 @@ public:
     TcpSocket()
     {
     }
-    static int create_and_bind(int port = 0, int af = AF_INET, int type = SOCK_STREAM)
-    {
-        int fd;
-        fd = socket(af, type, 0);
-        if (fd < 0)
-            printErrorMsg("socket");
-        int on = 1;
-        //address already use
-        if ((setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, &on, sizeof(on))) < 0) {
-            printErrorMsg("setsockopt");
-        }
-        sockaddr_in sa;
-        memset(&sa, 0, sizeof(struct sockaddr_in));
-        sa.sin_family = AF_INET;
-        sa.sin_port = htons(static_cast<uint16_t>(port));
-        if (bind(fd, (sockaddr*) &sa, sizeof(sa)) < 0)
-            printErrorMsg("bind");
-        return fd;
-    }
+    static int create_and_bind(int port = 0, int af = AF_INET, int type = SOCK_STREAM);
+
+    static bool sockConnect(int fd,const char* conn_ip,uint16_t conn_port);
 
     explicit TcpSocket(const int fd)
             :fd_(fd)
@@ -60,7 +45,11 @@ public:
 
     int Accept(char* fromIP, UINT& fromPort);
 
-    ssize_t Send(const char* message, size_t bufLen);
+    ssize_t Send(const void * message, size_t bufLen);
+
+    ssize_t write_n(const void* msg,size_t buf_len);
+
+    ssize_t read_n(void* msg,size_t buf_len);
 
     bool GetPeerName(char* peerIP, UINT& peerPort);
 
@@ -68,6 +57,17 @@ public:
 
     int getFd() const;
 
+    void setTcpNoDelay();
+
+    void shutDownWrite()
+    {
+        shutdown(fd_,SHUT_WR);
+    }
+
+    void shutDownRead()
+    {
+        shutdown(fd_,SHUT_RD);
+    }
     void closeFd()
     {
         close(fd_);

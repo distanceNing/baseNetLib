@@ -37,9 +37,9 @@ public:
         write(str.c_str(), str.size());
     }
 
-    void append(const char* str,size_t len)
+    void append(const char* str, size_t len)
     {
-        write(str,len);
+        write(str, len);
     }
 
     void write(const char* txt, size_t len);
@@ -128,7 +128,12 @@ public:
 public:
     const char* kCRLF = "\r\n";
 
-    const char* findCRLF()
+    const char* findCRLF() const
+    {
+        const char* ptr = std::search(readBegin(), writeBegin(), kCRLF, kCRLF + 2);
+        return ptr == writeBegin() ? NULL : ptr;
+    }
+    char* findCRLF()
     {
         char* ptr = std::search(readBegin(), writeBegin(), kCRLF, kCRLF + 2);
         return ptr == writeBegin() ? NULL : ptr;
@@ -138,6 +143,13 @@ public:
     {
         const char* ptr = std::search(start, static_cast<const char*> (writeBegin()), kCRLF, kCRLF + 2);
         return ptr == writeBegin() ? NULL : ptr;
+    }
+
+    void resetBuffer()
+    {
+        readIndex_ = kPrepend;
+        writeIndex_ = kPrepend;
+        memset(buffer_, 0, capacity_);
     }
 private:
     static const float kGrowthFactor;

@@ -3,6 +3,8 @@ project(base_net_lib)
 
 set(CMAKE_CXX_STANDARD 11)
 
+INCLUDE_DIRECTORIES(headers)
+
 set(SOURCE_FILES
         event_loop.cpp event_loop.h
         poller/poll_poller.cpp poller/poll_poller.h
@@ -19,7 +21,10 @@ set(SOURCE_FILES
         timerfd/time_stamp.h timerfd/time_stamp.cpp
         timerfd/timer_fd.h  timerfd/timer_fd.cpp
         timerfd/TimeQueue.h timerfd/TimeQueue.cpp
-        common.h
+        timerfd/SortTimerList.cpp timerfd/SortTimerList.h
+
+
+        headers/common.h
         main.cpp
 
         thread/Thread.cpp
