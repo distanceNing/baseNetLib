@@ -29,7 +29,7 @@ public:
     using TcpConnectionPtr=std::shared_ptr<TcpConnection>;
     using ConnectionMap=std::map<int, TcpConnectionPtr>;
 public:
-    using ClientReadCallBack=std::function<void(TcpConnection&, SocketBuf&)>;
+    using ClientReadCallBack=std::function<void(TcpConnection&, SocketBuf*)>;
     using ClientCloseCallBack=std::function<void(TcpConnectionPtr)>;
     using NewConnCallBack =std::function<void(int, const IpAddress&)>;
 

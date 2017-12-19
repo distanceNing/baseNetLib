@@ -18,14 +18,11 @@ void Thread::join()
     pthread_join(threadID_,NULL);
 }
 
-void Thread::cancel()
-{
-    pthread_cancel(threadID_);
-}
 pthread_t Thread::getThreadID()
 {
     return threadID_;
 }
+
 pthread_t Thread::getCurrentThreadID()
 {
     return pthread_self();

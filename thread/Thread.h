@@ -12,14 +12,17 @@ public:
     using ThreadFun =std::function<void()>;
     Thread(const ThreadFun& thread_fun ):threadFun_(thread_fun) { }
 
-
+    /*
+     *
+     *线程只有一个取消方式就是它自然死亡,所以不提供cancel的接口
+     *
+     *
+     */
     static void* threadFun(void*);
 
     static pthread_t getCurrentThreadID();
 
     void join();
-
-    void cancel();
 
     void run()
     {

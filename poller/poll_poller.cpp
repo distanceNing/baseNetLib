@@ -57,9 +57,9 @@ void PollPoller::removeChannel(Channel* channel)
 {
     for (auto i = pollfdList_.begin(); i != pollfdList_.end(); ++i) {
         if ( i->fd == channel->getFd()) {
-            //std::swap(*i,pollfdList_.back());
-            //pollfdList_.pop_back();
-            pollfdList_.erase(i);
+            if(i->fd != pollfdList_.back().fd)
+                std::swap(*i,pollfdList_.back());
+            pollfdList_.pop_back();
             break;
         }
     }

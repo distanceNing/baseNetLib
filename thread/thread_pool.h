@@ -64,11 +64,6 @@ public:
 
     }
 
-    void cancel()
-    {
-        for (auto& thread :threads_)
-            thread.cancel();
-    }
 
     void join()
     {
