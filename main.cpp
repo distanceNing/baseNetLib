@@ -1,40 +1,34 @@
 //
-// Created by yangning on 17-10-25.
+// Created by yangning on 17-12-17.
 //
 // Descriprion :
 //
 // Copyright (c) yangning All rights reserved.
 //
 
-#include "event_loop.h"
-#include "common.h"
-#include "tcp_server.h"
-#include "tcp_connection.h"
+#include <iostream>
+#include <zconf.h>
+#include "thread/thread_pool.h"
+
+
+
 int main()
 {
-    net::EventLoop loop(net::POLL);
 
-    net::TcpServer tcpServer(kPort,&loop);
+    ThreadPool threadPool;
 
-    tcpServer.setClienCloseCallBack([](net::TcpServer::TcpConnectionPtr connection){
-      printf("fd is %d closed \n",connection->getFd());
-    });
+    threadPool.run();
 
-    tcpServer.setClientReadCallBack([](net::TcpConnection& connection,net::SocketBuf* buf){
-      connection.sendMessage(buf->readBegin(),buf->readableBytes());
-      buf->skip(buf->readableBytes());
-    });
+    ThreadPool::ThreadTask task=[](){
+      std::cout<<"thread id is : "<<Thread::getCurrentThreadID()<<std::endl;
+      sleep(1);
+    };
+    for(int i = 0 ; i< 10;++i)
+        threadPool.appendTask(task);
 
-    tcpServer.setClienErrorCallBack([](){
-      printErrorMsg("error");
-    });
 
-    tcpServer.setNewConnCallBack([](int fd, const IpAddress& ipAddress) {
-      printf("a new connection fd is %d ,ip : %s  port : %d \n", fd, ipAddress.ip.c_str(), ipAddress.port);
-    });
-
-    tcpServer.serverStart();
+    sleep(2);
+    threadPool.stopRunning();
 
     return 0;
 }
-

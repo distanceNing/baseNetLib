@@ -6,14 +6,17 @@ set(CMAKE_CXX_STANDARD 11)
 INCLUDE_DIRECTORIES(headers)
 
 set(SOURCE_FILES
-        event_loop.cpp event_loop.h
-        poller/poll_poller.cpp poller/poll_poller.h
 
+
+        poller/poll_poller.cpp poller/poll_poller.h
         poller/poller.h poller/poller.cpp
         poller/epoll_poller.cpp poller/epoll_poller.h
-        tcp_server.h tcp_server.cpp
+
         socket/socket_buf.h socket/socket_buf.cpp
         socket/tcp_socket.cpp socket/tcp_socket.h
+
+        event_loop.cpp event_loop.h
+        tcp_server.h tcp_server.cpp
         channel.cpp channel.h
         Acceptor.h Acceptor.cpp
         tcp_connection.cpp tcp_connection.h
@@ -27,6 +30,9 @@ set(SOURCE_FILES
         headers/common.h
         main.cpp
 
+
+        thread/ThreadLoopPool.cpp
+        thread/ThreadLoopPool.h
         thread/Thread.cpp
         thread/Thread.h
         thread/thread_pool.cpp

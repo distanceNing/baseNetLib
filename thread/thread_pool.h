@@ -20,50 +20,44 @@ class ThreadPool {
 public:
     using ThreadTask = std::function<void()>;
     static const size_t kInitThreadNum = 4;
+    /*
+     *@descriprion: 消费这生产者模型:
+     *                  主线程生产出待消费的任务,子线程去执行
+     *@param:线程池线程数量
+     *
+     */
     ThreadPool(size_t thread_num = kInitThreadNum)
-            :threads_(thread_num, Thread(std::bind(&ThreadPool::threadTodo, this))),isrunning_(false)
+            :threads_(thread_num, Thread(std::bind(&ThreadPool::threadTodo, this))), isRunning_(false)
     {
 
     }
-
-    void threadTodo()
+    /*
+     *@param: 线程要去执行的函数(threadFun) 线程池的线程数量
+     *
+     */
+    ThreadPool(ThreadTask task, size_t thread_num = kInitThreadNum)
+            :threads_(thread_num, Thread(task)), isRunning_(false)
     {
-        std::cout<<Thread::getCurrentThreadID()<<" is running ---\n";
-        while (isrunning_) {
-            if ( !taskQueue_.empty()) {
-                ThreadTask task;
-                {
-                    MutexRAII raii(queueMutex_);
-                    task = std::move(taskQueue_.front());
-                    taskQueue_.pop();
-                }
-                std::cout<<Thread::getCurrentThreadID()<<" i get a task ---\n";
-                task();
-            }
-        }
     }
 
-    void appendTask(const ThreadTask& task)
-    {
-        MutexRAII raii(queueMutex_);
-        taskQueue_.push(task);
-    }
+    void threadTodo();
+    /*
+     *@descriprion: 添加任务
+     */
+    void appendTask(const ThreadTask& task);
 
-    void appenTask(std::initializer_list<ThreadTask> tasks)
-    {
-        MutexRAII raii(queueMutex_);
-        for(auto& task : tasks )
-            taskQueue_.push(task);
-    }
+    void appenTask(std::initializer_list<ThreadTask> tasks);
+
+    /*
+     *@descriprion: 调用run函数使线程池工作起来
+     */
     void run()
     {
-        isrunning_ = true ;
+        isRunning_ = true;
         for (auto& thread : threads_)
             thread.run();
 
-
     }
-
 
     void join()
     {
@@ -76,9 +70,9 @@ public:
         return taskQueue_.empty();
     }
 
-    bool stopRunning()
+    void stopRunning()
     {
-        isrunning_=false;
+        isRunning_ = false;
     }
 
     ~ThreadPool()
@@ -87,7 +81,7 @@ public:
     }
 
 private:
-    bool isrunning_;
+    bool isRunning_;
     std::vector<Thread> threads_;
     MutexLock queueMutex_;
     std::queue<ThreadTask> taskQueue_;
