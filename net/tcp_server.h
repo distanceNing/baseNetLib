@@ -33,7 +33,7 @@ public:
 
     void newConnectionCallBack(int fd, IpAddress ip_address);
 
-    void serNewConnCallBack(const NewConnCallBack& call_back )
+    void setNewConnCallBack(const NewConnCallBack& call_back )
     {
         newConnCallBack_=call_back;
     }

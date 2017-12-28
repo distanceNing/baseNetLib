@@ -32,6 +32,7 @@ public:
     void badDataBlock(PARSE_RESULT result);
 
     void handleUnknown();
+
     void hanleBadReq();
 public:
     const size_t getResponseLength()

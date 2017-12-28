@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 #include "../net/socket/socket_buf.h"
-#include "../headers/mem_request.h"
+#include "../mem_request.h"
 
 #define TEST_GET(buf, str, result, key_num) \
 do{\

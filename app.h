@@ -11,8 +11,8 @@
 #include "user.h"
 
 #include <map>
-#include "../net/common.h"
-#include "../net/tcp_server.h"
+#include "net/common.h"
+#include "net/tcp_server.h"
 
 class DataStructer;
 
@@ -23,7 +23,7 @@ public:
     App(net::EventLoop* loop):tcpServer_(kPort,loop)
     {
         tcpServer_.setClientReadCallBack(std::bind(&App::userMessageCallBack,this,_1,_2));
-        tcpServer_.serNewConnCallBack(std::bind(&App::newUserConn,this,_1,_2));
+        tcpServer_.setNewConnCallBack(std::bind(&App::newUserConn,this,_1,_2));
         tcpServer_.setClienCloseCallBack(std::bind(&App::userCloseConn,this,_1));
     }
 

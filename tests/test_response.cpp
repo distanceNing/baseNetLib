@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
-#include "mem_response.h"
-#include "data_structer.h"
+#include "../mem_response.h"
+#include "../data_structer.h"
 
 class TestResponse : public ::testing::TestWithParam<std::string> {
 public:

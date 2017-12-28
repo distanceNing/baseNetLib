@@ -6,8 +6,8 @@
 // Copyright (c) yangning All rights reserved.
 //
 
-#include "headers/mem_response.h"
-#include "headers/data_structer.h"
+#include "mem_response.h"
+#include "data_structer.h"
 
 static const char* NOT_FOUND = "NOT_FOUND";
 static const char* STORED = "STORED";

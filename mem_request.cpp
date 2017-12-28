@@ -5,10 +5,10 @@
 //
 // Copyright (c) yangning All rights reserved.
 //
-#include "headers/mem_request.h"
+#include "mem_request.h"
 #include "net/socket/socket_buf.h"
 #include "net/common.h"
-#include "headers/data_structer.h"
+#include "data_structer.h"
 
 inline bool strIsNum(const char* flag)
 {

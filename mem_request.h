@@ -8,7 +8,7 @@
 
 #ifndef MEMCACHED_REQUEST_H
 #define MEMCACHED_REQUEST_H
-#include "../net/common.h"
+#include "net/common.h"
 #include "data_structer.h"
 
 #include <string>
