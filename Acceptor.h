@@ -15,6 +15,7 @@
 #include "headers/common.h"
 #include "channel.h"
 #include <functional>
+#include <iostream>
 
 namespace net {
 

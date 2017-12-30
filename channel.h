@@ -11,6 +11,7 @@
 
 #include <functional>
 #include <zconf.h>
+#include <cassert>
 #include "event_loop.h"
 
 namespace net {

@@ -11,8 +11,6 @@
 #include <vector>
 #include <memory>
 
-#include <boost/scoped_ptr.hpp>
-#include <boost/noncopyable.hpp>
 
 #include "poller/poll_poller.h"
 #include "poller/epoll_poller.h"
@@ -35,7 +33,7 @@ inline Poller* createPoller(POLL_TYPE pollType)
     return new EpollPoller;
 }
 
-class EventLoop : boost::noncopyable{
+class EventLoop {
 protected:
     typedef std::vector<Channel*> ChannelList;
     using Functor=std::function<void()>;
@@ -104,7 +102,7 @@ private:
     bool isLooping_;
     const pthread_t threadId_;
     ChannelList activeChannels_;
-    boost::scoped_ptr<Poller> poller_;
+    std::unique_ptr<Poller> poller_;
     std::vector<Functor> functorQueue_;
     MutexLock mutexLock_;
 };
