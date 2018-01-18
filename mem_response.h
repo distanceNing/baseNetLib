@@ -31,7 +31,7 @@ public:
 
     void badDataBlock(PARSE_RESULT result);
 
-        void  ();
+    void  handleUnknown();
 
     void hanleBadReq();
 public:

@@ -7,4 +7,3 @@
 //
 
 #include "MemoryPool.h"
-MemPool Rational::memPool;

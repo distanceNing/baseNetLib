@@ -1,12 +1,13 @@
 
-
-
+#ifndef MEMCACHED_MEMPOOL_H
+#define MEMCACHED_MEMPOOL_H
+#include <cstdlib>
+#include <iostream>
 class MemoryBlock {
 public:
 	MemoryBlock* next;
 };
 
-//单线程固定大小的内存分配器
 template<class T>
 class MemoryPool {
 public:
@@ -68,3 +69,4 @@ public:
 private:
 	MemoryBlock* memPool;
 };
+#endif//!MEMCACHED_MEMPOOL_H

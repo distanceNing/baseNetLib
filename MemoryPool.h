@@ -8,9 +8,13 @@
 
 #ifndef MEMCACHED_MEMORYPOOL_H
 #define MEMCACHED_MEMORYPOOL_H
-#include <memory>
 #include <iostream>
+#include <mutex>
+#include <memory>
 #include <cassert>
+
+
+
 class MemBlock {
 public:
 	enum {
@@ -69,6 +73,7 @@ public:
 
 	void* alloc(size_t size)
 	{
+		//std::lock_guard<std::mutex> guard(allocMutex_);
 		if (memBlockList_->availableSize() < size)
 		{
 			expendMemPool(size);
@@ -79,18 +84,18 @@ public:
 
 	void free(void* block, size_t size)
 	{
+		//std::lock_guard<std::mutex> guard(freeMutex_);
 		memBlockList_->free(block, size);
 	}
 
 	~MemPool()
 	{
-		std::cout << "dtor mem pool \n";
 		MemBlock* temp;
 		while (memBlockList_)
 		{
 			temp = memBlockList_->next();
 			delete memBlockList_;
-			memBlockList_ = temp->next();
+			memBlockList_ = temp;
 		}
 	}
 private:
@@ -101,39 +106,11 @@ private:
 		memBlockList_ = space;
 	} 
 private:
+	std::mutex allocMutex_;
+	std::mutex freeMutex_;
 	MemBlock* memBlockList_;
 	size_t blockSize_;
 };
-
-
-class Rational {
-public:
-	
-	static MemPool memPool;
-	
-	inline void* operator new(size_t size)
-	{
-		return memPool.alloc(size);
-	}
-	
-	inline void operator delete(void* block, size_t size)
-	{
-		memPool.free(block, size);
-	}
-
-	Rational(int x = 0, int y = 1) :n(x), d(y) {}
-
-private:
-	int n;
-	int d;
-};
-
-
-
-
-
-
-
 
 #endif //MEMCACHED_MEMORYPOOL_H
 

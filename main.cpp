@@ -1,12 +1,46 @@
 //#include "MemServer.h"
 //#include "gtest/gtest.h"
 //#define _TESTING
-#include "MemoryPool.h"
+#include "mem_pool.h"
 #include <chrono>
 #include <iostream>
 
+class Rational {
+public:
 
+    /*static MemPool memPool;
 
+    inline void* operator new(size_t size)
+    {
+        return memPool.alloc(size);
+    }
+
+    inline void operator delete(void* block, size_t size)
+    {
+        memPool.free(block, size);
+    }
+*/
+
+    static MemoryPool<Rational> memoryPool;
+
+    inline void* operator new(size_t size)
+    {
+        return memoryPool.alloc(size);
+    }
+
+    inline void operator delete(void* block, size_t size)
+    {
+        memoryPool.free(block, size);
+    }
+
+    Rational(int x = 0, int y = 1) :n(x), d(y) {}
+
+private:
+    int n;
+    int d;
+};
+//MemPool Rational::memPool;
+MemoryPool<Rational> Rational::memoryPool;
 int main(int argc, char* argv[])
 {
 
@@ -21,7 +55,7 @@ int main(int argc, char* argv[])
 	Rational *ra[1000];
 
 
-	for (int j = 0;j < 5000;++j)
+	for (int j = 0;j < 50000;++j)
 	{
 		for (int i = 0;i < 1000;++i)
 		{
@@ -36,26 +70,13 @@ int main(int argc, char* argv[])
 	auto t2 = std::chrono::system_clock::now();
 	std::cout << std::chrono::duration_cast<std::chrono::milliseconds >(t2 - t1).count() <<" ms" <<std:: endl;
 	/*
-	 *  globe new and delete spend time is 1776 ms
+	 *  globe new and delete spend time is 1328 ms
 	 *  version 1 : 380 ms
 	 *  version 2:  620 ms
 	 *  version 3:  1160 ms
 	 *
 	 *
 	 */
-
-	getchar();
-
-
-
-
-
-
-
-
-
-
-
 
 
 
