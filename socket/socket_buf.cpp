@@ -75,7 +75,7 @@ void SocketBuf::grow(size_t len)
 }
 ssize_t SocketBuf::readFromFd(int fd)
 {
-    char extrabuf[65535] = {'\0'};
+    char extrabuf[65536] = {'\0'};
     size_t writeable = writeableBytes();
     struct iovec iov[2];
     iov[0].iov_base = writeBegin();
@@ -85,7 +85,6 @@ ssize_t SocketBuf::readFromFd(int fd)
 
     ssize_t read_size = readv(fd, iov, 2);
     if(read_size < 0)
-        //
     {
         if(errno == ECONNRESET)
             return 0;

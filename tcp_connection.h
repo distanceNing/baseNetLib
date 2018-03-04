@@ -24,7 +24,7 @@ namespace net {
 class TcpConnection :public std::enable_shared_from_this<TcpConnection>{
 public:
     enum ConnectState {
-      kConnecting, kConnected, kdisConncting, kdisConnected
+      kConnecting, kConnected, kdisConnecting, kdisConnected
     };
 
     TcpConnection(const int fd, const IpAddress& ipAddress, EventLoop* loop);

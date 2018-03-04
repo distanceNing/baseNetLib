@@ -13,7 +13,7 @@ void Acceptor::handleRead()
 {
     char conn_ip[32];
     unsigned conn_port = 0;
-    int client_fd = -1;
+    int client_fd;
     if ((client_fd = listenSock_.Accept(conn_ip, conn_port)) < 0)
         printErrorMsg("accept");
     //设置socke为非阻塞
