@@ -7,26 +7,23 @@
 //
 #ifndef BASE_NET_LIB_TCPSERVER_H
 #define BASE_NET_LIB_TCPSERVER_H
-#include "event_loop.h"
 #include "socket/tcp_socket.h"
-#include "channel.h"
 #include "Acceptor.h"
 
 #include <functional>
 #include <list>
 #include <memory>
 
-using namespace std::placeholders;
+
+
 namespace net {
+class EventLoop;
 class SocketBuf;
 class TcpConnection;
-}
 
-namespace net {
-
+using TcpConnectionPtr=std::shared_ptr<TcpConnection>;
 class TcpServer {
 public:
-    using TcpConnectionPtr=std::shared_ptr<TcpConnection>;
     using ConnectionMap=std::map<int, TcpConnectionPtr>;
 public:
     using ClientReadCallBack=std::function<void(TcpConnection&, SocketBuf*)>;
@@ -35,7 +32,7 @@ public:
 
     TcpServer(unsigned listen_port, EventLoop* loop);
 
-    void newConnectionCallBack(int fd, IpAddress ip_address);
+    void newConnectionCallBack(int fd, const IpAddress& ip_address);
 
     void setNewConnCallBack(const NewConnCallBack& call_back)
     {
@@ -67,9 +64,8 @@ public:
     {
     }
 
-
-protected:
-    Acceptor::NewConnetcionCallBack cb;
+private:
+    NewConnetcionCallBack cb;
     EventLoop* serverLoop_;
     std::unique_ptr<Acceptor> acceptor_;
     ConnectionMap connectionMap_;

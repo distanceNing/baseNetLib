@@ -1,5 +1,6 @@
 #include "tcp_socket.h"
-#include "../headers/common.h"
+#include "../common.h"
+#include "socket_buf.h"
 #include <cstdint>
 #include <iostream>
 namespace net {

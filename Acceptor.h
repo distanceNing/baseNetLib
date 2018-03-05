@@ -12,16 +12,15 @@
 #define BASE_NET_LIB_ACCEPTOR_H
 
 #include "socket/tcp_socket.h"
-#include "headers/common.h"
+#include "common.h"
 #include "channel.h"
 #include <functional>
 #include <iostream>
 
 namespace net {
-
+using NewConnetcionCallBack=std::function<void(int, const IpAddress&)>;
 class Acceptor {
 public:
-    using NewConnetcionCallBack=std::function<void(int, IpAddress)>;
     Acceptor(unsigned listenPort, EventLoop* loop)
             :ownEventLoop_(loop), listenSock_(TcpSocket::create_and_bind(listenPort)),
              listenChannel_(loop, listenSock_.getFd()), listening_(false), listenPort_(listenPort)

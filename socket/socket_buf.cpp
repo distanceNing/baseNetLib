@@ -7,7 +7,7 @@
 //
 
 #include "socket_buf.h"
-#include "../headers/common.h"
+#include "../common.h"
 #include <assert.h>
 
 namespace net {

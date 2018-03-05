@@ -8,18 +8,19 @@
 
 #ifndef BASE_NET_LIB_TCPCONNECTION_H
 #define BASE_NET_LIB_TCPCONNECTION_H
-#include "headers/common.h"
-#include "socket/tcp_socket.h"
+
 #include "tcp_server.h"
+#include "common.h"
+#include "socket/tcp_socket.h"
+#include "socket/socket_buf.h"
 
 #include <memory>
 
 namespace net {
-class TcpSocket;
+
 class EventLoop;
 class Channel;
-}
-namespace net {
+
 
 class TcpConnection :public std::enable_shared_from_this<TcpConnection>{
 public:
@@ -59,12 +60,7 @@ public:
         return connSocket_.getFd();
     }
 
-    void destoryConn()
-    {
-        connectState_ = kdisConnected;
-        connChannel_.removeSelf();
-        connSocket_.closeFd();
-    }
+    void destoryConn();
 
     ~TcpConnection()
     {

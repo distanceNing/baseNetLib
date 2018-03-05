@@ -16,7 +16,7 @@ int main()
 
     net::TcpServer tcpServer(kPort,&loop);
 
-    tcpServer.setClienCloseCallBack([](net::TcpServer::TcpConnectionPtr connection){
+    tcpServer.setClienCloseCallBack([](net::TcpConnectionPtr connection){
       printf("fd is %d closed \n",connection->getFd());
     });
 

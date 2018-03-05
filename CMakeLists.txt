@@ -27,7 +27,7 @@ set(SOURCE_FILES
         timerfd/SortTimerList.cpp timerfd/SortTimerList.h
 
 
-        headers/common.h
+        common.h
         main.cpp
 
 

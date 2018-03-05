@@ -13,10 +13,9 @@ typedef const char* LPCSTR;
 typedef char* LPSTR;
 #include <netinet/tcp.h>
 
-#include "socket_buf.h"
 
 namespace net {
-
+class SocketBuf;
 class TcpSocket {
 protected:
     typedef unsigned int UINT;

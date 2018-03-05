@@ -50,14 +50,12 @@ void TcpConnection::handleRead()
 void TcpConnection::sendMessage(const char* msg, size_t len)
 {
     assert(msg != NULL);
-    if ( !isConnected()) {
-        std::cout << "connection is not active \n";
-        return;
-    }
-    ssize_t send_size;
-    if ((send_size = connSocket_.Send(msg, len)) < len ) {
-        writeBuf_.write(msg + send_size, len - send_size);
-        connChannel_.enableWriting();
+    if ( isConnected()) {
+        ssize_t send_size;
+        if ((send_size = connSocket_.Send(msg, len)) < len ) {
+            writeBuf_.write(msg + send_size, len - send_size);
+            connChannel_.enableWriting();
+        }
     }
 }
 void TcpConnection::handleClose()
@@ -78,6 +76,12 @@ void TcpConnection::handleWrite()
     if ( size == readable )
         connChannel_.disenableWriting();
 
+}
+void TcpConnection::destoryConn()
+{
+    connectState_ = kdisConnected;
+    connChannel_.removeSelf();
+    connSocket_.closeFd();
 }
 
 }//namespace net

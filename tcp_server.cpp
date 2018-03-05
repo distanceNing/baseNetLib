@@ -4,6 +4,8 @@
 
 #include "tcp_server.h"
 #include "tcp_connection.h"
+using namespace std::placeholders;
+
 namespace net {
 TcpServer::TcpServer(unsigned listen_port, EventLoop* loop)
         :serverLoop_(loop), acceptor_(new Acceptor(listen_port, serverLoop_))
@@ -31,7 +33,7 @@ void TcpServer::removeConnection(TcpConnectionPtr connection)
     connectionMap_.erase(ite);
     serverLoop_->addTaskInQueue(std::bind(&TcpConnection::destoryConn,connection));
 }
-void TcpServer::newConnectionCallBack(int fd, IpAddress ip_address)
+void TcpServer::newConnectionCallBack(int fd, const IpAddress& ip_address)
 {
     TcpConnectionPtr con_ptr(new TcpConnection(fd, ip_address, serverLoop_));
     //设置连接client的事件回调函数
