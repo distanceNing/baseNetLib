@@ -10,7 +10,7 @@
 namespace net {
 
 TcpConnection::TcpConnection(const int fd, const IpAddress& ipAddress, EventLoop* loop)
-        :connSocket_(fd), ipAddress_(ipAddress), connChannel_(loop, fd), connectState_(kConnected)
+        :loop_(loop),connSocket_(fd), ipAddress_(ipAddress), connChannel_(loop, fd), connectState_(kConnected)
 {
     //添加connection的事件回调函数
     connChannel_.setReadCallBack(std::bind(&TcpConnection::handleRead, this));
@@ -40,28 +40,50 @@ void TcpConnection::handleRead()
             }
             writeBuf_.skip((size_t) send_size);
         }
-        if ( writeBuf_.readableBytes() == 0 )//read 返回值为0且发送缓冲区中没有数据时,关闭连接
+        //read 返回值为0且发送缓冲区中没有数据时,关闭连接
+        if ( writeBuf_.readableBytes() == 0 )
             handleClose();
     }
     else
         errorCallBack_();
 }
 
-void TcpConnection::sendMessage(const char* msg, size_t len)
+void TcpConnection::send(const char* msg, size_t len)
 {
     assert(msg != NULL);
+    std::string message(msg,len);
     if ( isConnected()) {
-        ssize_t send_size;
-        if ((send_size = connSocket_.Send(msg, len)) < len ) {
-            writeBuf_.write(msg + send_size, len - send_size);
-            connChannel_.enableWriting();
-        }
+        loop_->runInLoop(std::bind(&TcpConnection::sendInLoop,this,message));
     }
 }
+
+void TcpConnection::sendInLoop(const std::string& message)
+{
+    size_t len = message.size();
+    const char* msg = message.data();
+    ssize_t send_size = connSocket_.Send(msg, len);
+    if (send_size < 0 ) {
+        printErrorMsg("TcpConnection::sendInLoop");
+
+    }else if(send_size < len){
+        //将没有发送的数据写入发送缓冲区中
+        writeBuf_.write(msg + send_size, len - send_size);
+        //关注写事件
+        if(!connChannel_.isWriting())
+            connChannel_.enableWriting();
+    }
+
+
+}
+
+
 void TcpConnection::handleClose()
 {
+    assert(connectState_ == kConnected);
     connectState_ = kdisConnected;
+    //关闭对连接上所有事件的关注
     connChannel_.disenableAllEvent();
+    //执行回调
     closeCallBack_(shared_from_this());
 }
 void TcpConnection::handleWrite()
@@ -80,8 +102,23 @@ void TcpConnection::handleWrite()
 void TcpConnection::destoryConn()
 {
     connectState_ = kdisConnected;
+    connChannel_.disenableAllEvent();
     connChannel_.removeSelf();
     connSocket_.closeFd();
+}
+void TcpConnection::shutdown()
+{
+    if(connectState_ == kConnected){
+        connectState_ = kdisConnecting;
+        loop_->runInLoop(std::bind(&TcpConnection::shutdownInLoop,this));
+    }
+}
+void TcpConnection::shutdownInLoop()
+{
+    loop_->assertInLoopThread();
+    //在没有可写的数据时,关闭写的一端
+    if(!connChannel_.isWriting())
+        connSocket_.shutDownWrite();
 }
 
 }//namespace net

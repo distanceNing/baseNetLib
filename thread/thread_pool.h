@@ -82,6 +82,7 @@ public:
 
 private:
     bool isRunning_;
+    Condition  emptyCond_;
     std::vector<Thread> threads_;
     MutexLock queueMutex_;
     std::queue<ThreadTask> taskQueue_;

@@ -22,13 +22,14 @@ class SocketBuf;
 class TcpConnection;
 
 using TcpConnectionPtr=std::shared_ptr<TcpConnection>;
+using ClientReadCallBack=std::function<void(TcpConnection&, SocketBuf*)>;
+using ClientCloseCallBack=std::function<void(TcpConnectionPtr)>;
+using NewConnCallBack =std::function<void(int, const IpAddress&)>;
 class TcpServer {
 public:
     using ConnectionMap=std::map<int, TcpConnectionPtr>;
 public:
-    using ClientReadCallBack=std::function<void(TcpConnection&, SocketBuf*)>;
-    using ClientCloseCallBack=std::function<void(TcpConnectionPtr)>;
-    using NewConnCallBack =std::function<void(int, const IpAddress&)>;
+
 
     TcpServer(unsigned listen_port, EventLoop* loop);
 
@@ -38,7 +39,7 @@ public:
     {
         newConnCallBack_ = call_back;
     }
-
+    //上层应用添加的连接关闭事件回调
     void setClientReadCallBack(const ClientReadCallBack& call_back)
     {
         clienReadCallBack_ = call_back;

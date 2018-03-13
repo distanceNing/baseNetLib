@@ -10,7 +10,7 @@
 #define BASE_NET_LIB_TCPCONNECTION_H
 
 #include "tcp_server.h"
-#include "common.h"
+#include "include/common.h"
 #include "socket/tcp_socket.h"
 #include "socket/socket_buf.h"
 
@@ -30,12 +30,12 @@ public:
 
     TcpConnection(const int fd, const IpAddress& ipAddress, EventLoop* loop);
 
-    void setClienReadCallBack(const TcpServer::ClientReadCallBack& call_back)
+    void setClienReadCallBack(const ClientReadCallBack& call_back)
     {
         clientReadCallBack_ = call_back;
     }
 
-    void setClienCloseCallBack(const TcpServer::ClientCloseCallBack& call_back)
+    void setClienCloseCallBack(const ClientCloseCallBack& call_back)
     {
         closeCallBack_ = call_back;
 
@@ -46,8 +46,18 @@ public:
         errorCallBack_ = call_back;
 
     }
+    //提供给上层调用的发送消息函数
+    //线程安全的
+    void send(const char* msg, size_t len);
 
-    void sendMessage(const char* msg, size_t len);
+    void shutdown();
+
+    // *InLoop 保证在IO线程之中调用
+    void sendInLoop(const std::string& msg);
+
+    void shutdownInLoop();
+
+
 
 
     bool isConnected() const
@@ -73,12 +83,14 @@ private:
     void handleWrite();
 
     void handleClose();
+
+    EventLoop* loop_;
     ConnectState connectState_;
     TcpSocket connSocket_;
     Channel connChannel_;
     IpAddress ipAddress_;
-    TcpServer::ClientReadCallBack clientReadCallBack_;
-    TcpServer::ClientCloseCallBack closeCallBack_;
+    ClientReadCallBack clientReadCallBack_;
+    ClientCloseCallBack closeCallBack_;
     EventCallBack errorCallBack_;
     SocketBuf readBuf_;
     SocketBuf writeBuf_;

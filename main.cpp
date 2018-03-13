@@ -7,7 +7,7 @@
 //
 
 #include "event_loop.h"
-#include "common.h"
+#include "../include/common.h"
 #include "tcp_server.h"
 #include "tcp_connection.h"
 int main()
@@ -21,7 +21,7 @@ int main()
     });
 
     tcpServer.setClientReadCallBack([](net::TcpConnection& connection,net::SocketBuf* buf){
-      connection.sendMessage(buf->readBegin(),buf->readableBytes());
+      connection.send(buf->readBegin(),buf->readableBytes());
       buf->skip(buf->readableBytes());
     });
 

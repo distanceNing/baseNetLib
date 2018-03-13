@@ -16,6 +16,7 @@ public:
     {
         pthread_mutex_init(&mutex_, NULL);
     }
+
     inline void lock()
     {
         pthread_mutex_lock(&mutex_);
@@ -25,6 +26,7 @@ public:
     {
         pthread_mutex_unlock(&mutex_);
     }
+
     ~MutexLock()
     {
         unlock();
@@ -34,25 +36,23 @@ public:
 private:
     pthread_mutex_t mutex_;
 };
-class MutexRAII
-{
-public:
-    virtual ~MutexRAII();
+class MutexRAII {
 public:
     MutexRAII(MutexLock& mutexLock_);
+    ~MutexRAII();
 private:
     MutexLock& mutexLock_;
 };
 //条件变量用于线程之间同步共享数据的值,条件变量提供了一种线程间的通知机制当某个共享数据到达某个值的时候,唤醒
 //等待这个共享数据的线程
 
-class Cond {
+class Condition  {
 public:
-    Cond()
+    Condition ()
     {
-        if (!pthread_mutex_init(&mutex_, NULL))
+        if ( pthread_mutex_init(&mutex_, NULL) < 0)
             perror("pthread_mutex_init");
-        if (!pthread_cond_init(&cond_, NULL)) {
+        if ( pthread_cond_init(&cond_, NULL) < 0) {
             pthread_mutex_destroy(&mutex_);
             perror("pthread_cond_init");
         }
@@ -69,10 +69,10 @@ public:
 
     bool signal()
     {
-        return 0==pthread_cond_signal(&cond_);
+        return 0 == pthread_cond_signal(&cond_);
     }
 
-    virtual ~Cond()
+    ~Condition ()
     {
         pthread_mutex_destroy(&mutex_);
         pthread_cond_destroy(&cond_);

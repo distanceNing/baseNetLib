@@ -31,6 +31,7 @@ void TcpServer::removeConnection(TcpConnectionPtr connection)
     //从connections中删除连接
     auto ite = connectionMap_.find(connection->getFd());
     connectionMap_.erase(ite);
+
     serverLoop_->addTaskInQueue(std::bind(&TcpConnection::destoryConn,connection));
 }
 void TcpServer::newConnectionCallBack(int fd, const IpAddress& ip_address)
