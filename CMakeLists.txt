@@ -3,7 +3,7 @@ project(base_net_lib)
 
 set(CMAKE_CXX_STANDARD 11)
 
-INCLUDE_DIRECTORIES(headers)
+INCLUDE_DIRECTORIES(include)
 
 set(SOURCE_FILES
 
@@ -27,7 +27,7 @@ set(SOURCE_FILES
         timerfd/SortTimerList.cpp timerfd/SortTimerList.h
 
 
-        common.h
+        include/common.h   include/ScopeGuard.h
         main.cpp
 
 

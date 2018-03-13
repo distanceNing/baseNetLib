@@ -32,7 +32,7 @@ public:
     {
     }
 
-    virtual ~TcpSocket();
+     ~TcpSocket();
 
     bool CreateSocket(int port = 0, int af = AF_INET, int type = SOCK_STREAM);
 

@@ -43,6 +43,10 @@ public:
         ownEventLoop_->updateChannel(this);
     }
 public:
+    bool isWriting(){
+        return (events_ & kWrite) != 0;
+    }
+
     void setCloseCallBack(const EventCallBack& closeCallBack_);
 
     void setWriteCallBack(const EventCallBack& call_back)

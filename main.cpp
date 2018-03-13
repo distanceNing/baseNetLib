@@ -16,12 +16,12 @@ int main()
 
     net::TcpServer tcpServer(kPort,&loop);
 
-    tcpServer.setClienCloseCallBack([](net::TcpServer::TcpConnectionPtr connection){
+    tcpServer.setClienCloseCallBack([](net::TcpConnectionPtr connection){
       printf("fd is %d closed \n",connection->getFd());
     });
 
     tcpServer.setClientReadCallBack([](net::TcpConnection& connection,net::SocketBuf* buf){
-      connection.sendMessage(buf->readBegin(),buf->readableBytes());
+      connection.send(buf->readBegin(),buf->readableBytes());
       buf->skip(buf->readableBytes());
     });
 

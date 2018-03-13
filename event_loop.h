@@ -10,6 +10,7 @@
 
 #include <vector>
 #include <memory>
+#include <assert.h>
 
 #include "poller/poll_poller.h"
 #include "poller/epoll_poller.h"
@@ -46,14 +47,13 @@ public:
     ~EventLoop()
     {
     }
-    void runInLoop( ){
-        if(isInLoopThread())
-        {
 
-        }
-    }
 
     bool isInLoopThread();
+
+    void assertInLoopThread(){
+        assert(isInLoopThread());
+    }
 
     void updateChannel(Channel* channel);
 
