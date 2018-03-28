@@ -9,11 +9,11 @@
 #define BASE_NET_LIB_TCPSERVER_H
 #include "socket/tcp_socket.h"
 #include "Acceptor.h"
-
+#include "EventLoopThreadPool.h"
 #include <functional>
 #include <list>
 #include <memory>
-
+#include <map>
 
 
 namespace net {
@@ -31,7 +31,7 @@ public:
 public:
 
 
-    TcpServer(unsigned listen_port, EventLoop* loop);
+    TcpServer(unsigned listen_port, EventLoop* loop,size_t thread_num = 0);
 
     void newConnectionCallBack(int fd, const IpAddress& ip_address);
 
@@ -74,6 +74,8 @@ private:
     ClientCloseCallBack closeCallBack_;
     NewConnCallBack newConnCallBack_;
     EventCallBack errorCallBack_;
+    // 多线程的 tcp server
+    std::unique_ptr<EventLoopThreadPool> loopPool_;
 };
 }//namespace net
 #endif //BASE_NET_LIB_TCPSERVER_H

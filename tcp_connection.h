@@ -58,8 +58,6 @@ public:
     void shutdownInLoop();
 
 
-
-
     bool isConnected() const
     {
         return connectState_ == kConnected;

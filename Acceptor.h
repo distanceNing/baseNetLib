@@ -14,28 +14,19 @@
 #include "socket/tcp_socket.h"
 #include "include/common.h"
 #include "channel.h"
+
 #include <functional>
 #include <iostream>
 
 namespace net {
+class  EventLoop;
+
 using NewConnetcionCallBack=std::function<void(int, const IpAddress&)>;
 class Acceptor {
 public:
-    Acceptor(unsigned listenPort, EventLoop* loop)
-            :ownEventLoop_(loop), listenSock_(TcpSocket::create_and_bind(listenPort)),
-             listenChannel_(loop, listenSock_.getFd()), listening_(false), listenPort_(listenPort)
-    {
-        setFdNonBlocking(listenSock_.getFd());
-        listenChannel_.setReadCallBack(std::bind(&Acceptor::handleRead, this));
-    }
+    Acceptor(unsigned listenPort, EventLoop* loop);
 
-    void listen()
-    {
-        listening_ = true;
-        listenSock_.Listen();
-        listenChannel_.enableReading();
-        std::cout << "server is running on  " << listenPort_ << " ----- \n";
-    }
+    void listen();
 
     void setNewConnetcionCallBack(const NewConnetcionCallBack& cb)
     {

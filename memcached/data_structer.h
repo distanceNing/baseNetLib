@@ -9,8 +9,8 @@
 #ifndef MEMCACHED_DATASTRUCTER_H
 #define MEMCACHED_DATASTRUCTER_H
 #include "thread/lock.h"
-#include "net/common.h"
-#include "net/socket/socket_buf.h"
+#include "common.h"
+#include "socket/socket_buf.h"
 #include <unordered_map>
 #include <vector>
 #include <memory>

@@ -7,7 +7,15 @@
 //
 
 #include "Acceptor.h"
+#include "channel.h"
 namespace net {
+Acceptor::Acceptor(unsigned listenPort, EventLoop* loop)
+        :ownEventLoop_(loop), listenSock_(TcpSocket::create_and_bind(listenPort)),
+         listenChannel_(loop, listenSock_.getFd()), listening_(false), listenPort_(listenPort)
+{
+    setFdNonBlocking(listenSock_.getFd());
+    listenChannel_.setReadCallBack(std::bind(&Acceptor::handleRead, this));
+}
 
 void Acceptor::handleRead()
 {
@@ -24,4 +32,12 @@ void Acceptor::handleRead()
     else
         close(client_fd);
 }
+void Acceptor::listen()
+{
+    listening_ = true;
+    listenSock_.Listen();
+    listenChannel_.enableReading();
+    std::cout << "server is running on  " << listenPort_ << " ----- \n";
+}
+
 }//namespace net

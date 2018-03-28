@@ -6,15 +6,29 @@
 // Copyright (c) yangning All rights reserved.
 //
 
-#include "event_loop.h"
-#include "../include/common.h"
+#include "EventLoopThreadPool.h"
+#include "gtest/gtest.h"
 #include "tcp_server.h"
 #include "tcp_connection.h"
-int main()
-{
-    net::EventLoop loop(net::POLL);
 
-    net::TcpServer tcpServer(kPort,&loop);
+#include "event_loop.h"
+#define __TESTING
+int main(int argc, char* argv[])
+{
+#ifdef __TESTING
+    ::testing::FLAGS_gtest_color="yes";
+    ::testing::InitGoogleTest(&argc, argv);
+
+    net::EventLoop loop(net::POLL);
+    //单线程环境
+    //net::EventLoopThreadPool loop_pool(&loop,0);
+
+    //EXPECT_EQ(&loop,loop_pool.getNextLoop());
+    //net::EventLoopThreadPool loop_pool(&loop,4);
+
+    //EXPECT_EQ(&loop,loop_pool.getNextLoop());
+
+    net::TcpServer tcpServer(kPort,&loop,1);
 
     tcpServer.setClienCloseCallBack([](net::TcpConnectionPtr connection){
       printf("fd is %d closed \n",connection->getFd());
@@ -22,7 +36,9 @@ int main()
 
     tcpServer.setClientReadCallBack([](net::TcpConnection& connection,net::SocketBuf* buf){
       connection.send(buf->readBegin(),buf->readableBytes());
+      //printf("%s",buf->readBegin());
       buf->skip(buf->readableBytes());
+
     });
 
     tcpServer.setClienErrorCallBack([](){
@@ -35,6 +51,9 @@ int main()
 
     tcpServer.serverStart();
 
+    return RUN_ALL_TESTS();
+#else
     return 0;
+#endif //__TESTING
 }
 

@@ -5,6 +5,10 @@ set(CMAKE_CXX_STANDARD 11)
 
 INCLUDE_DIRECTORIES(include)
 
+INCLUDE_DIRECTORIES(
+        googletest/include
+)
+
 set(SOURCE_FILES
 
 
@@ -26,13 +30,21 @@ set(SOURCE_FILES
         timerfd/TimeQueue.h timerfd/TimeQueue.cpp
         timerfd/SortTimerList.cpp timerfd/SortTimerList.h
 
+        #memcached file
+        #memcached/mem_request.cpp memcached/mem_request.h
+        #memcached/data_structer.cpp memcached/data_structer.h
+        #memcached/mem_response.cpp memcached/mem_response.h
+        #memcached/user.cpp memcached/user.h
+        #memcached/MemServer.cpp memcached/MemServer.h
+        #memcached/mem_pool.h
+
 
         include/common.h   include/ScopeGuard.h
         main.cpp
 
-
-        thread/ThreadLoopPool.cpp
-        thread/ThreadLoopPool.h
+        EventLoopThread.h EventLoopThread.cpp
+        EventLoopThreadPool.cpp
+        EventLoopThreadPool.h
         thread/Thread.cpp
         thread/Thread.h
         thread/thread_pool.cpp
@@ -40,6 +52,11 @@ set(SOURCE_FILES
         thread/lock.cpp
         thread/lock.h
         )
-link_libraries(pthread)
+
 
 add_executable(base_net_lib ${SOURCE_FILES})
+target_link_libraries(              # Start
+        base_net_lib                       # Name of executable
+        ${PROJECT_SOURCE_DIR}/googletest/make/gtest_main.a
+        pthread# Name of library without "lib" prefix
+        )

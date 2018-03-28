@@ -4,11 +4,13 @@
 
 #include "tcp_server.h"
 #include "tcp_connection.h"
+#include "event_loop.h"
+#include "EventLoopThreadPool.h"
 using namespace std::placeholders;
 
 namespace net {
-TcpServer::TcpServer(unsigned listen_port, EventLoop* loop)
-        :serverLoop_(loop), acceptor_(new Acceptor(listen_port, serverLoop_))
+TcpServer::TcpServer(unsigned listen_port, EventLoop* loop,size_t thread_num)
+        :serverLoop_(loop), acceptor_(new Acceptor(listen_port, serverLoop_)),loopPool_(new EventLoopThreadPool(loop,thread_num))
 {
     acceptor_->setNewConnetcionCallBack(std::bind(&TcpServer::newConnectionCallBack, this, _1, _2));
 }
@@ -27,16 +29,16 @@ void TcpServer::serverStop()
 void TcpServer::removeConnection(TcpConnectionPtr connection)
 {
     //先执行客户回调
-    closeCallBack_(connection);
+    if(closeCallBack_)
+        closeCallBack_(connection);
     //从connections中删除连接
-    auto ite = connectionMap_.find(connection->getFd());
-    connectionMap_.erase(ite);
+    connectionMap_.erase(connection->getFd());
 
     serverLoop_->addTaskInQueue(std::bind(&TcpConnection::destoryConn,connection));
 }
 void TcpServer::newConnectionCallBack(int fd, const IpAddress& ip_address)
 {
-    TcpConnectionPtr con_ptr(new TcpConnection(fd, ip_address, serverLoop_));
+    TcpConnectionPtr con_ptr(new TcpConnection(fd, ip_address, loopPool_->getNextLoop()));
     //设置连接client的事件回调函数
     con_ptr->setClienReadCallBack(clienReadCallBack_);
     con_ptr->setClienCloseCallBack(std::bind(&TcpServer::removeConnection, this, _1));
@@ -44,7 +46,8 @@ void TcpServer::newConnectionCallBack(int fd, const IpAddress& ip_address)
 
     connectionMap_.insert(std::make_pair(fd,con_ptr));
     //connectionMap_[fd] = con_ptr;
-    newConnCallBack_(fd,ip_address);
+    if(newConnCallBack_)
+        newConnCallBack_(fd,ip_address);
 }
 
 } //namespace net

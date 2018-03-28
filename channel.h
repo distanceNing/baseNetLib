@@ -12,9 +12,10 @@
 #include <functional>
 #include <zconf.h>
 #include <cassert>
-#include "event_loop.h"
+#include <sys/poll.h>
 
 namespace net {
+class EventLoop;
 using EventCallBack=std::function<void()>;
 class Channel {
 public:
@@ -25,23 +26,14 @@ public:
     static const int kRead = POLLIN;
     static const int kError = POLLERR;
 
-    Channel(EventLoop* ownEventLoop_, const int fd_)
-            :ownEventLoop_(ownEventLoop_), fd_(fd_), events_(0), revents_(0),eventHandling_(false)
-    {
-        ownEventLoop_->addNewChannel(this);
-    }
+    Channel(EventLoop* ownEventLoop_, const int fd_);
 
     const net::EventLoop* getOwnLoop() const
     {
         return ownEventLoop_;
     }
 
-    void disenableAllEvent()
-    {
-        events_ = kNonEvent;
-        revents_ = kNonEvent;
-        ownEventLoop_->updateChannel(this);
-    }
+    void disenableAllEvent();
 public:
     bool isWriting(){
         return (events_ & kWrite) != 0;
@@ -64,35 +56,15 @@ public:
         errorCallBack_ = call_back;
     }
 
-    void enableReading()
-    {
-        events_ |= kRead;
-        ownEventLoop_->updateChannel(this);
-    }
+    void enableReading();
 
-    void disenableReading()
-    {
-        events_ &= kNonRead;
-        ownEventLoop_->updateChannel(this);
-    }
+    void disenableReading();
 
-    void enableWriting()
-    {
-        events_ |= kWrite;
-        ownEventLoop_->updateChannel(this);
-    }
+    void enableWriting();
 
-    void disenableWriting()
-    {
-        events_ &= kNonWrite;
-        ownEventLoop_->updateChannel(this);
-    }
+    void disenableWriting();
 
-    void enableError()
-    {
-        events_ |= kError;
-        ownEventLoop_->updateChannel(this);
-    }
+    void enableError();
 
     void setRetEvents(int ret_events)
     {
@@ -111,10 +83,7 @@ public:
 
     void handleEvent();
 
-    void removeSelf()
-    {
-        ownEventLoop_->removeChannel(this);
-    }
+    void removeSelf();
 
 public:
     void setIsAddInLoop(bool isAddInLoop_);

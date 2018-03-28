@@ -25,6 +25,7 @@ pthread_t Thread::getThreadID()
 
 pthread_t Thread::getCurrentThreadID()
 {
+
     return pthread_self();
 }
 

@@ -9,6 +9,7 @@
 #include <poll.h>
 #include <iostream>
 #include "channel.h"
+#include "event_loop.h"
 namespace net {
 void Channel::handleEvent()
 {
@@ -53,6 +54,47 @@ void Channel::setIsAddInLoop(bool isAddInLoop)
 void Channel::setCloseCallBack(const EventCallBack& closeCallBack)
 {
     Channel::closeCallBack_ = closeCallBack;
+}
+Channel::Channel(EventLoop* ownEventLoop_, const int fd_)
+        :ownEventLoop_(ownEventLoop_), fd_(fd_), events_(0), revents_(0),eventHandling_(false)
+{
+    ownEventLoop_->addNewChannel(this);
+}
+
+void Channel::disenableAllEvent()
+{
+    events_ = kNonEvent;
+    revents_ = kNonEvent;
+    ownEventLoop_->updateChannel(this);
+}
+void Channel::enableReading()
+{
+    events_ |= kRead;
+    ownEventLoop_->updateChannel(this);
+}
+void Channel::disenableReading()
+{
+    events_ &= kNonRead;
+    ownEventLoop_->updateChannel(this);
+}
+void Channel::enableWriting()
+{
+    events_ |= kWrite;
+    ownEventLoop_->updateChannel(this);
+}
+void Channel::disenableWriting()
+{
+    events_ &= kNonWrite;
+    ownEventLoop_->updateChannel(this);
+}
+void Channel::enableError()
+{
+    events_ |= kError;
+    ownEventLoop_->updateChannel(this);
+}
+void Channel::removeSelf()
+{
+    ownEventLoop_->removeChannel(this);
 }
 }//namespace net
 

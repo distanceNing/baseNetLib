@@ -39,8 +39,8 @@ protected:
     typedef std::vector<Channel*> ChannelList;
     using Functor=std::function<void()>;
 public:
-    EventLoop(POLL_TYPE pollType)
-            :isLooping_(false), threadId_(Thread::getCurrentThreadID()), poller_(createPoller(pollType))
+    EventLoop(POLL_TYPE poll_type)
+            :isLooping_(false), threadId_(Thread::getCurrentThreadID()), poller_(createPoller(poll_type))
     {
     }
 

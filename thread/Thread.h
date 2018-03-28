@@ -7,6 +7,7 @@
 
 #include <pthread.h>
 #include <functional>
+
 class Thread {
 public:
     using ThreadFun =std::function<void()>;
@@ -37,6 +38,7 @@ private:
     //bool isAutoDelete_;
     pthread_t threadID_;
     ThreadFun threadFun_;
+    pid_t tid_;
 };
 
 #endif //BASE_NET_LIB_THREAD_H

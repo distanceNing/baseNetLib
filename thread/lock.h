@@ -48,7 +48,7 @@ private:
 
 class Condition  {
 public:
-    Condition ()
+    Condition ():signaled_(false)
     {
         if ( pthread_mutex_init(&mutex_, NULL) < 0)
             perror("pthread_mutex_init");
@@ -58,18 +58,21 @@ public:
         }
     }
 
-    bool wait()
+    void wait()
     {
-        int ret = 0;
         pthread_mutex_lock(&mutex_);
-        ret = pthread_cond_wait(&cond_, &mutex_);
+        while(signaled_)
+            pthread_cond_wait(&cond_, &mutex_);
         pthread_mutex_unlock(&mutex_);
-        return ret == 0;
+
     }
 
-    bool signal()
+    void signal()
     {
-        return 0 == pthread_cond_signal(&cond_);
+        pthread_mutex_lock(&mutex_);
+        signaled_ = true;
+        pthread_cond_signal(&cond_);
+        pthread_mutex_unlock(&mutex_);
     }
 
     ~Condition ()
@@ -79,6 +82,7 @@ public:
     }
 
 private:
+    bool signaled_;
     pthread_cond_t cond_;
     pthread_mutex_t mutex_;
 };

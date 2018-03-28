@@ -7,6 +7,7 @@
 //
 
 #include "tcp_connection.h"
+#include "event_loop.h"
 namespace net {
 
 TcpConnection::TcpConnection(const int fd, const IpAddress& ipAddress, EventLoop* loop)
@@ -84,17 +85,19 @@ void TcpConnection::handleClose()
     //关闭对连接上所有事件的关注
     connChannel_.disenableAllEvent();
     //执行回调
-    closeCallBack_(shared_from_this());
+    if(closeCallBack_)
+        closeCallBack_(shared_from_this());
 }
 void TcpConnection::handleWrite()
 {
     size_t readable = writeBuf_.readableBytes();
     ssize_t size = connSocket_.Send(writeBuf_.readBegin(), readable);
     if ( size < 0 ) {
-        errorCallBack_();
+        if(errorCallBack_) errorCallBack_();
         return;
     }
     writeBuf_.skip((size_t) size);
+    //当写完缓冲区中所有的数据时 关闭写事件.
     if ( size == readable )
         connChannel_.disenableWriting();
 
