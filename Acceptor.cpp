@@ -7,7 +7,7 @@
 //
 
 #include "Acceptor.h"
-#include "channel.h"
+#include "event_loop.h"
 namespace net {
 Acceptor::Acceptor(unsigned listenPort, EventLoop* loop)
         :ownEventLoop_(loop), listenSock_(TcpSocket::create_and_bind(listenPort)),
@@ -36,6 +36,7 @@ void Acceptor::listen()
 {
     listening_ = true;
     listenSock_.Listen();
+    ownEventLoop_->addNewChannel(&listenChannel_);
     listenChannel_.enableReading();
     std::cout << "server is running on  " << listenPort_ << " ----- \n";
 }

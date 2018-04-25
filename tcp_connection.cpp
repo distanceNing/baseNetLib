@@ -11,15 +11,17 @@
 namespace net {
 
 TcpConnection::TcpConnection(const int fd, const IpAddress& ipAddress, EventLoop* loop)
-        :loop_(loop),connSocket_(fd), ipAddress_(ipAddress), connChannel_(loop, fd), connectState_(kConnected)
+        :loop_(loop),
+         connSocket_(fd),
+         ipAddress_(ipAddress),
+         connChannel_(loop, fd),
+         connectState_(kConnected)
 {
     //添加connection的事件回调函数
     connChannel_.setReadCallBack(std::bind(&TcpConnection::handleRead, this));
     connChannel_.setWriteCallBack(std::bind(&TcpConnection::handleWrite, this));
     connChannel_.setCloseCallBack(std::bind(&TcpConnection::handleClose, this));
     connChannel_.setErrorCallBack(errorCallBack_);
-    //设置connsock可读
-    connChannel_.enableReading();
 }
 
 void TcpConnection::handleRead()
@@ -122,6 +124,13 @@ void TcpConnection::shutdownInLoop()
     //在没有可写的数据时,关闭写的一端
     if(!connChannel_.isWriting())
         connSocket_.shutDownWrite();
+}
+void TcpConnection::enableConnection()
+{
+    //将新的channel添加到poll 中
+    loop_->addNewChannel(&connChannel_);
+    //设置connsock可读
+    connChannel_.enableReading();
 }
 
 }//namespace net

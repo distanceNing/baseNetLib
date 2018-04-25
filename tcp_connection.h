@@ -68,6 +68,8 @@ public:
         return connSocket_.getFd();
     }
 
+    void enableConnection();
+
     void destoryConn();
 
     ~TcpConnection()

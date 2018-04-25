@@ -38,7 +38,8 @@ void TcpServer::removeConnection(TcpConnectionPtr connection)
 }
 void TcpServer::newConnectionCallBack(int fd, const IpAddress& ip_address)
 {
-    TcpConnectionPtr con_ptr(new TcpConnection(fd, ip_address, loopPool_->getNextLoop()));
+    EventLoop* ioloop = loopPool_->getNextLoop();
+    TcpConnectionPtr con_ptr(new TcpConnection(fd, ip_address, ioloop));
     //设置连接client的事件回调函数
     con_ptr->setClienReadCallBack(clienReadCallBack_);
     con_ptr->setClienCloseCallBack(std::bind(&TcpServer::removeConnection, this, _1));
@@ -48,6 +49,8 @@ void TcpServer::newConnectionCallBack(int fd, const IpAddress& ip_address)
     //connectionMap_[fd] = con_ptr;
     if(newConnCallBack_)
         newConnCallBack_(fd,ip_address);
+
+    ioloop->runInLoop(std::bind(&TcpConnection::enableConnection,con_ptr));
 }
 
 } //namespace net

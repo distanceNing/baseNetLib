@@ -1,8 +1,7 @@
 #include "tcp_socket.h"
 #include "../include/common.h"
 #include "socket_buf.h"
-#include <cstdint>
-#include <iostream>
+
 namespace net {
 bool TcpSocket::CreateSocket(int port, int af, int type)
 {
@@ -48,7 +47,7 @@ int TcpSocket::Accept(char* fromIP, UINT& fromPort)
     memset(&from, 0, sizeof(struct sockaddr_in));
     from.sin_family = AF_INET;
     socklen_t len = sizeof(from);
-    int clientSock = -1;
+    int clientSock;
     if ((clientSock = accept(fd_, (sockaddr*) &from, &len)) < 0 )
         return clientSock;
     strcpy(fromIP, inet_ntoa(from.sin_addr));

@@ -56,9 +56,14 @@ void Channel::setCloseCallBack(const EventCallBack& closeCallBack)
     Channel::closeCallBack_ = closeCallBack;
 }
 Channel::Channel(EventLoop* ownEventLoop_, const int fd_)
-        :ownEventLoop_(ownEventLoop_), fd_(fd_), events_(0), revents_(0),eventHandling_(false)
+        :ownEventLoop_(ownEventLoop_),
+         fd_(fd_),
+         events_(0),
+         revents_(0),
+         eventHandling_(false),
+         isAddInLoop_(false)
 {
-    ownEventLoop_->addNewChannel(this);
+    //ownEventLoop_->addNewChannel(this);
 }
 
 void Channel::disenableAllEvent()
