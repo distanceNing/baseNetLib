@@ -10,8 +10,8 @@
 #include "event_loop.h"
 namespace net {
 Acceptor::Acceptor(unsigned listenPort, EventLoop* loop)
-        :ownEventLoop_(loop), listenSock_(TcpSocket::create_and_bind(listenPort)),
-         listenChannel_(loop, listenSock_.getFd()), listening_(false), listenPort_(listenPort)
+        :ownEventLoop_(loop), listenSock_(TcpSocket::create_and_bind(listenPort)),listenPort_(listenPort),
+         listening_(false),listenChannel_(loop, listenSock_.getFd()) 
 {
     setFdNonBlocking(listenSock_.getFd());
     listenChannel_.setReadCallBack(std::bind(&Acceptor::handleRead, this));

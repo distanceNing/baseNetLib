@@ -166,9 +166,9 @@ private:
         return buffer_;
     }
     char* buffer_;
-    size_t capacity_;
     size_t readIndex_;
     size_t writeIndex_;
+    size_t capacity_;
 
 };
 

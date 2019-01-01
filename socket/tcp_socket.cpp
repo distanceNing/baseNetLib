@@ -106,7 +106,7 @@ ssize_t TcpSocket::write_n(const void* msg, size_t buf_len)
     ssize_t a_send_size;
     while ((a_send_size = ::write(fd_, (char*) msg + send_size, buf_len - send_size)) > 0) {
         send_size += a_send_size;
-        if ( send_size == buf_len )
+        if ( (size_t)send_size == buf_len )
             break;
     }
     return send_size;
@@ -118,7 +118,7 @@ ssize_t TcpSocket::read_n(void* msg, size_t buf_len)
     ssize_t a_recv_size;
     while ((a_recv_size = ::read(fd_, (char*) msg + recv_size, buf_len - recv_size)) > 0) {
         recv_size += a_recv_size;
-        if ( recv_size == buf_len )
+        if ( (size_t)recv_size == buf_len )
             break;
     }
     return recv_size;

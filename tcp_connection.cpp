@@ -35,9 +35,12 @@ void TcpConnection::handleRead()
         if ( writeBuf_.readableBytes() > 0 ) {
             //当还有未发送完的用户数据时,先对数据进行发送,之后在正确关闭连接.
             //connectState_ = kdisConnecting;
-            ssize_t send_size = -1;
             size_t readable = writeBuf_.readableBytes();
-            if ((send_size = connSocket_.Send(writeBuf_.readBegin(), readable)) < readable ) {
+            ssize_t send_size = connSocket_.Send(writeBuf_.readBegin(), readable);
+            if ( send_size < 0){
+    	        errorCallBack_();
+            }
+            if ((size_t)send_size < readable ) {
                 //发送write buffer中的数据,一次发送未发送完毕,关注可写事件
                 connChannel_.enableWriting();
             }
@@ -46,9 +49,8 @@ void TcpConnection::handleRead()
         //read 返回值为0且发送缓冲区中没有数据时,关闭连接
         if ( writeBuf_.readableBytes() == 0 )
             handleClose();
-    }
-    else
-        errorCallBack_();
+    }else
+    	errorCallBack_();
 }
 
 void TcpConnection::send(const char* msg, size_t len)
@@ -68,7 +70,7 @@ void TcpConnection::sendInLoop(const std::string& message)
     if (send_size < 0 ) {
         printErrorMsg("TcpConnection::sendInLoop");
 
-    }else if(send_size < len){
+    }else if((size_t)send_size < len){
         //将没有发送的数据写入发送缓冲区中
         writeBuf_.write(msg + send_size, len - send_size);
         //关注写事件
@@ -100,7 +102,7 @@ void TcpConnection::handleWrite()
     }
     writeBuf_.skip((size_t) size);
     //当写完缓冲区中所有的数据时 关闭写事件.
-    if ( size == readable )
+    if ( (size_t)size == readable )
         connChannel_.disenableWriting();
 
 }

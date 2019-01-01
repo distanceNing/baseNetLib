@@ -18,3 +18,9 @@ net::EventLoopThread::EventLoopThread()
         :thread_(std::bind(&EventLoopThread::threadFun,this)),loop_(nullptr)
 {
 }
+
+net::EventLoopThread::~EventLoopThread()
+{
+    if(loop_)
+        delete( loop_);
+}

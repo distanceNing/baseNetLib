@@ -24,7 +24,7 @@ TimeStamp EpollPoller::Poll(int time_out, Poller::ChannelList& activeChannels)
         fillActiveChannel(num_ready, activeChannels);
 
         //当返回的事件大小和epollEventList长度一样时,进行扩充
-        if (epollEventList_.size() == num_ready) {
+        if (epollEventList_.size() == (size_t)num_ready) {
             epollEventList_.resize(epollEventList_.size() << 2);
         }
     }

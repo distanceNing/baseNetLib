@@ -2,7 +2,7 @@
 // Created by yangning on 17-10-25.
 //
 
-#include <zconf.h>
+//#include <zconf.h>
 #include "Thread.h"
 #include <pthread.h>
 

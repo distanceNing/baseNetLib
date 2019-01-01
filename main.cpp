@@ -16,8 +16,8 @@
 int main(int argc, char* argv[])
 {
 #ifdef __TESTING
-    ::testing::FLAGS_gtest_color="yes";
-    ::testing::InitGoogleTest(&argc, argv);
+    //::testing::FLAGS_gtest_color="yes";
+    //::testing::InitGoogleTest(&argc, argv);
 
     net::EventLoop loop(net::POLL);
     //单线程环境
@@ -29,6 +29,7 @@ int main(int argc, char* argv[])
     //EXPECT_EQ(&loop,loop_pool.getNextLoop());
 
     net::TcpServer tcpServer(kPort,&loop,1);
+    loop.assertInLoopThread();
 
     tcpServer.setClienCloseCallBack([](net::TcpConnectionPtr connection){
       printf("fd is %d closed \n",connection->getFd());
@@ -50,8 +51,10 @@ int main(int argc, char* argv[])
     });
 
     tcpServer.serverStart();
-
-    return RUN_ALL_TESTS();
+/**
+  
+*///  return RUN_ALL_TESTS();
+    return 0;
 #else
     return 0;
 #endif //__TESTING

@@ -33,9 +33,8 @@ private:
 
     void fillActiveChannel(int num_ready, ChannelList& activeChannel);
 
-    int epollFd_;
-
     EpollEventList epollEventList_;
+    int epollFd_;
 };
 }//namespace net
 #endif //BASE_NET_LIB_EPOLL_POLLER_H

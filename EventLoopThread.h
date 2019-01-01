@@ -28,11 +28,7 @@ public:
         return loop_;
     }
 
-    ~EventLoopThread()
-    {
-        if(loop_)
-            delete( loop_);
-    }
+    ~EventLoopThread();
 
 private:
     Thread thread_;

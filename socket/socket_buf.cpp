@@ -91,7 +91,7 @@ ssize_t SocketBuf::readFromFd(int fd)
         else
             printErrorMsg("readv");
     }
-    if (read_size > writeable) {
+    if ((size_t)read_size > writeable) {
         writeIndex_ += writeable;
         write(extrabuf, read_size - writeable);
     }

@@ -10,7 +10,7 @@
 #define BASE_NET_LIB_CHANNEL_H
 
 #include <functional>
-#include <zconf.h>
+//#include <zconf.h>
 #include <cassert>
 #include <sys/poll.h>
 
@@ -94,12 +94,11 @@ public:
 
 private:
     EventLoop* ownEventLoop_;
-    bool isAddInLoop_;
-    bool eventHandling_;
-private:
     const int fd_;
     short events_;
     short revents_;
+    bool eventHandling_;
+    bool isAddInLoop_;
     EventCallBack writeCallBack_;
     EventCallBack readCallBack_;
     EventCallBack errorCallBack_;

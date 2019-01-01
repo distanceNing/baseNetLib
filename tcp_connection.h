@@ -85,10 +85,10 @@ private:
     void handleClose();
 
     EventLoop* loop_;
-    ConnectState connectState_;
     TcpSocket connSocket_;
-    Channel connChannel_;
     IpAddress ipAddress_;
+    Channel connChannel_;
+    ConnectState connectState_;
     ClientReadCallBack clientReadCallBack_;
     ClientCloseCallBack closeCallBack_;
     EventCallBack errorCallBack_;
