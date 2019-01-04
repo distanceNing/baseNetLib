@@ -4,19 +4,18 @@
 
 class Consumer{
 public:
-    Consumer(){}
+    Consumer(int type):type_(type){}
 
-    bool register();
+    bool register_node();
 
-    void process();
-    // topic
-    // msg info
-    void  push_msg();
+    int getSubscribeMsgType()const{
+        return type_;
+    }
 
     ~Consumer(){}
 
-    private:
-
+private:
+    int type_;
 
 };
 #endif // _CONSUMER_H_

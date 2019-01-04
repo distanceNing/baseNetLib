@@ -12,13 +12,13 @@
 #include "tcp_server.h"
 #include "tcp_connection.h"
 #include "Session.h"
-
+#include "consumer/consumer.h"
 class Server {
 public:
 
-    using SessionMap=std::map<net::TcpConnectionPtr,Session>;
+    using SessionMap=std::map<int,Session>;
 
-    Server(net::EventLoop* loop);
+    Server(net::EventLoop* loop,size_t thred_num);
 
 
     void run();
@@ -34,6 +34,7 @@ private:
 
     SessionMap sessionMap_;
     net::TcpServer tcpServer_;
+
 };
 
 #endif //THEAPP_SERVER_H

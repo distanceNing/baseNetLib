@@ -22,9 +22,9 @@ class SocketBuf;
 class TcpConnection;
 
 using TcpConnectionPtr=std::shared_ptr<TcpConnection>;
-using ClientReadCallBack=std::function<void(TcpConnection&, SocketBuf*)>;
+using ClientReadCallBack=std::function<void(TcpConnectionPtr, SocketBuf*)>;
 using ClientCloseCallBack=std::function<void(TcpConnectionPtr)>;
-using NewConnCallBack =std::function<void(int, const IpAddress&)>;
+using NewConnCallBack =std::function<void(int, const IpAddress&,TcpConnectionPtr&)>;
 class TcpServer {
 public:
     using ConnectionMap=std::map<int, TcpConnectionPtr>;

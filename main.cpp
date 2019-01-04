@@ -12,13 +12,19 @@
 #include "tcp_connection.h"
 
 #include "event_loop.h"
+
+#include "Server.h"
 #define __TESTING
 int main(int argc, char* argv[])
 {
 #ifdef __TESTING
     //::testing::FLAGS_gtest_color="yes";
     //::testing::InitGoogleTest(&argc, argv);
+    net::EventLoop loop(net::POLL);
+    Server server(&loop,0);
+    server.run();
 
+/**
     net::EventLoop loop(net::POLL);
     //单线程环境
     //net::EventLoopThreadPool loop_pool(&loop,0);
@@ -51,7 +57,6 @@ int main(int argc, char* argv[])
     });
 
     tcpServer.serverStart();
-/**
   
 *///  return RUN_ALL_TESTS();
     return 0;

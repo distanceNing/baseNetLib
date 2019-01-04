@@ -39,8 +39,14 @@ set(SOURCE_FILES
         #memcached/user.cpp memcached/user.h
         #memcached/MemServer.cpp memcached/MemServer.h
         #memcached/mem_pool.h
-
-
+        proto/Protocol.cpp proto/Protocol.h
+        Server.h Server.cpp
+        Session.h Session.cpp
+        msg/msg.h msg/msg.cpp
+        msg/MsgSet.cpp msg/MsgSet.h
+        msg/MsgFactory.cpp msg/MsgFactory.h
+        consumer/ConsumerList.cpp
+        consumer/ConsumerList.h
         include/common.h   include/ScopeGuard.h
         main.cpp
 

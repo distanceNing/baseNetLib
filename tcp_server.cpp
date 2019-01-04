@@ -48,7 +48,7 @@ void TcpServer::newConnectionCallBack(int fd, const IpAddress& ip_address)
     connectionMap_.insert(std::make_pair(fd,con_ptr));
     //connectionMap_[fd] = con_ptr;
     if(newConnCallBack_)
-        newConnCallBack_(fd,ip_address);
+        newConnCallBack_(fd,ip_address,con_ptr);
 
     ioloop->runInLoop(std::bind(&TcpConnection::enableConnection,con_ptr));
 }

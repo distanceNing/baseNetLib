@@ -10,10 +10,33 @@
 #define THEAPP_PROTOCOL_H
 #include <string>
 #include <memory>
+#include <map>
 #include "rapidjson/document.h"// rapidjson's DOM-style API
+
+void jsonstr2map(std::map<std::string, std::string>& map, const char* json_str);
+
+
+std::string map2jsonstr(const std::map<std::string,std::string>& map);
+
+
 
 class Protocol {
 public:
+
+
+    static const char* kSuccess;
+    static const char* kFail ;
+
+    enum TopicType {
+      kAnnounceMsg, kRemindMsg, kInfoMsg
+    };
+    enum MsgProto {
+      kJson, kXml, kHtml
+    };
+    enum cmd {
+      kCmdRegister, kCmdPush
+
+    };
     Protocol()
     {
     }
@@ -23,8 +46,6 @@ public:
     static std::shared_ptr<rapidjson::Document> stringToJsonObj(const std::string& json_str);
 
     static std::string jsonObjToString(const rapidjson::Document& json);
-
-
 
     ~Protocol()
     {

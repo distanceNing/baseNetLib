@@ -8,27 +8,40 @@
 
 #include "Server.h"
 #include "tcp_server.h"
+
+
+
 void Server::run()
 {
-    tcpServer_.serverStart();
+
     tcpServer_.setClienErrorCallBack([](){
       printErrorMsg("error");
     });
 
-    tcpServer_.setClientReadCallBack([&](net::TcpConnection& connection,net::SocketBuf* buf){
-      Session& session =  sessionMap_[net::TcpConnectionPtr(&connection)];
-      session.parse(buf);
+    tcpServer_.setClientReadCallBack([&](net::TcpConnectionPtr connection,net::SocketBuf* buf){
+     auto ite =  sessionMap_.find(connection->getFd())->second;//[net::TcpConnectionPtr(&connection)];
+     ite.handleRequest(connection,buf);
 
     });
 
-    tcpServer_.setNewConnCallBack([&](int fd, const IpAddress& ipAddress,net::TcpConnectionPtr conn_ptr) {
-      Session session;
-      sessionMap_[conn_ptr]=std::move(session);
+
+    tcpServer_.setClienCloseCallBack([](net::TcpConnectionPtr connection){
+      printf("fd is %d closed \n",connection->getFd());
+    });
+
+
+
+    tcpServer_.setNewConnCallBack([&](int fd, const IpAddress& ipAddress,net::TcpConnectionPtr& conn_ptr) {
+      //Session session(ipAddress);
+      sessionMap_.insert(std::make_pair(fd,Session(ipAddress)));
+      //sessionMap_[conn_ptr]=std::move(session);
       printf("a new connection fd is %d ,ip : %s  port : %d \n", fd, ipAddress.ip.c_str(), ipAddress.port);
     });
+
+    tcpServer_.serverStart();
 }
-Server::Server(net::EventLoop* loop)
-        :tcpServer_(9000,loop)
+Server::Server(net::EventLoop* loop,size_t thread_num)
+        :tcpServer_(9000,loop,thread_num)
 {
 
 }

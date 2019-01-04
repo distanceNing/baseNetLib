@@ -29,7 +29,7 @@ void TcpConnection::handleRead()
     assert(isConnected());
     ssize_t read_size;
     if ((read_size = readBuf_.readFromFd(connSocket_.getFd())) > 0 ) {
-        clientReadCallBack_(*this, &readBuf_);
+        clientReadCallBack_(shared_from_this(), &readBuf_);
     }//EOF
     else if ( read_size == 0 ) {
         if ( writeBuf_.readableBytes() > 0 ) {
